@@ -9,7 +9,7 @@ namespace SixNations.Services
 {
     public static class RequirementDataService
     {
-        private static IEnumerable<Requirement> AllOrders()
+        private static IEnumerable<Requirement> Index()
         {
             // The following is order summary data
             var data = new ObservableCollection<Requirement>
@@ -78,7 +78,7 @@ namespace SixNations.Services
         {
             await Task.CompletedTask;
 
-            return AllOrders();
+            return Index();
         }
     }
 }
