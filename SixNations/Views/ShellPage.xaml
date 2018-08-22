@@ -6,16 +6,22 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     DataContext="{Binding ShellViewModel, Source={StaticResource Locator}}"
     xmlns:helpers="using:SixNations.Helpers"
+    xmlns:converters="using:SixNations.Views.Converters"
     xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:InverseBooleanConverter x:Key="Inverter"/>
+    </Page.Resources>
 
     <NavigationView
         x:Name="navigationView"
         SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
         Header="{x:Bind ViewModel.Selected.Content, Mode=OneWay}"
         IsSettingsVisible="True"
-        Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
+        Background="{ThemeResource SystemControlBackgroundAltHighBrush}"
+        CompactModeThresholdWidth="0" ExpandedModeThresholdWidth="1900">
         <NavigationView.MenuItems>
             <!--
             TODO WTS: Change the symbols for each item as appropriate for your app
@@ -23,8 +29,18 @@
             Or to use an IconElement instead of a Symbol see https://github.com/Microsoft/WindowsTemplateStudio/blob/master/docs/projectTypes/navigationpane.md
             Edit String/en-US/Resources.resw: Add a menu item title for each page
             -->
-            <NavigationViewItem x:Uid="Shell_Main" Icon="Document" helpers:NavHelper.NavigateTo="SixNations.ViewModels.MainViewModel" />
-            <NavigationViewItem x:Uid="Shell_Wall" Icon="Document" helpers:NavHelper.NavigateTo="SixNations.ViewModels.WallViewModel" />
+            <NavigationViewItem x:Uid="Shell_Login"
+                                Icon="ProtectedDocument"
+                                helpers:NavHelper.NavigateTo="SixNations.ViewModels.LoginViewModel"
+                                Visibility="{Binding IsLoggedIn, Converter={StaticResource Inverter}}"/>
+            <NavigationViewItem x:Uid="Shell_Main"
+                                Icon="ShowResults"
+                                helpers:NavHelper.NavigateTo="SixNations.ViewModels.MainViewModel"
+                                Visibility="{Binding IsLoggedIn}"/>
+            <NavigationViewItem x:Uid="Shell_Wall"
+                                Icon="Share"
+                                helpers:NavHelper.NavigateTo="SixNations.ViewModels.WallViewModel"
+                                Visibility="{Binding IsLoggedIn}"/>
         </NavigationView.MenuItems>
         <NavigationView.HeaderTemplate>
             <DataTemplate>

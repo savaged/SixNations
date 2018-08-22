@@ -1,9 +1,6 @@
 ﻿using System;
-
 using CommonServiceLocator;
-
 using GalaSoft.MvvmLight.Ioc;
-
 using SixNations.Services;
 using SixNations.Views;
 
@@ -18,6 +15,7 @@ namespace SixNations.ViewModels
 
             SimpleIoc.Default.Register(() => new NavigationServiceEx());
             SimpleIoc.Default.Register<ShellViewModel>();
+            Register<LoginViewModel, LoginPage>();
             Register<MainViewModel, MainPage>();
             Register<WallViewModel, WallPage>();
             Register<SettingsViewModel, SettingsPage>();
@@ -33,6 +31,8 @@ namespace SixNations.ViewModels
         public MainViewModel MainViewModel => ServiceLocator.Current.GetInstance<MainViewModel>();
 
         public ShellViewModel ShellViewModel => ServiceLocator.Current.GetInstance<ShellViewModel>();
+
+        public LoginViewModel LoginViewModel => ServiceLocator.Current.GetInstance<LoginViewModel>();
 
         public NavigationServiceEx NavigationService => ServiceLocator.Current.GetInstance<NavigationServiceEx>();
 

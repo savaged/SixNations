@@ -121,7 +121,7 @@
     <Compile Include="Exceptions\AuthException.cs" />
     <Compile Include="Models\ResponseRootObject.cs" />
     <Compile Include="Props.cs" />
-    <Compile Include="Helpers\EnumToBooleanConverter.cs" />
+    <Compile Include="Views\Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Helpers\Json.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
@@ -133,12 +133,17 @@
     <Compile Include="Services\NavigationServiceEx.cs" />
     <Compile Include="Services\RequirementDataService.cs" />
     <Compile Include="Services\ThemeSelectorService.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\UriSchemeExampleViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WallViewModel.cs" />
+    <Compile Include="Views\Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainDetailControl.xaml.cs">
       <DependentUpon>MainDetailControl.xaml</DependentUpon>
     </Compile>
@@ -182,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\TextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -39,7 +39,7 @@ namespace SixNations
 
         private ActivationService CreateActivationService()
         {
-            return new ActivationService(this, typeof(ViewModels.MainViewModel), new Lazy<UIElement>(CreateShell));
+            return new ActivationService(this, typeof(ViewModels.LoginViewModel), new Lazy<UIElement>(CreateShell));
         }
 
         private UIElement CreateShell()

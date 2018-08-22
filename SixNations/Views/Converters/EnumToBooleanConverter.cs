@@ -1,8 +1,8 @@
 ﻿using System;
-
+using SixNations.Helpers;
 using Windows.UI.Xaml.Data;
 
-namespace SixNations.Helpers
+namespace SixNations.Views.Converters
 {
     public class EnumToBooleanConverter : IValueConverter
     {

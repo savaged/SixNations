@@ -22,7 +22,7 @@ namespace SixNations.Views
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            await ViewModel.LoadDataAsync(MasterDetailsViewControl.ViewState);
+            await ViewModel.LoadAsync(MasterDetailsViewControl.ViewState);
         }
     }
 }

@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="SixNations.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SixNations.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding LoginViewModel, Source={StaticResource Locator}}">
+
+    <Canvas>
+        <StackPanel Margin="100,40,0,0">
+            <TextBox Width="400"
+                     Header="Email"
+                     Text="{Binding Email, Mode=TwoWay}"/>
+            <PasswordBox Width="400"
+                         Margin="0,10,0,0"
+                         Header="Password"
+                         Name="Password"/>
+            <Button Margin="0,20,0,0"
+                    Content="Submit"
+                    Command="{Binding SubmitCmd}"
+                    CommandParameter="{Binding ElementName=Password}"/>
+        </StackPanel>
+    </Canvas>
+</Page>

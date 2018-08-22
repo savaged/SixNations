@@ -23,12 +23,13 @@ namespace SixNations.ViewModels
         private NavigationView _navigationView;
         private NavigationViewItem _selected;
         private ICommand _itemInvokedCommand;
+        private bool _isLoggedIn;
 
         public NavigationServiceEx NavigationService
         {
             get
             {
-                return CommonServiceLocator.ServiceLocator.Current.GetInstance<NavigationServiceEx>();
+                return ServiceLocator.Current.GetInstance<NavigationServiceEx>();
             }
         }
 
@@ -42,6 +43,7 @@ namespace SixNations.ViewModels
 
         public ShellViewModel()
         {
+            _isLoggedIn = false;
         }
 
         public void Initialize(Frame frame, NavigationView navigationView)
@@ -49,6 +51,12 @@ namespace SixNations.ViewModels
             _navigationView = navigationView;
             NavigationService.Frame = frame;
             NavigationService.Navigated += Frame_Navigated;
+        }
+
+        public bool IsLoggedIn
+        {
+            get => _isLoggedIn;
+            set => Set(ref _isLoggedIn, value);
         }
 
         private void OnItemInvoked(NavigationViewItemInvokedEventArgs args)

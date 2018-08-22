@@ -28,6 +28,12 @@ namespace SixNations.ViewModels
         {
         }
 
+        public async Task LoadAsync(MasterDetailsViewState viewState)
+        {
+
+            await LoadDataAsync(viewState);
+        }
+
         public async Task LoadDataAsync(MasterDetailsViewState viewState)
         {
             Index.Clear();

@@ -221,4 +221,8 @@
     <value>The Parameter DeferredDataFormatId is null or does not contains any element.</value>
     <comment>The Parameter DeferredDataFormatId is null or does not contains any element.</comment>
   </data>
+  <data name="Shell_Login.Content" xml:space="preserve">
+    <value>Login</value>
+    <comment>Navigation view item name for Login</comment>
+  </data>
 </root>
