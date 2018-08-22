@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="SixNations.Desktop.Controls.Login"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SixNations.Desktop.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding Source={StaticResource Locator}, Path=Login}">
+    <Canvas>
+        <StackPanel Margin="100">
+            <WrapPanel Margin="10">
+                <Label Width="80" Content="Email"/>
+                <TextBox Width="300" Text="{Binding Email}"/>
+            </WrapPanel>
+            <WrapPanel Margin="10">
+                <Label Width="80" Content="Password"/>
+                <PasswordBox Width="300" Name="Password"/>
+            </WrapPanel>
+            <Button Width="80" Margin="10" HorizontalAlignment="Right" Content="Submit" 
+                    Command="{Binding SubmitCmd}" CommandParameter="{Binding ElementName=Password}"/>
+        </StackPanel>
+    </Canvas>
+</UserControl>
