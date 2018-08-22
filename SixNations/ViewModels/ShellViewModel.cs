@@ -9,6 +9,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
 using SixNations.Helpers;
+using SixNations.Messages;
 using SixNations.Services;
 using SixNations.Views;
 
@@ -23,7 +24,7 @@ namespace SixNations.ViewModels
         private NavigationView _navigationView;
         private NavigationViewItem _selected;
         private ICommand _itemInvokedCommand;
-        private bool _isLoggedIn;
+        private string _authToken;
 
         public NavigationServiceEx NavigationService
         {
@@ -43,7 +44,12 @@ namespace SixNations.ViewModels
 
         public ShellViewModel()
         {
-            _isLoggedIn = false;
+            MessengerInstance.Register<AuthenticatedMessage>(this, OnAuthenticated);
+        }
+
+        public override void Cleanup()
+        {
+            base.Cleanup();
         }
 
         public void Initialize(Frame frame, NavigationView navigationView)
@@ -53,10 +59,12 @@ namespace SixNations.ViewModels
             NavigationService.Navigated += Frame_Navigated;
         }
 
-        public bool IsLoggedIn
+        public bool IsLoggedIn => !string.IsNullOrEmpty(AuthToken);
+
+        public string AuthToken
         {
-            get => _isLoggedIn;
-            set => Set(ref _isLoggedIn, value);
+            get => _authToken;
+            private set => _authToken = value;
         }
 
         private void OnItemInvoked(NavigationViewItemInvokedEventArgs args)
@@ -92,6 +100,12 @@ namespace SixNations.ViewModels
             var navigatedPageKey = NavigationService.GetNameOfRegisteredPage(sourcePageType);
             var pageKey = menuItem.GetValue(NavHelper.NavigateToProperty) as string;
             return pageKey == navigatedPageKey;
+        }
+
+        private void OnAuthenticated(AuthenticatedMessage m)
+        {
+            AuthToken = m.Token;
+            RaisePropertyChanged(() => IsLoggedIn);
         }
     }
 }

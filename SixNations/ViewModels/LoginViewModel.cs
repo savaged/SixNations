@@ -3,6 +3,9 @@ using GalaSoft.MvvmLight;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using Windows.Storage;
+using SixNations.Services;
+using SixNations.Messages;
+using Windows.UI.Xaml.Controls;
 
 namespace SixNations.ViewModels
 {
@@ -47,9 +50,23 @@ namespace SixNations.ViewModels
             }
         }
 
-        private void OnSubmit(object password)
+        private async void OnSubmit(object o)
         {
-            throw new NotImplementedException();
+            if (!(o is PasswordBox))
+            {
+                throw new ArgumentException("Expected a PasswordBox!");
+            }
+            var pb = (PasswordBox)o;
+            if (string.IsNullOrEmpty(pb.Password))
+            {
+                throw new ArgumentException("Expected to have a password set!");
+            }
+            var token = await new AuthTokenService().GetTokenAsync(Email, pb.Password);
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new Exception("Expected a valid token!");
+            }
+            MessengerInstance.Send(new AuthenticatedMessage(token));
         }
     }
 }

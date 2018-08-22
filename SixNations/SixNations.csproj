@@ -119,6 +119,7 @@
     <Compile Include="Activation\ActivationHandler.cs" />
     <Compile Include="Activation\SchemeActivationHandler.cs" />
     <Compile Include="Exceptions\AuthException.cs" />
+    <Compile Include="Messages\AuthenticatedMessage.cs" />
     <Compile Include="Models\ResponseRootObject.cs" />
     <Compile Include="Props.cs" />
     <Compile Include="Views\Converters\EnumToBooleanConverter.cs" />

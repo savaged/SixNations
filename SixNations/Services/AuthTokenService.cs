@@ -27,7 +27,7 @@ namespace SixNations.Services
             url = $"{Props.ApiBaseURL}api/login";
         }
 
-        public async Task<string> GetNewToken(string email, string password)
+        public async Task<string> GetTokenAsync(string email, string password)
         {
             Log.Info($"Requesting access from {url}");
 
