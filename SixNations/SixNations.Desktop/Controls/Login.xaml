@@ -18,6 +18,7 @@
                 <PasswordBox Width="300" Name="Password"/>
             </WrapPanel>
             <Button Width="80" Margin="10" HorizontalAlignment="Right" Content="Submit" 
+                    IsDefault="True"
                     Command="{Binding SubmitCmd}" CommandParameter="{Binding ElementName=Password}"/>
         </StackPanel>
     </Canvas>
