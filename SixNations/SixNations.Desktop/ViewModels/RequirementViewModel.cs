@@ -18,7 +18,7 @@ namespace SixNations.Desktop.ViewModels
         public RequirementViewModel(IRequirementDataService requirementDataService)
         {
             _requirementDataService = requirementDataService;
-            // TODO Find a better way to do an async load
+            // TODO Find a better way to do an async load or supress the warning
             Load();
         }
 
@@ -32,6 +32,7 @@ namespace SixNations.Desktop.ViewModels
             catch (Exception ex)
             {
                 Log.Error(ex.Message);
+                // TODO Alert the UI of the error
             }
             if (data != null)
             {
