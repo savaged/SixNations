@@ -113,7 +113,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Requirement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Wall.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,11 +143,19 @@
     <Compile Include="Controls\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Requirement.xaml.cs">
+      <DependentUpon>Requirement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Wall.xaml.cs">
+      <DependentUpon>Wall.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Exceptions\AuthException.cs" />
+    <Compile Include="Interfaces\IParameterised.cs" />
     <Compile Include="Interfaces\ISelectedIndexManager.cs" />
+    <Compile Include="Interfaces\IShellViewModel.cs" />
     <Compile Include="Messages\AuthenticatedMessage.cs" />
     <Compile Include="Models\Requirement.cs" />
     <Compile Include="Models\ResponseRootObject.cs" />
@@ -151,9 +167,12 @@
     <Compile Include="Constants\Props.cs" />
     <Compile Include="Services\AuthTokenService.cs" />
     <Compile Include="Services\AuthTokenService.partial.cs" />
+    <Compile Include="Interfaces\ISelectedIndexChangedEventArgs.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\RequirementDataService.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
+    <Compile Include="ViewModels\WallViewModel.cs" />
+    <Compile Include="ViewModels\RequirementViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />

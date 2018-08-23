@@ -1,4 +1,4 @@
-using MvvmDialogs;
+using System;
 using System.Windows.Input;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
@@ -6,16 +6,21 @@ using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Constants;
+using GalaSoft.MvvmLight.Views;
 
 namespace SixNations.Desktop.ViewModels
 {
-    public class MainViewModel : ViewModelBase, ISelectedIndexManager
+    public class MainViewModel : ViewModelBase, IShellViewModel
     {
-        private int _selectedNavIndex;
+        private readonly INavigationService _navigationService;
 
-        public MainViewModel(IDialogService dialogService)
+        public MainViewModel(
+            INavigationService navigationService, 
+            MvvmDialogs.IDialogService dialogService)
         {
-            _selectedNavIndex = (int)HamburgerNavItemsIndex.Login;
+            _navigationService = navigationService;
+            SelectedIndexManager = (ISelectedIndexManager)_navigationService;
+            SelectedIndexManager.SelectedIndex = (int)HamburgerNavItemsIndex.Login;
 
             DialogService = dialogService;
 
@@ -33,17 +38,13 @@ namespace SixNations.Desktop.ViewModels
             MessengerInstance.Register<AuthenticatedMessage>(this, OnAuthenticated);
         }
 
-        public IDialogService DialogService { get; }
+        public ISelectedIndexManager SelectedIndexManager { get; }
+
+        public MvvmDialogs.IDialogService DialogService { get; }
 
         public ICommand ExitCmd { get; }
 
         public ICommand ShowAboutDialogCmd { get; }
-
-        public int SelectedIndex
-        {
-            get => _selectedNavIndex;
-            set => Set(ref _selectedNavIndex, value);
-        }
 
         public bool IsLoggedIn => !string.IsNullOrEmpty(AuthToken);
 
@@ -53,6 +54,8 @@ namespace SixNations.Desktop.ViewModels
         {
             AuthToken = m.Token;
             RaisePropertyChanged(() => IsLoggedIn);
+            _navigationService.NavigateTo(
+                HamburgerNavItemsIndex.Requirements.ToString());
         }
 
         private void OnShowAboutDialog()

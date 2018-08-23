@@ -19,23 +19,21 @@ namespace SixNations.Desktop.Views
 
         private void OnSourceInitialized(object sender, EventArgs e)
         {
-            _selectedIndexManager = (ISelectedIndexManager)DataContext;
-            _selectedIndexManager.PropertyChanged += DataContextPropertyChanged;
+            var shellVM = (IShellViewModel)DataContext;
+            _selectedIndexManager = shellVM.SelectedIndexManager;
+            _selectedIndexManager.SelectedIndexChanged += OnSelectedIndexChanged;
         }
 
-        private void DataContextPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnSelectedIndexChanged(object sender, ISelectedIndexChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ISelectedIndexManager.SelectedIndex))
+            var selected = HamburgerNav.SelectedItem;
+            if (selected == null)
             {
-                var selected = HamburgerNav.SelectedItem;
-                if (selected == null)
-                {
-                    selected = HamburgerNav.SelectedOptionsItem;
-                }
-                if (selected != null)
-                {
-                    HamburgerNav.Content = ((HamburgerMenuItem)selected).Tag;
-                }
+                selected = HamburgerNav.SelectedOptionsItem;
+            }
+            if (selected != null)
+            {
+                HamburgerNav.Content = ((HamburgerMenuItem)selected).Tag;
             }
         }
 
@@ -49,7 +47,7 @@ namespace SixNations.Desktop.Views
 
         private void OnClosing(object sender, CancelEventArgs e)
         {
-            _selectedIndexManager.PropertyChanged -= DataContextPropertyChanged;
+            _selectedIndexManager.SelectedIndexChanged -= OnSelectedIndexChanged;
         }
     }
 }

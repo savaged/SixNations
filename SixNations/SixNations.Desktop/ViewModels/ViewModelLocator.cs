@@ -1,6 +1,8 @@
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Views;
+using SixNations.Desktop.Services;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -27,13 +29,25 @@ namespace SixNations.Desktop.ViewModels
                 // Create run time view services and models
                 //SimpleIoc.Default.Register<IDataService, DataService>();
             }
+            if (!SimpleIoc.Default.IsRegistered<INavigationService>())
+            {
+                SimpleIoc.Default.Register<INavigationService>(() =>
+                {
+                    return new NavigationService();
+                });
+            }
             if (!SimpleIoc.Default.IsRegistered<MvvmDialogs.IDialogService>())
             {
-                SimpleIoc.Default.Register<MvvmDialogs.IDialogService>(() => new MvvmDialogs.DialogService());
+                SimpleIoc.Default.Register<MvvmDialogs.IDialogService>(() =>
+                {
+                    return new MvvmDialogs.DialogService();
+                });
             }
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<AboutDialogViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<RequirementViewModel>();
+            SimpleIoc.Default.Register<WallViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
         }
 
@@ -42,6 +56,10 @@ namespace SixNations.Desktop.ViewModels
         public AboutDialogViewModel About => ServiceLocator.Current.GetInstance<AboutDialogViewModel>();
 
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
+
+        public RequirementViewModel Requirement => ServiceLocator.Current.GetInstance<RequirementViewModel>();
+
+        public WallViewModel Wall => ServiceLocator.Current.GetInstance<WallViewModel>();
 
         public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
 

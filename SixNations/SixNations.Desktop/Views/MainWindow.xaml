@@ -5,7 +5,6 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:local="clr-namespace:SixNations.Desktop.Views"
-                 xmlns:vm="clr-namespace:SixNations.Desktop.ViewModels"
                  xmlns:controls="clr-namespace:SixNations.Desktop.Controls"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
@@ -49,7 +48,7 @@
                            DisplayMode="CompactInline"
                            ItemTemplate="{StaticResource MenuItemTemplate}"
                            OptionsItemTemplate="{StaticResource MenuItemTemplate}"
-                           SelectedIndex="{Binding SelectedIndex}"
+                           SelectedIndex="{Binding SelectedIndexManager.SelectedIndex}"
                            ItemClick="HamburgerNav_ItemClick"
                            OptionsItemClick="HamburgerNav_ItemClick">
 
@@ -84,6 +83,20 @@
                     <mah:HamburgerMenuGlyphItem Glyph="&#xE72E;" Label="Login">
                         <mah:HamburgerMenuGlyphItem.Tag>
                             <controls:Login />
+                        </mah:HamburgerMenuGlyphItem.Tag>
+                    </mah:HamburgerMenuGlyphItem>
+
+                    <mah:HamburgerMenuGlyphItem Glyph="&#xE7BC;" Label="Requirement"
+                                                IsEnabled="{Binding DataContext.IsLoggedIn, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                        <mah:HamburgerMenuGlyphItem.Tag>
+                            <controls:Requirement />
+                        </mah:HamburgerMenuGlyphItem.Tag>
+                    </mah:HamburgerMenuGlyphItem>
+
+                    <mah:HamburgerMenuGlyphItem Glyph="&#xE95D;" Label="Wall"
+                                                IsEnabled="{Binding DataContext.IsLoggedIn, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                        <mah:HamburgerMenuGlyphItem.Tag>
+                            <controls:Wall />
                         </mah:HamburgerMenuGlyphItem.Tag>
                     </mah:HamburgerMenuGlyphItem>
 
