@@ -27,22 +27,27 @@ namespace SixNations.Desktop.ViewModels
                 // Create run time view services and models
                 //SimpleIoc.Default.Register<IDataService, DataService>();
             }
-            SimpleIoc.Default.Register<MvvmDialogs.IDialogService>(() => new MvvmDialogs.DialogService());
-
+            if (!SimpleIoc.Default.IsRegistered<MvvmDialogs.IDialogService>())
+            {
+                SimpleIoc.Default.Register<MvvmDialogs.IDialogService>(() => new MvvmDialogs.DialogService());
+            }
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<AboutDialogViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<SettingsViewModel>();
         }
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
 
-        public AboutDialogViewModel AboutDialog => ServiceLocator.Current.GetInstance<AboutDialogViewModel>();
+        public AboutDialogViewModel About => ServiceLocator.Current.GetInstance<AboutDialogViewModel>();
 
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
 
+        public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
+
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+            SimpleIoc.Default.Unregister<MvvmDialogs.IDialogService>();
         }
     }
 }

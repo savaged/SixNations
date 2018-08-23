@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:SixNations.Desktop.Views"
         xmlns:vm="clr-namespace:SixNations.Desktop.ViewModels"
         xmlns:controls="clr-namespace:SixNations.Desktop.Controls"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:mahapps="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         md:DialogServiceViews.IsRegistered="True"
         mc:Ignorable="d"
@@ -15,21 +15,96 @@
         Height="600" Width="900"
         WindowState="Normal"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
-
-    <Window.InputBindings>
-        <KeyBinding Command="{Binding ExitCmd}" Gesture="Alt+F4" />
-    </Window.InputBindings>
+    
+    <Window.Resources>
+        <DataTemplate x:Key="MenuItemTemplate" 
+                      DataType="{x:Type mahapps:HamburgerMenuGlyphItem}">
+            <Grid Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           FontSize="16"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="Segoe MDL2 Assets"
+                           Foreground="White"
+                           Text="{Binding Glyph}" />
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Foreground="White"
+                           Text="{Binding Label}" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
 
     <DockPanel>
-        <Menu DockPanel.Dock="Top" Margin="0,0,0.4,0">
-            <MenuItem Header="File">
-                <MenuItem Header="Exit" Command="{Binding ExitCmd}" InputGestureText="Alt+F4"/>
-            </MenuItem>
-            <MenuItem Header="About" Command="{Binding ShowAboutDialogCmd}"/>
-        </Menu>
+        <mahapps:HamburgerMenu x:Name="HamburgerNav"
+                               PaneBackground="#FF444444"
+                               IsPaneOpen="False" 
+                               DisplayMode="CompactInline"
+                               ItemTemplate="{StaticResource MenuItemTemplate}"
+                               OptionsItemTemplate="{StaticResource MenuItemTemplate}"
+                               ItemClick="HamburgerNav_ItemClick"
+                               OptionsItemClick="HamburgerNav_ItemClick">
 
-        <StackPanel>
-            <controls:Login/>
-        </StackPanel>
+            <mahapps:HamburgerMenu.ContentTemplate>
+                <DataTemplate DataType="{x:Type mahapps:HamburgerMenuItem}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="48" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0"
+                                Background="Black">
+                            <TextBlock x:Name="Header"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontSize="24"
+                                       Foreground="White"
+                                       Padding="20"
+                                       Text="{Binding Label}" />
+                        </Border>
+                        <ContentControl x:Name="Content"
+                                        Grid.Row="1"
+                                        Focusable="False"
+                                        Content="{Binding Tag}" />
+                    </Grid>
+                </DataTemplate>
+            </mahapps:HamburgerMenu.ContentTemplate>
+            
+            <mahapps:HamburgerMenu.ItemsSource>
+                <mahapps:HamburgerMenuItemCollection>
+
+                    <mahapps:HamburgerMenuGlyphItem Glyph="&#xE72E;" Label="Login">
+                        <mahapps:HamburgerMenuGlyphItem.Tag>
+                            <controls:Login/>
+                        </mahapps:HamburgerMenuGlyphItem.Tag>
+                    </mahapps:HamburgerMenuGlyphItem>
+                    
+                </mahapps:HamburgerMenuItemCollection>
+            </mahapps:HamburgerMenu.ItemsSource>
+
+            <mahapps:HamburgerMenu.OptionsItemsSource>
+                <mahapps:HamburgerMenuItemCollection>
+
+                    <mahapps:HamburgerMenuGlyphItem Glyph="&#xE9CE;" Label="About">
+                        <mahapps:HamburgerMenuGlyphItem.Tag>
+                            <controls:About/>
+                        </mahapps:HamburgerMenuGlyphItem.Tag>
+                    </mahapps:HamburgerMenuGlyphItem>
+
+                    <mahapps:HamburgerMenuGlyphItem Glyph="&#xE713;" Label="Settings">
+                        <mahapps:HamburgerMenuGlyphItem.Tag>
+                            <controls:Settings/>
+                        </mahapps:HamburgerMenuGlyphItem.Tag>
+                    </mahapps:HamburgerMenuGlyphItem>
+
+                </mahapps:HamburgerMenuItemCollection>
+            </mahapps:HamburgerMenu.OptionsItemsSource>
+            
+        </mahapps:HamburgerMenu>
     </DockPanel>
 </Window>
