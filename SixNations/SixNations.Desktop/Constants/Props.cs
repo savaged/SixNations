@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace SixNations.Desktop.StaticData
+namespace SixNations.Desktop.Constants
 {
-    static class Constants
+    static class Props
     {
 #if DEBUG
         internal const string ApiBaseURL = "http://homestead.test/";

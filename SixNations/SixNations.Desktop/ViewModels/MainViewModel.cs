@@ -5,7 +5,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
-using SixNations.Desktop.StaticData;
+using SixNations.Desktop.Constants;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -15,7 +15,7 @@ namespace SixNations.Desktop.ViewModels
 
         public MainViewModel(IDialogService dialogService)
         {
-            _selectedNavIndex = (int)NavItemsIndex.Login;
+            _selectedNavIndex = (int)HamburgerNavItemsIndex.Login;
 
             DialogService = dialogService;
 
