@@ -151,6 +151,7 @@
     <Compile Include="Constants\Props.cs" />
     <Compile Include="Services\AuthTokenService.cs" />
     <Compile Include="Services\AuthTokenService.partial.cs" />
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\RequirementDataService.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
