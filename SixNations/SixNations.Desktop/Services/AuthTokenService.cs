@@ -2,10 +2,10 @@
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Net.Sockets;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using SixNations.Desktop.Exceptions;
 using SixNations.Desktop.Models;
 
@@ -23,7 +23,7 @@ namespace SixNations.Desktop.Services
 
         public AuthTokenService()
         {
-            url = $"{Constants.ApiBaseURL}api/login";
+            url = $"{StaticData.Constants.ApiBaseURL}api/login";
         }
 
         public async Task<string> GetTokenAsync(string email, string password)

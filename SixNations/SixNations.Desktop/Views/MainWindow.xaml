@@ -14,6 +14,8 @@
                  Title="Six Nations"
                  Height="600" Width="900"
                  WindowState="Normal"
+                 SourceInitialized="OnSourceInitialized"
+                 Closing="OnClosing"
                  DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
 
     <Window.Resources>
@@ -47,6 +49,7 @@
                            DisplayMode="CompactInline"
                            ItemTemplate="{StaticResource MenuItemTemplate}"
                            OptionsItemTemplate="{StaticResource MenuItemTemplate}"
+                           SelectedIndex="{Binding SelectedIndex}"
                            ItemClick="HamburgerNav_ItemClick"
                            OptionsItemClick="HamburgerNav_ItemClick">
 

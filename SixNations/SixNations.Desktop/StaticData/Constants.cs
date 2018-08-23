@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SixNations.Desktop
+namespace SixNations.Desktop.StaticData
 {
     static class Constants
     {
