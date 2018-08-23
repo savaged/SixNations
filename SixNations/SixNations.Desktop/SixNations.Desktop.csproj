@@ -168,7 +168,9 @@
     <Compile Include="Services\AuthTokenService.cs" />
     <Compile Include="Services\AuthTokenService.partial.cs" />
     <Compile Include="Interfaces\ISelectedIndexChangedEventArgs.cs" />
+    <Compile Include="Interfaces\IRequirementDataService.cs" />
     <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\DesignRequirementDataService.cs" />
     <Compile Include="Services\RequirementDataService.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\WallViewModel.cs" />

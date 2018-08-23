@@ -2,6 +2,7 @@ using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
+using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Services;
 
 namespace SixNations.Desktop.ViewModels
@@ -21,13 +22,11 @@ namespace SixNations.Desktop.ViewModels
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                // Create design time view services and models
-                //SimpleIoc.Default.Register<IDataService, DesignDataService>();
+                SimpleIoc.Default.Register<IRequirementDataService, DesignRequirementDataService>();
             }
             else
             {
-                // Create run time view services and models
-                //SimpleIoc.Default.Register<IDataService, DataService>();
+                SimpleIoc.Default.Register<IRequirementDataService, RequirementDataService>();
             }
             if (!SimpleIoc.Default.IsRegistered<INavigationService>())
             {

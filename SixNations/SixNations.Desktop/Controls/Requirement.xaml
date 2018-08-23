@@ -4,10 +4,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SixNations.Desktop.Controls"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding Source={StaticResource Locator}, Path=Requirement}">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="IndexViewSource" Source="{Binding Index}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Id" Direction="Descending" />
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
     <Canvas>
-            
+        <DataGrid d:DesignHeight="450" d:DesignWidth="800"
+                  AutoGenerateColumns="False" IsReadOnly="True" 
+                  ItemsSource="{Binding Source={StaticResource IndexViewSource}}" 
+                  SelectedItem="{Binding SelectedItem}"
+                  CanUserDeleteRows="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="7*" />
+                <DataGridTextColumn Header="Story" Binding="{Binding Story}" Width="45*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Estimation" Binding="{Binding EstimationName}" Width="12*" />
+                <DataGridTextColumn Header="Priority" Binding="{Binding PriorityName}" Width="12*" />
+                <DataGridTextColumn Header="Status" Binding="{Binding StatusName}" Width="12*" />
+                <DataGridTextColumn Header="Release" Binding="{Binding Release}" Width="12*" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Canvas>
 </UserControl>
