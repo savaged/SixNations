@@ -10,9 +10,9 @@
                  xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
                  md:DialogServiceViews.IsRegistered="True"
                  mc:Ignorable="d"
-                 Title="Six Nations"
                  Height="600" Width="900"
                  WindowState="Normal"
+                 ResizeMode="CanResizeWithGrip"
                  SourceInitialized="OnSourceInitialized"
                  Closing="OnClosing"
                  DataContext="{Binding Source={StaticResource Locator}, Path=Main}">

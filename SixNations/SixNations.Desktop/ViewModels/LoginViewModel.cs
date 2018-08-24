@@ -12,13 +12,10 @@ namespace SixNations.Desktop.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
-        private string _email;
         private RelayCommand<object> _submitCmd;
 
         public LoginViewModel()
         {
-            _email = Properties.Settings.Default.UserEmail;
-
             _submitCmd = new RelayCommand<object>(OnSubmit, (p) => CanExecute);
         }
 
@@ -39,16 +36,14 @@ namespace SixNations.Desktop.ViewModels
 
         public string Email
         {
-            get => _email;
+            get => Properties.Settings.Default.UserEmail;
             set
             {
-                if (_email != value)
+                if (Properties.Settings.Default.UserEmail != value)
                 {
-                    Set(ref _email, value);
-
                     Properties.Settings.Default.UserEmail = value;
                     Properties.Settings.Default.Save();
-
+                    RaisePropertyChanged();
                     _submitCmd.RaiseCanExecuteChanged();
                 }
             }

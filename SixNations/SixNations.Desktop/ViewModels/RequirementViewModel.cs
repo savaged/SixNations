@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using log4net;
@@ -16,6 +17,7 @@ namespace SixNations.Desktop.ViewModels
         private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IRequirementDataService _requirementDataService;
+        private Requirement _selectedItem;
 
         public RequirementViewModel(IRequirementDataService requirementDataService)
         {
@@ -30,6 +32,10 @@ namespace SixNations.Desktop.ViewModels
         public async Task LoadAsync()
         {
             IEnumerable<Requirement> data = null;
+            if (IsInDesignMode)
+            {
+                data = await _requirementDataService.GetModelDataAsync(null, null);
+            }
             if (User.Current.IsLoggedIn)
             {
                 try
@@ -50,6 +56,7 @@ namespace SixNations.Desktop.ViewModels
                 {
                     Index.Add(item);
                 }
+                SelectedItem = Index.First();
             }
             else
             {
@@ -58,5 +65,11 @@ namespace SixNations.Desktop.ViewModels
         }
 
         public ObservableCollection<Requirement> Index { get; }
+
+        public Requirement SelectedItem
+        {
+            get => _selectedItem;
+            set => Set(ref _selectedItem, value);
+        }
     }
 }
