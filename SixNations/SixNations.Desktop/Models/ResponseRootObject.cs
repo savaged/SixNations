@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Converters;
+using SixNations.Desktop.Interfaces;
+using log4net;
 
 namespace SixNations.Desktop.Models
 {
@@ -218,4 +220,88 @@ namespace SixNations.Desktop.Models
         }
     }
 
+    public class ResponseRootObjectToModelMapper<T> where T : IHttpDataServiceModel, new()
+    {
+        private static readonly ILog Log = LogManager.GetLogger(
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private bool _noData;
+        private ResponseRootObject _responseRootObject;
+
+        public ResponseRootObjectToModelMapper(ResponseRootObject responseRootObject)
+        {
+            _responseRootObject = responseRootObject;
+        }
+
+        public T Mapped()
+        {
+            Validate();
+            return Map();
+        }
+
+        public IList<T> AllMapped()
+        {
+            Validate();
+            return MapAll().ConvertAll(o => o);
+        }
+
+        private void Validate()
+        {
+            if (_responseRootObject == null)
+            {
+                throw new ArgumentNullException(
+                    "No response root found. " +
+                    "The service relied upon should always return a response root object.");
+            }
+            if (_responseRootObject.IsEmpty())
+            {
+                _noData = true;
+            }
+        }
+
+        private T Map()
+        {
+            var model = new T();
+            if (!_noData)
+            {
+                if (_responseRootObject.Data.Length > 1)
+                {
+                    throw new InvalidOperationException(
+                        "Multiple data items found. NOTE to developer: Use MapAll() instead.");
+                }
+                try
+                {
+                    model = MapAll().First();
+                }
+                catch (ArgumentException ex)
+                {
+                    Log.Error($"Unexpected error mapping response to model! {ex.Message}");
+                    throw;
+                }
+            }
+            return model;
+        }
+
+        private List<T> MapAll()
+        {
+            var models = new List<T>();
+            foreach (var rdo in _responseRootObject.Data)
+            {
+                if (!rdo.IsEmpty())
+                {
+                    try
+                    {
+                        var model = new T();
+                        model.Initialise(rdo);
+                        models.Add(model);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Log.Error($"Unexpected error mapping response to models! {ex.Message}");
+                        throw;
+                    }
+                }
+            }
+            return models;
+        }
+    }
 }

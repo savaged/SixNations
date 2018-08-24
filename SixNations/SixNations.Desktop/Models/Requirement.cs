@@ -1,8 +1,10 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using GalaSoft.MvvmLight;
+using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.Models
 {
-    public class Requirement : ObservableObject
+    public class Requirement : HttpDataServiceModelBase
     {
         private int _requirementID;
         private string _story;
@@ -10,6 +12,8 @@ namespace SixNations.Desktop.Models
         private int _priority;
         private int _status;
         private string _release;
+
+        public override int Id => RequirementID;
 
         public int RequirementID
         {

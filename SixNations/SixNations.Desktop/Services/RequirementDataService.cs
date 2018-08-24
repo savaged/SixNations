@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using SixNations.Desktop.Facade;
+using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
 
@@ -9,17 +10,23 @@ namespace SixNations.Desktop.Services
 {
     public class RequirementDataService : IRequirementDataService
     {
-        private IEnumerable<Requirement> Index()
+        public async Task<IEnumerable<Requirement>> GetModelDataAsync(
+            string authToken, Action<Exception> exceptionHandler)
         {
-            throw new NotImplementedException();
-        }
+            var uri = typeof(Requirement).NameToUriFormat();
 
-        // TODO: Get data from API
-        public async Task<IEnumerable<Requirement>> GetModelDataAsync()
-        {
-            await Task.CompletedTask;
-
-            return Index();
+            ResponseRootObject response = null;
+            try
+            {
+                response = await HttpDataServiceFacade.HttpRequestAsync(uri, authToken);
+            }
+            catch (Exception ex)
+            {
+                exceptionHandler(ex);
+                response = new ResponseRootObject(ex.Message);
+            }
+            var index = new ResponseRootObjectToModelMapper<Requirement>(response).AllMapped();
+            return index;
         }
     }
 }

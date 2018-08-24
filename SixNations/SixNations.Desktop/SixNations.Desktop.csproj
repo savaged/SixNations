@@ -152,11 +152,18 @@
     <Compile Include="Controls\Wall.xaml.cs">
       <DependentUpon>Wall.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Exceptions\AuthException.cs" />
+    <Compile Include="Exceptions\HttpDataServiceException.cs" />
+    <Compile Include="Exceptions\AuthServiceException.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Interfaces\HttpMethods.cs" />
+    <Compile Include="Interfaces\IAsyncViewModel.cs" />
+    <Compile Include="Interfaces\IHttpDataServiceModel.cs" />
     <Compile Include="Interfaces\IParameterised.cs" />
     <Compile Include="Interfaces\ISelectedIndexManager.cs" />
     <Compile Include="Interfaces\IShellViewModel.cs" />
     <Compile Include="Messages\AuthenticatedMessage.cs" />
+    <Compile Include="Models\HttpDataServiceModelBase.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\Requirement.cs" />
     <Compile Include="Models\ResponseRootObject.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -167,8 +174,8 @@
     <Compile Include="Constants\Props.cs" />
     <Compile Include="Services\AuthTokenService.cs" />
     <Compile Include="Services\AuthTokenService.partial.cs" />
-    <Compile Include="Interfaces\ISelectedIndexChangedEventArgs.cs" />
     <Compile Include="Interfaces\IRequirementDataService.cs" />
+    <Compile Include="Facades\HttpDataServiceFacade.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\DesignRequirementDataService.cs" />
     <Compile Include="Services\RequirementDataService.cs" />

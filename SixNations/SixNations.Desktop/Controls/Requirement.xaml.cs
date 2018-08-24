@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SixNations.Desktop.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,12 @@ namespace SixNations.Desktop.Controls
         public Requirement()
         {
             InitializeComponent();
+        }
+
+        private async void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var vm = (IAsyncViewModel)DataContext;
+            await vm.LoadAsync();
         }
     }
 }

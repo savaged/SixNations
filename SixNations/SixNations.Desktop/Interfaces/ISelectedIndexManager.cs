@@ -7,6 +7,6 @@ namespace SixNations.Desktop.Interfaces
     {
         int SelectedIndex { get; set; }
 
-        event EventHandler<ISelectedIndexChangedEventArgs> SelectedIndexChanged;
+        event EventHandler<EventArgs> SelectedIndexChanged;
     }
 }

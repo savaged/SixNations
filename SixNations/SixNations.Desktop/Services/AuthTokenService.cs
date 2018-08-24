@@ -8,15 +8,12 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using SixNations.Desktop.Exceptions;
 using SixNations.Desktop.Models;
+using SixNations.Desktop.Facade;
 
 namespace SixNations.Desktop.Services
 {
     partial class AuthTokenService
     {
-        private const string DefaultRequestHeaderName1 = "Accept";
-        private const string DefaultRequestHeaderValue1 = "application/json";
-        private const string DefaultRequestHeaderName2 = "Authorization";
-        private const string DefaultRequestHeaderValue2 = "Bearer ";
         private readonly string url;
 
         private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -44,28 +41,29 @@ namespace SixNations.Desktop.Services
             }
             catch (Exception e)
             {
-                throw new AuthException(e);
+                throw new AuthServiceException(e);
             }
 
             var statusCode = (int)response.StatusCode;
             if (statusCode == 429)
             {
-                throw new AuthException("Too many login attempts. Please try again later.");
+                throw new AuthServiceException("Too many login attempts. Please try again later.");
             }
 
-            var rawResponseContent = await ReadResponseContentAsync(response);
+            var rawResponseContent = await HttpDataServiceFacade.ReadResponseContentAsync(response);
             var responseRootObject = DeserializeResponseRootObject(rawResponseContent, url);
 
             // If no access token then throw exception
             if (responseRootObject.Error != null && responseRootObject.Error != "")
             {
-                throw new AuthException(responseRootObject.Error);
+                throw new AuthServiceException(responseRootObject.Error);
             }
 
             accessToken = (string)responseRootObject.Data[0]["access_token"];
             if (string.IsNullOrEmpty(accessToken))
             {
-                throw new AuthException("Unexpected exception meaning execution could not get access token!");
+                throw new AuthServiceException(
+                    "Unexpected exception meaning execution could not get access token!");
             }
             Log.Info("Access token obtained");
             return accessToken;
@@ -86,22 +84,6 @@ namespace SixNations.Desktop.Services
             return preValues;
         }
 
-        private async Task<string> ReadResponseContentAsync(HttpResponseMessage rawResponse)
-        {
-            string rawResponseContent;
-            try
-            {
-                // TODO: to improve performance read to stream (see https://www.newtonsoft.com/json/help/html/Performance.htm)
-                rawResponseContent = await rawResponse.Content.ReadAsStringAsync();
-            }
-            catch (Exception ex)
-            {
-                Log.Error("API read error " + ex.Message);
-                throw;
-            }
-            return rawResponseContent;
-        }
-
         private ResponseRootObject DeserializeResponseRootObject(string rawResponseContent, string url)
         {
             ResponseRootObject responseRootObject;
@@ -114,8 +96,10 @@ namespace SixNations.Desktop.Services
             {
                 Log.Error(
                     $"The raw response could not be read by Json Reader. Raw: [{rawResponseContent}]");
-                responseRootObject = new ResponseRootObject(rawResponseContent);
-                responseRootObject.Success = true;
+                responseRootObject = new ResponseRootObject(rawResponseContent)
+                {
+                    Success = true
+                };
             }
             catch (JsonSerializationException ex)
             {

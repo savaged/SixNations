@@ -9,7 +9,7 @@ namespace SixNations.Desktop.Services
 {
     public class DesignRequirementDataService : IRequirementDataService
     {
-        private IEnumerable<Requirement> Index()
+        internal IEnumerable<Requirement> Index()
         {
             // The following is order summary data
             var data = new ObservableCollection<Requirement>
@@ -73,8 +73,8 @@ namespace SixNations.Desktop.Services
             return data;
         }
 
-        // TODO: Get data from API
-        public async Task<IEnumerable<Requirement>> GetModelDataAsync()
+        public async Task<IEnumerable<Requirement>> GetModelDataAsync(
+            string authToken, Action<Exception> exceptionHandler)
         {
             await Task.CompletedTask;
 

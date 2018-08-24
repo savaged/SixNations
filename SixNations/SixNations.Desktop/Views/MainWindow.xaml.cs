@@ -24,7 +24,7 @@ namespace SixNations.Desktop.Views
             _selectedIndexManager.SelectedIndexChanged += OnSelectedIndexChanged;
         }
 
-        private void OnSelectedIndexChanged(object sender, ISelectedIndexChangedEventArgs e)
+        private void OnSelectedIndexChanged(object sender, EventArgs e)
         {
             var selected = HamburgerNav.SelectedItem;
             if (selected == null)

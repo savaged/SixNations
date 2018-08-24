@@ -7,6 +7,7 @@ using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Constants;
 using GalaSoft.MvvmLight.Views;
+using SixNations.Desktop.Models;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -27,14 +28,6 @@ namespace SixNations.Desktop.ViewModels
             ExitCmd = new RelayCommand(OnExit);
             ShowAboutDialogCmd = new RelayCommand(OnShowAboutDialog);
 
-            if (IsInDesignMode)
-            {
-                // Code runs in Blend --> create design time data.
-            }
-            else
-            {
-                // Code runs "for real"
-            }
             MessengerInstance.Register<AuthenticatedMessage>(this, OnAuthenticated);
         }
 
@@ -46,13 +39,11 @@ namespace SixNations.Desktop.ViewModels
 
         public ICommand ShowAboutDialogCmd { get; }
 
-        public bool IsLoggedIn => !string.IsNullOrEmpty(AuthToken);
-
-        public string AuthToken { get; private set; }
+        public bool IsLoggedIn => User.Current.IsLoggedIn;
 
         private void OnAuthenticated(AuthenticatedMessage m)
         {
-            AuthToken = m.Token;
+            User.Current.Initialise(m.Token);
             RaisePropertyChanged(() => IsLoggedIn);
             _navigationService.NavigateTo(
                 HamburgerNavItemsIndex.Requirements.ToString());

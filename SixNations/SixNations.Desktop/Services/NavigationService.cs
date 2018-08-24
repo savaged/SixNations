@@ -80,11 +80,11 @@ namespace SixNations.Desktop.Services
                 (int)_previousNavItem, (int)_currentNavItem));
         }
 
-        public event EventHandler<ISelectedIndexChangedEventArgs> SelectedIndexChanged;
+        public event EventHandler<EventArgs> SelectedIndexChanged;
     }
 
     public class SelectedIndexChangedEventArgs 
-        : EventArgs, ISelectedIndexChangedEventArgs
+        : EventArgs
     {
         public SelectedIndexChangedEventArgs(int oldValue, int newValue)
         {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using log4net;
@@ -10,29 +9,33 @@ using SixNations.Desktop.Models;
 
 namespace SixNations.Desktop.ViewModels
 {
-    public class RequirementViewModel : ViewModelBase
+    // [SuppressMessage("Await.Warning", "CS4014:Await.Warning", Justification = "LoadAsync() runs in the ctor only at design time. [Used a discard instead]")]
+    public class RequirementViewModel : ViewModelBase, IAsyncViewModel
     {
-        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(
+            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IRequirementDataService _requirementDataService;
 
         public RequirementViewModel(IRequirementDataService requirementDataService)
         {
             _requirementDataService = requirementDataService;
-            // TODO Find a better way to do an async load or supress the warning
-            Load();
+            if (IsInDesignMode)
+            {
+                _ = LoadAsync();
+            }
         }
 
-        private async Task Load()
+        public async Task LoadAsync()
         {
             IEnumerable<Requirement> data = null;
             try
             {
-                data = await _requirementDataService.GetModelDataAsync();
+                data = await _requirementDataService.GetModelDataAsync(null, null);
             }
             catch (Exception ex)
             {
                 Log.Error(ex.Message);
-                // TODO Alert the UI of the error
+                throw;
             }
             if (data != null)
             {
