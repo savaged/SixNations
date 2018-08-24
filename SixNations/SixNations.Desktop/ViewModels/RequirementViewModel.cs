@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using log4net;
+using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
 
@@ -19,6 +20,7 @@ namespace SixNations.Desktop.ViewModels
         public RequirementViewModel(IRequirementDataService requirementDataService)
         {
             _requirementDataService = requirementDataService;
+            Index = new ObservableCollection<Requirement>();
             if (IsInDesignMode)
             {
                 _ = LoadAsync();
@@ -28,25 +30,33 @@ namespace SixNations.Desktop.ViewModels
         public async Task LoadAsync()
         {
             IEnumerable<Requirement> data = null;
-            try
+            if (User.Current.IsLoggedIn)
             {
-                data = await _requirementDataService.GetModelDataAsync(null, null);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.Message);
-                throw;
+                try
+                {
+                    data = await _requirementDataService.GetModelDataAsync(
+                        User.Current.AuthToken, FeedbackActions.ReactToException);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message);
+                    throw;
+                }
             }
             if (data != null)
             {
-                Index = new ObservableCollection<Requirement>(data);
+                Index.Clear();
+                foreach (var item in data)
+                {
+                    Index.Add(item);
+                }
             }
             else
             {
-                Index = new ObservableCollection<Requirement>();
+                Index.Clear();
             }
         }
 
-        public ObservableCollection<Requirement> Index { get; private set; }
+        public ObservableCollection<Requirement> Index { get; }
     }
 }

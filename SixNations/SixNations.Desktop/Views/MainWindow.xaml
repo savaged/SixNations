@@ -86,15 +86,13 @@
                         </mah:HamburgerMenuGlyphItem.Tag>
                     </mah:HamburgerMenuGlyphItem>
 
-                    <mah:HamburgerMenuGlyphItem Glyph="&#xE7BC;" Label="Requirement"
-                                                IsEnabled="{Binding DataContext.IsLoggedIn, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                    <mah:HamburgerMenuGlyphItem Glyph="&#xE7BC;" Label="Requirement">
                         <mah:HamburgerMenuGlyphItem.Tag>
                             <controls:Requirement />
                         </mah:HamburgerMenuGlyphItem.Tag>
                     </mah:HamburgerMenuGlyphItem>
 
-                    <mah:HamburgerMenuGlyphItem Glyph="&#xE95D;" Label="Wall"
-                                                IsEnabled="{Binding DataContext.IsLoggedIn, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                    <mah:HamburgerMenuGlyphItem Glyph="&#xE95D;" Label="Wall">
                         <mah:HamburgerMenuGlyphItem.Tag>
                             <controls:Wall />
                         </mah:HamburgerMenuGlyphItem.Tag>

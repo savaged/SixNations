@@ -1,24 +1,17 @@
 ﻿using log4net;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Reflection;
 using System.Windows;
-using System.ComponentModel;
 using SixNations.Desktop.ViewModels;
 using SixNations.Desktop.Views;
 using CommonServiceLocator;
-using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Threading;
 
 namespace SixNations.Desktop
 {
     public partial class App : Application
     {
-        private static readonly ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private static MainWindow app;
 
         private void Application_Startup(object sender, StartupEventArgs e)
@@ -28,6 +21,8 @@ namespace SixNations.Desktop
             // For catching Global uncaught exception
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += new UnhandledExceptionEventHandler(UnhandledExceptionOccured);
+
+            DispatcherHelper.Initialize();
 
             app = new MainWindow();
             var context = ServiceLocator.Current.GetInstance<MainViewModel>();

@@ -33,16 +33,15 @@ namespace SixNations.Desktop.Views
             }
             if (selected != null)
             {
-                HamburgerNav.Content = ((HamburgerMenuItem)selected).Tag;
+                HamburgerNav.Content = ((HamburgerMenuItem)selected);
+                HamburgerNav.IsPaneOpen = false;
             }
         }
 
         private void HamburgerNav_ItemClick(object sender, ItemClickEventArgs e)
         {
-            // set the content
-            this.HamburgerNav.Content = e.ClickedItem;
-            // close the pane
-            this.HamburgerNav.IsPaneOpen = false;
+            HamburgerNav.Content = e.ClickedItem;
+            HamburgerNav.IsPaneOpen = false;
         }
 
         private void OnClosing(object sender, CancelEventArgs e)

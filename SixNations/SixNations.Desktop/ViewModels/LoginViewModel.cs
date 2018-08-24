@@ -5,6 +5,8 @@ using GalaSoft.MvvmLight.Command;
 using SixNations.Desktop.Services;
 using SixNations.Desktop.Messages;
 using System.Windows.Controls;
+using SixNations.Desktop.Exceptions;
+using SixNations.Desktop.Helpers;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -63,12 +65,19 @@ namespace SixNations.Desktop.ViewModels
             {
                 throw new ArgumentException("Expected to have a password set!");
             }
-            var token = await new AuthTokenService().GetTokenAsync(Email, pb.Password);
-            if (string.IsNullOrEmpty(token))
+            string token = null;
+            try
             {
-                throw new Exception("Expected a valid token!");
+                token = await new AuthTokenService().GetTokenAsync(Email, pb.Password);
             }
-            MessengerInstance.Send(new AuthenticatedMessage(token));
+            catch (AuthServiceException ex)
+            {
+                FeedbackActions.ReactToException(ex);
+            }
+            if (!string.IsNullOrEmpty(token))
+            {
+                MessengerInstance.Send(new AuthenticatedMessage(token));
+            }
         }
     }
 }
