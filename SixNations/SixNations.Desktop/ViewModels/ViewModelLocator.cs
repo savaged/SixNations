@@ -24,10 +24,12 @@ namespace SixNations.Desktop.ViewModels
             if (ViewModelBase.IsInDesignModeStatic)
             {
                 SimpleIoc.Default.Register<IDataService<Requirement>, DesignRequirementDataService>();
+                SimpleIoc.Default.Register<IDataService<Lookup>, DesignLookupDataService>();
             }
             else
             {
                 SimpleIoc.Default.Register<IDataService<Requirement>, RequirementDataService>();
+                SimpleIoc.Default.Register<IDataService<Lookup>, LookupDataService>();
             }
             if (!SimpleIoc.Default.IsRegistered<INavigationService>())
             {
