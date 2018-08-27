@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using SixNations.Desktop.Interfaces;
+using SixNations.Desktop.Models;
 using SixNations.Desktop.Services;
 
 namespace SixNations.Desktop.ViewModels
@@ -22,11 +23,11 @@ namespace SixNations.Desktop.ViewModels
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                SimpleIoc.Default.Register<IRequirementDataService, DesignRequirementDataService>();
+                SimpleIoc.Default.Register<IDataService<Requirement>, DesignRequirementDataService>();
             }
             else
             {
-                SimpleIoc.Default.Register<IRequirementDataService, RequirementDataService>();
+                SimpleIoc.Default.Register<IDataService<Requirement>, RequirementDataService>();
             }
             if (!SimpleIoc.Default.IsRegistered<INavigationService>())
             {

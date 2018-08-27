@@ -8,7 +8,7 @@ using SixNations.Desktop.Models;
 
 namespace SixNations.Desktop.Services
 {
-    public class RequirementDataService : IRequirementDataService
+    public class RequirementDataService : IHttpDataService<Requirement>
     {
         public async Task<IEnumerable<Requirement>> GetModelDataAsync(
             string authToken, Action<Exception> exceptionHandler)

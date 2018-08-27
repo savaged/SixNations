@@ -2,7 +2,7 @@
 
 namespace SixNations.Desktop.Interfaces
 {
-    public interface IHttpDataServiceModel
+    public interface IHttpDataServiceModel : IDataServiceModel
     {
         void Initialise(DataTransferObject dto);
 

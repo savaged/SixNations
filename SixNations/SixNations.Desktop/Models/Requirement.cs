@@ -50,11 +50,5 @@ namespace SixNations.Desktop.Models
             get => _status;
             set => Set(ref _status, value);
         }
-
-        public string EstimationName { get; set; }
-
-        public string StatusName { get; set; }
-
-        public string PriorityName { get; set; }
     }
 }

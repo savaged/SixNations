@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SixNations.Desktop.Models;
 
 namespace SixNations.Desktop.Interfaces
 {
-    public interface IRequirementDataService
+    public interface IDataService<T> where T : IDataServiceModel
     {
-        Task<IEnumerable<Requirement>> GetModelDataAsync(
+        
+
+        Task<IEnumerable<T>> GetModelDataAsync(
             string authToken, Action<Exception> exceptionHandler);
     }
 }

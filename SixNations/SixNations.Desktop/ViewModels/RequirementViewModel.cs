@@ -16,12 +16,18 @@ namespace SixNations.Desktop.ViewModels
     {
         private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly IRequirementDataService _requirementDataService;
+
+        private readonly IDataService<Requirement> _requirementDataService;
+        private readonly IDataService<Lookup> _lookupDataService;
         private Requirement _selectedItem;
 
-        public RequirementViewModel(IRequirementDataService requirementDataService)
+        public RequirementViewModel(
+            IDataService<Requirement> requirementDataService,
+            IDataService<Lookup> lookupService)
         {
             _requirementDataService = requirementDataService;
+            _lookupDataService = lookupService;
+
             Index = new ObservableCollection<Requirement>();
             if (IsInDesignMode)
             {
@@ -31,6 +37,8 @@ namespace SixNations.Desktop.ViewModels
 
         public async Task LoadAsync()
         {
+            await LoadLookupAsync();
+
             IEnumerable<Requirement> data = null;
             if (IsInDesignMode)
             {
@@ -64,6 +72,19 @@ namespace SixNations.Desktop.ViewModels
             }
         }
 
+        private async Task LoadLookupAsync()
+        {
+            if (IsInDesignMode)
+            {
+                var lookups = await _lookupDataService.GetModelDataAsync(
+                    User.Current.AuthToken, FeedbackActions.ReactToException);
+
+                EstimationLookup = lookups.First(l => l.Name == "Estimation");
+                PriorityLookup = lookups.First(l => l.Name == "Priority");
+                StatusLookup = lookups.First(l => l.Name == "Status");
+            }
+        }
+
         public ObservableCollection<Requirement> Index { get; }
 
         public Requirement SelectedItem
@@ -71,5 +92,11 @@ namespace SixNations.Desktop.ViewModels
             get => _selectedItem;
             set => Set(ref _selectedItem, value);
         }
+
+        public Lookup EstimationLookup { get; private set; }
+
+        public Lookup PriorityLookup { get; private set; }
+
+        public Lookup StatusLookup { get; private set; }
     }
 }
