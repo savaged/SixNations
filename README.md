@@ -1,8 +1,26 @@
 # SixNations
-Requirements management loosely based on SCRUM
+Requirements management loosely based on SCRUM.
 
 SixNations, is designed as lean tooling for an Agile development 
 team.
+
+It is a work-in-progress but should compile after a "Restore NuGet Packages" and
+One must add a file in `Services` named `AuthTokenService.partial.cs` with the following contents:
+
+```using System;
+
+namespace SixNations.Desktop.Services
+{
+    partial class AuthTokenService
+    {
+        private const string ClientSecret = "your token here";
+    }
+}
+```
+
+Don't forget to add it to your .gitignore file, otherwise the world will know your secret!
+
+---
 
 Copyright (c) 2018 David Savage.
 Please see the contents of the file 'COPYING'.
