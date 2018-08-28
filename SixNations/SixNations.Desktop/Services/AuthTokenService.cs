@@ -9,10 +9,11 @@ using Newtonsoft.Json;
 using SixNations.Desktop.Exceptions;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Facade;
+using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.Services
 {
-    partial class AuthTokenService
+    partial class AuthTokenService : IAuthTokenService
     {
         private readonly string url;
 

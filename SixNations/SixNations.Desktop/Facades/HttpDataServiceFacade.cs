@@ -12,7 +12,7 @@ using SixNations.Desktop.Exceptions;
 
 namespace SixNations.Desktop.Facade
 {
-    static class HttpDataServiceFacade
+    public class HttpDataServiceFacade : IHttpDataServiceFacade
     {
         private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -32,12 +32,12 @@ namespace SixNations.Desktop.Facade
         private const string DefaultRequestHeaderName2 = "Authorization";
         private const string DefaultRequestHeaderValue2 = "Bearer ";
 
-        public static async Task<ResponseRootObject> HttpRequestAsync(string uri, string token)
+        public async Task<ResponseRootObject> HttpRequestAsync(string uri, string token)
         {
             return await HttpRequestAsync(uri, token, HttpMethods.Get, null);
         }
         
-        public static async Task<ResponseRootObject> HttpRequestAsync(
+        public async Task<ResponseRootObject> HttpRequestAsync(
             string uri, string token, HttpMethods httpMethod, IDictionary<string, object> data)
         {
             var rawResponse = await HttpRequestRawResponseAsync(uri, token, httpMethod, data);

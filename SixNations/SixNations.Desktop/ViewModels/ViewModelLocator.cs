@@ -2,6 +2,7 @@ using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
+using SixNations.Desktop.Facade;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Services;
@@ -30,6 +31,40 @@ namespace SixNations.Desktop.ViewModels
             {
                 SimpleIoc.Default.Register<IDataService<Requirement>, RequirementDataService>();
                 SimpleIoc.Default.Register<IDataService<Lookup>, LookupDataService>();
+            }
+            if (!SimpleIoc.Default.IsRegistered<IHttpDataServiceFacade>())
+            {
+                if (Constants.Props.ApiBaseURL == "Mocked")
+                {
+                    SimpleIoc.Default.Register<IHttpDataServiceFacade>(() =>
+                    {
+                        return new MockedHttpDataServiceFacade();
+                    });
+                }
+                else
+                {
+                    SimpleIoc.Default.Register<IHttpDataServiceFacade>(() =>
+                    {
+                        return new HttpDataServiceFacade();
+                    });
+                }
+            }
+            if (!SimpleIoc.Default.IsRegistered<IAuthTokenService>())
+            {
+                if (Constants.Props.ApiBaseURL == "Mocked")
+                {
+                    SimpleIoc.Default.Register<IAuthTokenService>(() =>
+                    {
+                        return new MockedAuthTokenService();
+                    });
+                }
+                else
+                {
+                    SimpleIoc.Default.Register<IAuthTokenService>(() =>
+                    {
+                        return new AuthTokenService();
+                    });
+                }
             }
             if (!SimpleIoc.Default.IsRegistered<INavigationService>())
             {

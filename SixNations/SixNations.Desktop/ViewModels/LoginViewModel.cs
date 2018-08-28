@@ -2,11 +2,12 @@
 using GalaSoft.MvvmLight;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using SixNations.Desktop.Services;
+using CommonServiceLocator;
 using SixNations.Desktop.Messages;
 using System.Windows.Controls;
 using SixNations.Desktop.Exceptions;
 using SixNations.Desktop.Helpers;
+using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -63,7 +64,8 @@ namespace SixNations.Desktop.ViewModels
             string token = null;
             try
             {
-                token = await new AuthTokenService().GetTokenAsync(Email, pb.Password);
+                token = await ServiceLocator.Current.GetInstance<IAuthTokenService>()
+                    .GetTokenAsync(Email, pb.Password);
             }
             catch (AuthServiceException ex)
             {
