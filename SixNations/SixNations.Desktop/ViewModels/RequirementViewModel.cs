@@ -24,13 +24,18 @@ namespace SixNations.Desktop.ViewModels
         private Lookup _estimationLookup;
         private Lookup _priorityLookup;
         private Lookup _statusLookup;
+        private string _storyFilter;
 
         public RequirementViewModel(
             IDataService<Requirement> requirementDataService,
             IDataService<Lookup> lookupService)
         {
+            _storyFilter = string.Empty;
+
             _requirementDataService = requirementDataService;
             _lookupDataService = lookupService;
+
+            MessengerInstance.Register<StoryFilterMessage>(this, OnFindStory);
 
             Index = new ObservableCollection<Requirement>();
             if (IsInDesignMode)
@@ -98,6 +103,12 @@ namespace SixNations.Desktop.ViewModels
 
         public ObservableCollection<Requirement> Index { get; }
 
+        public string StoryFilter
+        {
+            get => _storyFilter;
+            set => Set(ref _storyFilter, value);
+        }
+
         public Requirement SelectedItem
         {
             get => _selectedItem;
@@ -120,6 +131,11 @@ namespace SixNations.Desktop.ViewModels
         {
             get => _statusLookup;
             private set => Set(ref _statusLookup, value);
+        }
+
+        private void OnFindStory(StoryFilterMessage m)
+        {
+            StoryFilter = m.Filter;
         }
     }
 }

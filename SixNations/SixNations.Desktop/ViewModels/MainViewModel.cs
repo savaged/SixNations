@@ -26,9 +26,10 @@ namespace SixNations.Desktop.ViewModels
 
             DialogService = dialogService;
 
+            StoryFilterCmd = new RelayCommand(OnStoryFilter, CanExecuteStoryFilter);
+            ClearStoryFilterCmd = new RelayCommand(OnClearStoryFilter, CanExecuteStoryFilter);
             ExitCmd = new RelayCommand(OnExit);
-            ShowAboutDialogCmd = new RelayCommand(OnShowAboutDialog);
-
+            
             MessengerInstance.Register<AuthenticatedMessage>(this, OnAuthenticated);
             MessengerInstance.Register<BusyMessage>(this, (m) => IsBusy = m.IsBusy);
         }
@@ -39,7 +40,11 @@ namespace SixNations.Desktop.ViewModels
 
         public ICommand ExitCmd { get; }
 
-        public ICommand ShowAboutDialogCmd { get; }
+        public ICommand StoryFilterCmd { get; }
+
+        public ICommand ClearStoryFilterCmd { get; }
+
+        public bool CanExecuteStoryFilter => !IsBusy && IsLoggedIn;
 
         public bool IsBusy
         {
@@ -66,10 +71,15 @@ namespace SixNations.Desktop.ViewModels
             IsBusy = false;
         }
 
-        private void OnShowAboutDialog()
+        private void OnStoryFilter()
         {
-            var vm = ServiceLocator.Current.GetInstance<AboutDialogViewModel>();
+            var vm = ServiceLocator.Current.GetInstance<FindStoryDialogViewModel>();
             DialogService.ShowDialog(this, vm);
+        }
+
+        private void OnClearStoryFilter()
+        {
+            MessengerInstance.Send(new StoryFilterMessage(string.Empty));
         }
 
         private void OnExit()

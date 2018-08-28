@@ -41,6 +41,11 @@
             </Grid>
         </DataTemplate>
     </Window.Resources>
+    
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+F" Command="{Binding StoryFilterCmd}"/>
+        <KeyBinding Gesture="Shift+Ctrl+F" Command="{Binding ClearStoryFilterCmd}"/>
+    </Window.InputBindings>
 
     <xctk:BusyIndicator IsBusy="{Binding IsBusy}">
     <Grid>
@@ -90,7 +95,8 @@
 
                     <mah:HamburgerMenuGlyphItem Glyph="&#xE7BC;" Label="Requirement">
                         <mah:HamburgerMenuGlyphItem.Tag>
-                            <controls:Requirement />
+                                <controls:Requirement 
+                                    ToolTip="Ctrl+F to filter stories and Shift+Ctrl+F to clear"/>
                         </mah:HamburgerMenuGlyphItem.Tag>
                     </mah:HamburgerMenuGlyphItem>
 

@@ -4,15 +4,13 @@ using System.Reflection;
 
 namespace SixNations.Desktop.ViewModels
 {
-    public class AboutDialogViewModel : ViewModelBase, IModalDialogViewModel
+    public class AboutViewModel : ViewModelBase
     {
-        public AboutDialogViewModel()
+        public AboutViewModel()
         {
             VersionText = $"Assure Desktop v{Assembly.GetEntryAssembly().GetName().Version}";
         }
 
         public string VersionText { get; }
-
-        public bool? DialogResult => true;
     }
 }

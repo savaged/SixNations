@@ -14,12 +14,9 @@ using System.Windows.Shapes;
 
 namespace SixNations.Desktop.Views
 {
-    /// <summary>
-    /// Interaction logic for About.xaml
-    /// </summary>
-    public partial class AboutDialog
+    public partial class FindStoryDialog
     {
-        public AboutDialog()
+        public FindStoryDialog()
         {
             InitializeComponent();
         }

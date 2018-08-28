@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding Source={StaticResource Locator}, Path=Login}">
     <Canvas>
-        <StackPanel Margin="100">
+        <StackPanel Margin="100" FocusManager.FocusedElement="{Binding ElementName=Password}">
             <WrapPanel Margin="10">
                 <Label Width="80" Content="Email"/>
                 <TextBox Width="300" Text="{Binding Email}"/>

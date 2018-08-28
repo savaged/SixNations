@@ -46,16 +46,15 @@ namespace SixNations.Desktop.ViewModels
                 });
             }
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<AboutDialogViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RequirementViewModel>();
             SimpleIoc.Default.Register<WallViewModel>();
-            SimpleIoc.Default.Register<SettingsViewModel>();
+            SimpleIoc.Default.Register<AboutViewModel>();
+            SimpleIoc.Default.Register<SettingsViewModel>();            
+            SimpleIoc.Default.Register<FindStoryDialogViewModel>();
         }
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
-
-        public AboutDialogViewModel About => ServiceLocator.Current.GetInstance<AboutDialogViewModel>();
 
         public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
 
@@ -63,7 +62,12 @@ namespace SixNations.Desktop.ViewModels
 
         public WallViewModel Wall => ServiceLocator.Current.GetInstance<WallViewModel>();
 
+        public AboutViewModel About => ServiceLocator.Current.GetInstance<AboutViewModel>();
+
         public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
+
+        public FindStoryDialogViewModel FindStoryDialog => 
+            ServiceLocator.Current.GetInstance<FindStoryDialogViewModel>();
 
         public static void Cleanup()
         {

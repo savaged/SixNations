@@ -125,7 +125,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AboutDialog.xaml">
+    <Page Include="Views\FindStoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -165,6 +165,7 @@
     <Compile Include="Interfaces\IDataService.cs" />
     <Compile Include="Interfaces\ISelectedIndexManager.cs" />
     <Compile Include="Interfaces\IShellViewModel.cs" />
+    <Compile Include="Messages\StoryFilterMessage.cs" />
     <Compile Include="Messages\BusyMessage.cs" />
     <Compile Include="Messages\AuthenticatedMessage.cs" />
     <Compile Include="Models\HttpDataServiceModelBase.cs" />
@@ -186,15 +187,16 @@
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\DesignRequirementDataService.cs" />
     <Compile Include="Services\RequirementDataService.cs" />
-    <Compile Include="ViewModels\AboutDialogViewModel.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\FindStoryDialogViewModel.cs" />
     <Compile Include="ViewModels\WallViewModel.cs" />
     <Compile Include="ViewModels\RequirementViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="Views\AboutDialog.xaml.cs">
-      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    <Compile Include="Views\FindStoryDialog.xaml.cs">
+      <DependentUpon>FindStoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Constants\HamburgerNavIndexEnums.cs" />
