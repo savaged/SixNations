@@ -5,7 +5,7 @@ SixNations, is designed as lean tooling for an Agile development
 team.
 
 It is a work-in-progress but should compile after a "Restore NuGet Packages" and
-One must add a file in `Services` named `AuthTokenService.partial.cs` with the following contents:
+one must add a file in `Services` named `AuthTokenService.partial.cs` with the following contents:
 
 ```using System;
 
