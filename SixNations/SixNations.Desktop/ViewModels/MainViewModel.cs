@@ -14,6 +14,7 @@ namespace SixNations.Desktop.ViewModels
     public class MainViewModel : ViewModelBase, IShellViewModel
     {
         private readonly INavigationService _navigationService;
+        private bool _isBusy;
 
         public MainViewModel(
             INavigationService navigationService, 
@@ -29,6 +30,7 @@ namespace SixNations.Desktop.ViewModels
             ShowAboutDialogCmd = new RelayCommand(OnShowAboutDialog);
 
             MessengerInstance.Register<AuthenticatedMessage>(this, OnAuthenticated);
+            MessengerInstance.Register<BusyMessage>(this, (m) => IsBusy = m.IsBusy);
         }
 
         public ISelectedIndexManager SelectedIndexManager { get; }
@@ -39,14 +41,29 @@ namespace SixNations.Desktop.ViewModels
 
         public ICommand ShowAboutDialogCmd { get; }
 
+        public bool IsBusy
+        {
+            get => _isBusy;
+            private set
+            {
+                if (_isBusy != value)
+                {
+                    _isBusy = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public bool IsLoggedIn => User.Current.IsLoggedIn;
 
         private void OnAuthenticated(AuthenticatedMessage m)
         {
+            IsBusy = true;
             User.Current.Initialise(m.Token);
-            RaisePropertyChanged(() => IsLoggedIn);
+            RaisePropertyChanged(nameof(IsLoggedIn));
             _navigationService.NavigateTo(
                 HamburgerNavItemsIndex.Requirements.ToString());
+            IsBusy = false;
         }
 
         private void OnShowAboutDialog()

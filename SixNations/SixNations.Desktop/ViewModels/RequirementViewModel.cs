@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight;
 using log4net;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
+using SixNations.Desktop.Messages;
 using SixNations.Desktop.Models;
 
 namespace SixNations.Desktop.ViewModels
@@ -40,6 +41,8 @@ namespace SixNations.Desktop.ViewModels
 
         public async Task LoadAsync()
         {
+            MessengerInstance.Send(new BusyMessage(true));
+
             await LoadLookupAsync();
 
             IEnumerable<Requirement> data = null;
@@ -73,6 +76,7 @@ namespace SixNations.Desktop.ViewModels
             {
                 Index.Clear();
             }
+            MessengerInstance.Send(new BusyMessage(false));
         }
 
         private async Task LoadLookupAsync()

@@ -165,6 +165,7 @@
     <Compile Include="Interfaces\IDataService.cs" />
     <Compile Include="Interfaces\ISelectedIndexManager.cs" />
     <Compile Include="Interfaces\IShellViewModel.cs" />
+    <Compile Include="Messages\BusyMessage.cs" />
     <Compile Include="Messages\AuthenticatedMessage.cs" />
     <Compile Include="Models\HttpDataServiceModelBase.cs" />
     <Compile Include="Models\Lookup.cs" />
