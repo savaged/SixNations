@@ -78,5 +78,34 @@ namespace SixNations.Desktop.Services
 
             return Index();
         }
+
+        public Task<Requirement> CreateModelAsync(string authToken, Action<Exception> exceptionHandler)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task<Requirement> StoreModelAsync(
+            string authToken, Action<Exception> exceptionHandler, Requirement model)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task<Requirement> UpdateModelAsync(
+            string authToken, Action<Exception> exceptionHandler, Requirement model)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task<Requirement> EditModelAsync(
+            string authToken, Action<Exception> exceptionHandler, Requirement model)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task<bool> DeleteModelAsync(
+            string authToken, Action<Exception> exceptionHandler, Requirement model)
+        {
+            throw new NotSupportedException();
+        }
     }
 }

@@ -82,5 +82,34 @@ namespace SixNations.Desktop.Services
             }
             return _lookup;
         }
+
+        public Task<Lookup> CreateModelAsync(string authToken, Action<Exception> exceptionHandler)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task<Lookup> StoreModelAsync(
+            string authToken, Action<Exception> exceptionHandler, Lookup model)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task<Lookup> UpdateModelAsync(
+            string authToken, Action<Exception> exceptionHandler, Lookup model)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task<Lookup> EditModelAsync(
+            string authToken, Action<Exception> exceptionHandler, Lookup model)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task<bool> DeleteModelAsync(
+            string authToken, Action<Exception> exceptionHandler, Lookup model)
+        {
+            throw new NotSupportedException();
+        }
     }
 }

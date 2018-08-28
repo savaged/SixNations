@@ -1,4 +1,5 @@
 ﻿using SixNations.Desktop.Models;
+using System.Collections.Generic;
 
 namespace SixNations.Desktop.Interfaces
 {
@@ -9,5 +10,7 @@ namespace SixNations.Desktop.Interfaces
         string Error { get; set; }
 
         bool IsLockedForEditing { get; }
+
+        IDictionary<string, object> Data { get; }
     }
 }

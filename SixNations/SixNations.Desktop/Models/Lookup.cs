@@ -81,5 +81,7 @@ namespace SixNations.Desktop.Models
         public bool IsNew => false;
 
         public bool IsReadOnly => true;
+
+        public IDictionary<string, object> Data => throw new NotSupportedException();
     }
 }

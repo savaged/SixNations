@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using CommonServiceLocator;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using log4net;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
@@ -35,6 +38,11 @@ namespace SixNations.Desktop.ViewModels
             _requirementDataService = requirementDataService;
             _lookupDataService = lookupService;
 
+            NewCmd = new RelayCommand(OnNew, CanExecute);
+            EditCmd = new RelayCommand(OnEdit, CanExecuteSelectedItemChange);
+            DeleteCmd = new RelayCommand(OnDelete, CanExecuteSelectedItemChange);
+            SaveCmd = new RelayCommand(OnSave, CanExecuteSelectedItemChange);
+
             MessengerInstance.Register<StoryFilterMessage>(this, OnFindStory);
 
             Index = new ObservableCollection<Requirement>();
@@ -50,6 +58,30 @@ namespace SixNations.Desktop.ViewModels
 
             await LoadLookupAsync();
 
+            await LoadIndexAsync();
+
+            MessengerInstance.Send(new BusyMessage(false));
+        }
+
+        private async Task LoadLookupAsync()
+        {
+            IEnumerable<Lookup> lookups = null;
+            if (IsInDesignMode)
+            {
+                lookups = await _lookupDataService.GetModelDataAsync(null, null);
+            }
+            else
+            {
+                lookups = await _lookupDataService.GetModelDataAsync(
+                        User.Current.AuthToken, FeedbackActions.ReactToException);
+            }
+            EstimationLookup = lookups.First(l => l.Name == "RequirementEstimation");
+            PriorityLookup = lookups.First(l => l.Name == "RequirementPriority");
+            StatusLookup = lookups.First(l => l.Name == "RequirementStatus");
+        }
+
+        private async Task LoadIndexAsync()
+        {
             IEnumerable<Requirement> data = null;
             if (IsInDesignMode)
             {
@@ -81,33 +113,25 @@ namespace SixNations.Desktop.ViewModels
             {
                 Index.Clear();
             }
-            MessengerInstance.Send(new BusyMessage(false));
         }
 
-        private async Task LoadLookupAsync()
-        {
-            IEnumerable<Lookup> lookups = null;
-            if (IsInDesignMode)
-            {
-                lookups = await _lookupDataService.GetModelDataAsync(null, null);
-            }
-            else
-            {
-                lookups = await _lookupDataService.GetModelDataAsync(
-                        User.Current.AuthToken, FeedbackActions.ReactToException);
-            }
-            EstimationLookup = lookups.First(l => l.Name == "RequirementEstimation");
-            PriorityLookup = lookups.First(l => l.Name == "RequirementPriority");
-            StatusLookup = lookups.First(l => l.Name == "RequirementStatus");
-        }
+        public ICommand NewCmd { get; }
+
+        public ICommand EditCmd { get; }
+
+        public ICommand DeleteCmd { get; }
+
+        public ICommand SaveCmd { get; }
+
+        // TODO: Add permissions check on current user
+        public bool CanExecute => !ServiceLocator.Current.GetInstance<MainViewModel>().IsBusy;
+
+        // TODO: Add permissions check on current user
+        public bool CanExecuteSelectedItemChange => CanExecute && SelectedItem != null;
 
         public ObservableCollection<Requirement> Index { get; }
 
-        public string StoryFilter
-        {
-            get => _storyFilter;
-            set => Set(ref _storyFilter, value);
-        }
+        public bool IsSelectedItemEditable => SelectedItem != null && SelectedItem.IsLockedForEditing;
 
         public Requirement SelectedItem
         {
@@ -133,9 +157,112 @@ namespace SixNations.Desktop.ViewModels
             private set => Set(ref _statusLookup, value);
         }
 
+        public string StoryFilter
+        {
+            get => _storyFilter;
+            set => Set(ref _storyFilter, value);
+        }
+
         private void OnFindStory(StoryFilterMessage m)
         {
             StoryFilter = m.Filter;
+        }
+
+        private async void OnNew()
+        {
+            MessengerInstance.Send(new BusyMessage(true));
+            try
+            {
+                SelectedItem = await _requirementDataService.CreateModelAsync(
+                    User.Current.AuthToken, FeedbackActions.ReactToException);
+                RaisePropertyChanged(nameof(IsSelectedItemEditable));
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Unexpected Error Creating! {ex}");
+                throw;
+            }
+            finally
+            {
+                MessengerInstance.Send(new BusyMessage(false));
+            }            
+        }
+
+        private async void OnEdit()
+        {
+            MessengerInstance.Send(new BusyMessage(true));
+            try
+            {
+                SelectedItem = await _requirementDataService.EditModelAsync(
+                    User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
+                RaisePropertyChanged(nameof(IsSelectedItemEditable));
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Unexpected Error Saving! {ex}");
+                throw;
+            }
+            finally
+            {
+                MessengerInstance.Send(new BusyMessage(false));
+            }
+        }
+
+        private async void OnDelete()
+        {
+            MessengerInstance.Send(new BusyMessage(true));
+            bool result;
+            try
+            {
+                result = await _requirementDataService.DeleteModelAsync(
+                    User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
+                RaisePropertyChanged(nameof(IsSelectedItemEditable));
+                if (result)
+                {
+                    await LoadIndexAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Unexpected Error Deleting! {ex}");
+                throw;
+            }
+            finally
+            {
+                MessengerInstance.Send(new BusyMessage(false));
+            }
+        }
+
+        private async void OnSave()
+        {
+            MessengerInstance.Send(new BusyMessage(true));
+            try
+            {
+                if (SelectedItem.IsNew)
+                {
+                    SelectedItem = await _requirementDataService.StoreModelAsync(
+                        User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
+                }
+                else
+                {
+                    SelectedItem = await _requirementDataService.UpdateModelAsync(
+                        User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
+                }
+                RaisePropertyChanged(nameof(IsSelectedItemEditable));
+                if (SelectedItem != null)
+                {
+                    await LoadIndexAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Unexpected Error Saving! {ex}");
+                throw;
+            }
+            finally
+            {
+                MessengerInstance.Send(new BusyMessage(false));
+            }
         }
     }
 }

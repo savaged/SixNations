@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using GalaSoft.MvvmLight;
 using SixNations.Desktop.Helpers;
@@ -87,5 +88,41 @@ namespace SixNations.Desktop.Models
         public bool IsNew => Id < 1;
 
         public bool IsReadOnly => !IsLockedForEditing && !IsNew;
+
+        public IDictionary<string, object> Data
+        {
+            get
+            {
+                var data = new Dictionary<string, object>();
+                var props = GetType().GetProperties();
+                foreach (var p in props)
+                {
+                    if (p.Name == nameof(Data)) continue;
+
+                    // Transforms using attributes can be added here
+
+                    var value = p.GetValue(this);
+                    if (value is DateTime)
+                    {
+                        value = FilterAnyMinDate(value);
+                    }
+                    data.Add(p.Name, value);
+                }
+                return data;
+            }
+        }
+
+        private static object FilterAnyMinDate(object value)
+        {
+            if (value is DateTime dt)
+            {
+                if (dt == DateTime.MinValue)
+                {
+                    return null;
+                }
+            }
+            return value;
+        }
+
     }
 }
