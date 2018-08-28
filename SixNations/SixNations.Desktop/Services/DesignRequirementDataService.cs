@@ -11,7 +11,6 @@ namespace SixNations.Desktop.Services
     {
         private IEnumerable<Requirement> Index()
         {
-            // The following is order summary data
             var data = new ObservableCollection<Requirement>
             {
                 new Requirement
@@ -69,7 +68,6 @@ namespace SixNations.Desktop.Services
                     Release = ""
                 }
             };
-
             return data;
         }
 

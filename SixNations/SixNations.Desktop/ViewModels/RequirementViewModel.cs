@@ -20,6 +20,9 @@ namespace SixNations.Desktop.ViewModels
         private readonly IDataService<Requirement> _requirementDataService;
         private readonly IDataService<Lookup> _lookupDataService;
         private Requirement _selectedItem;
+        private Lookup _estimationLookup;
+        private Lookup _priorityLookup;
+        private Lookup _statusLookup;
 
         public RequirementViewModel(
             IDataService<Requirement> requirementDataService,
@@ -74,15 +77,19 @@ namespace SixNations.Desktop.ViewModels
 
         private async Task LoadLookupAsync()
         {
+            IEnumerable<Lookup> lookups = null;
             if (IsInDesignMode)
             {
-                var lookups = await _lookupDataService.GetModelDataAsync(
-                    User.Current.AuthToken, FeedbackActions.ReactToException);
-
-                EstimationLookup = lookups.First(l => l.Name == "Estimation");
-                PriorityLookup = lookups.First(l => l.Name == "Priority");
-                StatusLookup = lookups.First(l => l.Name == "Status");
+                lookups = await _lookupDataService.GetModelDataAsync(null, null);
             }
+            else
+            {
+                lookups = await _lookupDataService.GetModelDataAsync(
+                        User.Current.AuthToken, FeedbackActions.ReactToException);
+            }
+            EstimationLookup = lookups.First(l => l.Name == "RequirementEstimation");
+            PriorityLookup = lookups.First(l => l.Name == "RequirementPriority");
+            StatusLookup = lookups.First(l => l.Name == "RequirementStatus");
         }
 
         public ObservableCollection<Requirement> Index { get; }
@@ -93,10 +100,22 @@ namespace SixNations.Desktop.ViewModels
             set => Set(ref _selectedItem, value);
         }
 
-        public Lookup EstimationLookup { get; private set; }
+        public Lookup EstimationLookup
+        {
+            get => _estimationLookup;
+            private set => Set(ref _estimationLookup, value);
+        }
 
-        public Lookup PriorityLookup { get; private set; }
+        public Lookup PriorityLookup
+        {
+            get => _priorityLookup;
+            private set => Set(ref _priorityLookup, value);
+        }
 
-        public Lookup StatusLookup { get; private set; }
+        public Lookup StatusLookup
+        {
+            get => _statusLookup;
+            private set => Set(ref _statusLookup, value);
+        }
     }
 }

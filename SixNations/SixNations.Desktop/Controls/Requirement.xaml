@@ -49,28 +49,31 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0">Estimation</Label>
-                    <!--TextBox IsReadOnly="True" Grid.Column="1" Grid.Row="0" Text="{Binding SelectedItem.EstimationName}"/-->
-                    <ComboBox Grid.Column="1" Grid.Row="0" MaxHeight="30" 
+                    <Label Grid.Column="0" Grid.Row="0">Story</Label>
+                    <TextBox Grid.Column="1" Grid.Row="0" 
+                             MaxWidth="450" MinHeight="200"
+                             TextWrapping="Wrap"
+                             Text="{Binding SelectedItem.Story}"/>
+                    <Label Grid.Column="0" Grid.Row="1">Estimation</Label>
+                    <!--TextBox IsReadOnly="True" Grid.Column="1" Grid.Row="1" Text="{Binding SelectedItem.EstimationName}"/-->
+                    <ComboBox Grid.Column="1" Grid.Row="1" MaxHeight="30" 
                               ItemsSource="{Binding EstimationLookup}"
                               SelectedValuePath="Key" DisplayMemberPath="Value"
                               SelectedValue="{Binding SelectedItem.Estimation}"/>
-                    <Label Grid.Column="0" Grid.Row="1">Priority</Label>
-                    <!--TextBox IsReadOnly="True" Grid.Column="1" Grid.Row="1" Text="{Binding SelectedItem.PriorityName}"/-->
-                    <ComboBox Grid.Column="1" Grid.Row="1" MaxHeight="30" 
+                    <Label Grid.Column="0" Grid.Row="2">Priority</Label>
+                    <!--TextBox IsReadOnly="True" Grid.Column="1" Grid.Row="2" Text="{Binding SelectedItem.PriorityName}"/-->
+                    <ComboBox Grid.Column="1" Grid.Row="2" MaxHeight="30" 
                               ItemsSource="{Binding PriorityLookup}"
                               SelectedValuePath="Key" DisplayMemberPath="Value"
                               SelectedValue="{Binding SelectedItem.Priority}"/>
-                    <Label Grid.Column="0" Grid.Row="2">Status</Label>
-                    <!--TextBox IsReadOnly="True" Grid.Column="1" Grid.Row="2" Text="{Binding SelectedItem.StatusName}"/-->
-                    <ComboBox Grid.Column="1" Grid.Row="2" MaxHeight="30" 
+                    <Label Grid.Column="0" Grid.Row="3">Status</Label>
+                    <!--TextBox IsReadOnly="True" Grid.Column="1" Grid.Row="3" Text="{Binding SelectedItem.StatusName}"/-->
+                    <ComboBox Grid.Column="1" Grid.Row="3" MaxHeight="30" 
                               ItemsSource="{Binding StatusLookup}"
                               SelectedValuePath="Key" DisplayMemberPath="Value"
                               SelectedValue="{Binding SelectedItem.Status}"/>
-                    <Label Grid.Column="0" Grid.Row="3">Release</Label>
-                    <TextBox IsReadOnly="True" Grid.Column="1" Grid.Row="3" Text="{Binding SelectedItem.Release}"/>
-                    <Label Grid.Column="0" Grid.Row="4">Diagnostic</Label>
-                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding SelectedItem.Status}"/>
+                    <Label Grid.Column="0" Grid.Row="4">Release</Label>
+                    <TextBox IsReadOnly="True" Grid.Column="1" Grid.Row="4" Text="{Binding SelectedItem.Release}"/>
                 </Grid>
             </StackPanel>
         </WrapPanel>

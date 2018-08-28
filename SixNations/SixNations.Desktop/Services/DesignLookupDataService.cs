@@ -8,26 +8,9 @@ namespace SixNations.Desktop.Services
 {
     public class DesignLookupDataService : IHttpDataService<Lookup>
     {
-        private Lookup Show(string lookupName)
-        {
-            var dict = new Dictionary<int, string>();
-            switch (lookupName)
-            {
-                case "Estimation":
-                    GetEstimationLookup();
-                    break;
-                case "Priority":
-                    GetPriorityLookup();
-                    break;
-                case "Status":
-                    GetStatusLookup();
-                    break;
-            }
-            var data = new Lookup(dict);
-            return data;
-        }
+        private IEnumerable<Lookup> _lookup;
 
-        private IDictionary<int, string> GetEstimationLookup()
+        private Lookup GetEstimationLookup()
         {
             var dict = new Dictionary<int, string>
             {
@@ -38,10 +21,10 @@ namespace SixNations.Desktop.Services
                 { 8, "XL" },
                 { 13, "XXL" },
             };
-            return dict;
+            return new Lookup(dict);
         }
 
-        private IDictionary<int, string> GetPriorityLookup()
+        private Lookup GetPriorityLookup()
         {
             var dict = new Dictionary<int, string>
             {
@@ -50,10 +33,10 @@ namespace SixNations.Desktop.Services
                 { 3, "Could" },
                 { 4, "Wont" },
             };
-            return dict;
+            return new Lookup(dict);
         }
 
-        private IDictionary<int, string> GetStatusLookup()
+        private Lookup GetStatusLookup()
         {
             var dict = new Dictionary<int, string>
             {
@@ -62,7 +45,25 @@ namespace SixNations.Desktop.Services
                 { 3, "Test" },
                 { 4, "Done" },
             };
-            return dict;
+            return new Lookup(dict);
+        }
+
+        private Lookup GetLookup(string lookupName)
+        {
+            Lookup lookup = null;
+            switch (lookupName.ToLower())
+            {
+                case "requirementestimation":
+                    lookup = GetEstimationLookup();
+                    break;
+                case "requirementpriority":
+                    lookup = GetPriorityLookup();
+                    break;
+                case "requirementstatus":
+                    lookup = GetStatusLookup();
+                    break;
+            }
+            return lookup;
         }
 
         public async Task<IEnumerable<Lookup>> GetModelDataAsync(
@@ -70,13 +71,16 @@ namespace SixNations.Desktop.Services
         {
             await Task.CompletedTask;
 
-            var col = new List<Lookup>
+            if (_lookup == null)
             {
-                Show("Estimation"),
-                Show("Priority"),
-                Show("Status")
-            };
-            return col;
+                _lookup = new List<Lookup>
+                {
+                    GetLookup("RequirementEstimation"),
+                    GetLookup("RequirementPriority"),
+                    GetLookup("RequirementStatus")
+                };
+            }
+            return _lookup;
         }
     }
 }

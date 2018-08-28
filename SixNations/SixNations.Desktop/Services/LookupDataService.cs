@@ -3,22 +3,34 @@ using System.Collections.Generic;
 using SixNations.Desktop.Interfaces;
 using System.Threading.Tasks;
 using SixNations.Desktop.Models;
+using SixNations.Desktop.Facade;
 
 namespace SixNations.Desktop.Services
 {
     public class LookupDataService : IHttpDataService<Lookup>
     {
-        private readonly string _lookupName;
+        private IEnumerable<Lookup> _lookup;
 
-        public LookupDataService(string lookupName)
+        private async Task<Lookup> GetLookup(string lookupName)
         {
-            _lookupName = lookupName;
+            var response = await HttpDataServiceFacade.HttpRequestAsync(
+                lookupName.ToLower(), User.Current.AuthToken);
+            return new Lookup(lookupName, response);
         }
 
-        public Task<IEnumerable<Lookup>> GetModelDataAsync(
+        public async Task<IEnumerable<Lookup>> GetModelDataAsync(
             string authToken, Action<Exception> exceptionHandler)
         {
-            throw new NotImplementedException();
+            if (_lookup == null)
+            {
+                _lookup = new List<Lookup>
+                {
+                    await GetLookup("RequirementEstimation"),
+                    await GetLookup("RequirementPriority"),
+                    await GetLookup("RequirementStatus")
+                };
+            }
+            return _lookup;
         }
     }
 }
