@@ -18,7 +18,7 @@ namespace SixNations.Desktop.Services
 }
 ```
 
-Don't forget to add it to your .gitignore file, otherwise the world will know your secret!
+Don't forget to add it to your `.gitignore` file, otherwise the world will know your secret!
 
 ---
 
