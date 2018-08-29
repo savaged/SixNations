@@ -22,8 +22,8 @@ namespace SixNations.Desktop.Services
 }
 ```
 
-Don't forget to add it to your `.gitignore` file, otherwise the 
-world will know your secret!
+The `.gitignore` file under this repository includes the extension
+`.partial.cs`, otherwise the world would know your secret!
 
 And the second partial in `Constants` named `Props.partial.cs`
 with the following contents:
