@@ -56,6 +56,8 @@ namespace SixNations.Desktop.ViewModels
 
             await LoadIndexAsync();
 
+            SelectedItem = Index.First();
+
             MessengerInstance.Send(new BusyMessage(false));
         }
 
@@ -93,7 +95,6 @@ namespace SixNations.Desktop.ViewModels
                 {
                     Index.Add(item);
                 }
-                SelectedItem = Index.First();
             }
             else
             {
@@ -206,6 +207,8 @@ namespace SixNations.Desktop.ViewModels
                 if (result)
                 {
                     await LoadIndexAsync();
+
+                    SelectedItem = Index.First();
                 }
             }
             catch (Exception ex)
@@ -224,20 +227,22 @@ namespace SixNations.Desktop.ViewModels
             MessengerInstance.Send(new BusyMessage(true));
             try
             {
+                Requirement updated;
                 if (SelectedItem.IsNew)
                 {
-                    SelectedItem = await _requirementDataService.StoreModelAsync(
+                    updated = await _requirementDataService.StoreModelAsync(
                         User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
                 }
                 else
                 {
-                    SelectedItem = await _requirementDataService.UpdateModelAsync(
+                    updated = await _requirementDataService.UpdateModelAsync(
                         User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
                 }
                 RaisePropertyChanged(nameof(IsSelectedItemEditable));
-                if (SelectedItem != null)
+                if (updated != null)
                 {
                     await LoadIndexAsync();
+                    SelectedItem = Index.FirstOrDefault(r => r.Id == updated.Id);
                 }
             }
             catch (Exception ex)

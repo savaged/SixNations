@@ -13,6 +13,10 @@ using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.Services
 {
+    /// <summary>
+    /// The ClientSecret property is added to a partial because this
+    /// should not be included in the source control repository.
+    /// </summary>
     partial class AuthTokenService : IAuthTokenService
     {
         private readonly string url;

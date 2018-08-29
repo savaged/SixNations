@@ -30,7 +30,8 @@
                       CanUserDeleteRows="False" CanUserAddRows="False"
                       AlternatingRowBackground="AliceBlue">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="320" Header="Story" Binding="{Binding Story}">
+                    <DataGridTextColumn Width="40" Header="ID" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Width="280" Header="Story" Binding="{Binding Story}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="TextWrapping" Value="Wrap" />

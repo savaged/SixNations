@@ -2,16 +2,17 @@
 
 namespace SixNations.Desktop.Constants
 {
-    static class Props
+    /// <summary>
+    /// The ApiBaseURL property is added to a partial that is
+    /// not kept in source control so that the individual 
+    /// developer setting does not have to change for all others.
+    /// </summary>
+    static partial class Props
     {
-        internal const string MOCKED = "Mocked/";
-#if DEBUG
         /// <summary>
-        /// Can use a Url or the word "Mocked/" for dummy services
+        /// This can be used against the ApiBaseURL property to 
+        /// switch to mocked data services.
         /// </summary>
-        internal static readonly string ApiBaseURL = MOCKED; // "http://homestead.test/";
-#else
-        internal static readonly string ApiBaseURL = "http://192.168.0.22/";
-#endif
+        internal const string MOCKED = "Mocked/";
     }
 }

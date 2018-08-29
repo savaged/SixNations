@@ -4,10 +4,12 @@ Requirements management loosely based on SCRUM.
 SixNations, is designed as lean tooling for an Agile development 
 team.
 
-It is designed to consume a RESTful data service but could be adapted to use something like Entity Framework.
+It is designed to consume a RESTful data service but could be 
+adapted to use something like Entity Framework.
 
-It is a work-in-progress but should compile after a "Restore NuGet Packages" and
-one must add a file in `Services` named `AuthTokenService.partial.cs` with the following contents:
+It is a work-in-progress but should compile after a "Restore NuGet
+Packages" and one must add a couple of files. The first in
+`Services` named `AuthTokenService.partial.cs` with the contents:
 
 ```using System;
 
@@ -20,7 +22,31 @@ namespace SixNations.Desktop.Services
 }
 ```
 
-Don't forget to add it to your `.gitignore` file, otherwise the world will know your secret!
+Don't forget to add it to your `.gitignore` file, otherwise the 
+world will know your secret!
+
+And the second partial in `Constants` named `Props.partial.cs`
+with the following contents:
+
+```
+namespace SixNations.Desktop.Constants
+{
+    static partial class Props
+    {
+#if DEBUG
+        /// <summary>
+        /// Can use a Url or the word "Mocked/" for dummy services
+        /// </summary>
+        internal static readonly string ApiBaseURL = MOCKED; // "http://homestead.test/";
+#else
+        internal static readonly string ApiBaseURL = "http://192.168.0.22/";
+#endif
+    }
+}
+```
+Or similar; one can change these 'developer settings' as much as
+desired and not effect other developers because the extension
+`.partial.cs` should be in the `.gitignore` file.
 
 ---
 
