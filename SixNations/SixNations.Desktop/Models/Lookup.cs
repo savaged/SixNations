@@ -6,9 +6,13 @@ namespace SixNations.Desktop.Models
 {
     public class Lookup : Dictionary<int, string>, IHttpDataServiceModel
     {
-        public Lookup(string lookupName, DataTransferObject[] data)
+        public Lookup(string lookupName)
         {
             Name = lookupName;
+        }
+
+        public Lookup(string lookupName, DataTransferObject[] data) : this(lookupName)
+        {
             if (data == null)
             {
                 throw new ArgumentNullException("Expected to recieve initialised data.");
@@ -22,17 +26,12 @@ namespace SixNations.Desktop.Models
         public Lookup(string lookupName, ResponseRootObject response) 
             : this(lookupName, response?.Data) { }
 
-        public Lookup()
-        {
-            Add(0, "Unknown");
-        }
-
-        public Lookup(string @default)
+        public Lookup(string lookupName, string @default) : this(lookupName)
         {
             Add(0, @default);
         }
 
-        public Lookup(int[] array)
+        public Lookup(string lookupName, int[] array) : this(lookupName)
         {
             foreach (var value in array)
             {
@@ -40,7 +39,7 @@ namespace SixNations.Desktop.Models
             }
         }
 
-        public Lookup(IDictionary<int, string> dict)
+        public Lookup(string lookupName, IDictionary<int, string> dict) : this(lookupName)
         {
             foreach (var kvp in dict)
             {
@@ -48,7 +47,7 @@ namespace SixNations.Desktop.Models
             }
         }
 
-        public Lookup(Enum @enum)
+        public Lookup(Enum @enum) : this(@enum.ToString())
         {
             foreach (var field in Enum.GetValues(@enum.GetType()))
             {
@@ -82,6 +81,6 @@ namespace SixNations.Desktop.Models
 
         public bool IsReadOnly => true;
 
-        public IDictionary<string, object> Data => throw new NotSupportedException();
+        public IDictionary<string, object> GetData() => throw new NotSupportedException();
     }
 }

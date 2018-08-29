@@ -40,10 +40,12 @@ namespace SixNations.Desktop.Facade
         public async Task<ResponseRootObject> HttpRequestAsync(
             string uri, string token, HttpMethods httpMethod, IDictionary<string, object> data)
         {
+            var url = GetUrl(uri);
+            Log.Info($"Request initiated from {httpMethod}: {url}");
+
             var rawResponse = await HttpRequestRawResponseAsync(uri, token, httpMethod, data);
             var rawResponseContent = await ReadResponseContentAsync(rawResponse);
-            var statusCode = (int)rawResponse.StatusCode;
-            var url = GetUrl(uri);
+            var statusCode = (int)rawResponse.StatusCode;            
 
             var responseRootObject = DeserializeResponseRootObject(rawResponseContent, statusCode, url);
 
@@ -54,8 +56,8 @@ namespace SixNations.Desktop.Facade
 
             EmulateEditLocking(url, httpMethod, ref responseRootObject);
 
-            Log.Info("Request complete from " + httpMethod + ": " + url);
-            Log.Debug("Response from " + httpMethod + ": " + url + "-> " + responseRootObject.ToString());
+            Log.Info($"Request complete from {httpMethod}: {url}");
+            Log.Debug($"Response from {httpMethod}: {url}-> {responseRootObject.ToString()}");
             return responseRootObject;
         }
 
@@ -115,7 +117,7 @@ namespace SixNations.Desktop.Facade
 
             var url = GetUrl(uri);
             //var args = GetArgs(data);
-            Log.Info(httpMethod + ": " + url);
+            Log.Debug(httpMethod + ": " + url);
             if (data?.Count > 0)
             {
                 var requestContent = await httpContent.ReadAsStringAsync();
@@ -128,7 +130,7 @@ namespace SixNations.Desktop.Facade
             }
             catch (Exception ex)
             {
-                Log.Fatal("Unexpected error accessing gateway. \n" + ex.Message);
+                Log.Fatal($"Unexpected error accessing gateway. \n{ex.Message}");
                 throw;
             }
 
@@ -149,7 +151,8 @@ namespace SixNations.Desktop.Facade
                 throw new HttpDataServiceException(statusCode, msg);
             }
         }
-        private static void AnticipatedStatusCodeErrorCheck(int statusCode, ResponseRootObject responseRootObject)
+        private static void AnticipatedStatusCodeErrorCheck(
+            int statusCode, ResponseRootObject responseRootObject)
         {
             if (allowedStatusCodes.Contains(statusCode) && statusCode != 200)
             {
@@ -171,7 +174,6 @@ namespace SixNations.Desktop.Facade
 
         private static string GetUrl(string uri)
         {
-            //TODO Fix this mess. Split, and only care about first.tolower, then ? then append the rest
             if (uri.Contains("?"))
             {
                 string[] words = uri.Split('?');
@@ -266,13 +268,13 @@ namespace SixNations.Desktop.Facade
             catch (JsonSerializationException ex)
             {
                 var msg = "Deserialisation 'error' on response from: " +
-                    url + ". NOTE FOR DEV: " +
+                    $"{url}. NOTE FOR DEV: " +
                     "Check the API method is defined to return an array of " +
                     "objects in 'data' even if there is just one. However, " +
                     "this may simply be that no data was returned. This can " +
                     "happen with a call to an API Create method which has " +
                     "no templating. " +
-                    "Here is the JsonSerializationException: " + ex.Message;
+                    $"Here is the JsonSerializationException: {ex.Message}";
                 Log.Error(msg);
                 responseRootObject = new ResponseRootObject(msg);
             }
@@ -316,11 +318,13 @@ namespace SixNations.Desktop.Facade
         }
 
         /// <summary>
-        /// We can move this into the API if we feel it is needed
+        /// We can move this into the API if we feel it is needed.
+        /// The ResponseRootObject argument passed in with its editable flag set.
         /// </summary>
         /// <param name="url"></param>
         /// <param name="httpMethod"></param>
         /// <param name="responseRootObject"></param>
+        /// <returns></returns>
         private static void EmulateEditLocking(
             string url, HttpMethods httpMethod, ref ResponseRootObject responseRootObject)
         {

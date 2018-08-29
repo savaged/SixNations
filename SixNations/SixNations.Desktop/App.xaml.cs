@@ -33,13 +33,13 @@ namespace SixNations.Desktop
         {
             // Here change path to the log.txt file
             var path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
-                + "\\" + Environment.UserName + "\\SixNations.Desktop\\log.txt";
+                + "\\SixNations.Desktop\\log.txt";
 
             // Show a message before closing application
             
             MessageBox.Show(
                 "Oops, something went wrong and the application must close. Please find a " +
-                "report on the issue at: " + path + Environment.NewLine +
+                $"report on the issue at: {path}{Environment.NewLine}" +
                 "If the problem persist, please contact David Savage.",
                 "Unhandled Error",
                 MessageBoxButton.OK);

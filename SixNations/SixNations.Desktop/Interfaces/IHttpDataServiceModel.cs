@@ -11,6 +11,6 @@ namespace SixNations.Desktop.Interfaces
 
         bool IsLockedForEditing { get; }
 
-        IDictionary<string, object> Data { get; }
+        IDictionary<string, object> GetData();
     }
 }

@@ -150,6 +150,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Attributes\HiddenAttribute.cs" />
     <Compile Include="Controls\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -198,11 +199,9 @@
     <Compile Include="Services\AuthTokenService.cs" />
     <Compile Include="Services\AuthTokenService.partial.cs" />
     <Compile Include="Facades\HttpDataServiceFacade.cs" />
-    <Compile Include="Services\DesignLookupDataService.cs" />
     <Compile Include="Interfaces\IAuthTokenService.cs" />
     <Compile Include="Services\LookupDataService.cs" />
     <Compile Include="Services\NavigationService.cs" />
-    <Compile Include="Services\DesignRequirementDataService.cs" />
     <Compile Include="Services\RequirementDataService.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\FindStoryDialogViewModel.cs" />

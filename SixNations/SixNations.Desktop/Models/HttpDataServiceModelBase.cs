@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using GalaSoft.MvvmLight;
+using SixNations.Desktop.Attributes;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 
@@ -73,10 +74,13 @@ namespace SixNations.Desktop.Models
             if (s != null) s.Invoke(this, new object[] { value });
         }
 
+        [Hidden]
         public string Error { get; set; }
 
+        [Hidden]
         public bool IsLockedForEditing { get; private set; }
 
+        [Hidden]
         public bool IsDirty
         {
             get => _isDirty;
@@ -85,22 +89,22 @@ namespace SixNations.Desktop.Models
 
         public abstract int Id { get; }
 
+        [Hidden]
         public bool IsNew => Id < 1;
 
+        [Hidden]
         public bool IsReadOnly => !IsLockedForEditing && !IsNew;
 
-        public IDictionary<string, object> Data
+        public IDictionary<string, object> GetData()
         {
-            get
+            var data = new Dictionary<string, object>();
+            var props = GetType().GetProperties();
+            foreach (var p in props)
             {
-                var data = new Dictionary<string, object>();
-                var props = GetType().GetProperties();
-                foreach (var p in props)
+                // Transforms using attributes can be added here
+
+                if (!Attribute.IsDefined(p, typeof(HiddenAttribute)))
                 {
-                    if (p.Name == nameof(Data)) continue;
-
-                    // Transforms using attributes can be added here
-
                     var value = p.GetValue(this);
                     if (value is DateTime)
                     {
@@ -108,8 +112,8 @@ namespace SixNations.Desktop.Models
                     }
                     data.Add(p.Name, value);
                 }
-                return data;
             }
+            return data;
         }
 
         private static object FilterAnyMinDate(object value)

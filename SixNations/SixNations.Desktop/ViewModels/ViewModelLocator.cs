@@ -2,6 +2,7 @@ using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
+using SixNations.Desktop.Constants;
 using SixNations.Desktop.Facade;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
@@ -22,19 +23,12 @@ namespace SixNations.Desktop.ViewModels
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                SimpleIoc.Default.Register<IDataService<Requirement>, DesignRequirementDataService>();
-                SimpleIoc.Default.Register<IDataService<Lookup>, DesignLookupDataService>();
-            }
-            else
-            {
-                SimpleIoc.Default.Register<IDataService<Requirement>, RequirementDataService>();
-                SimpleIoc.Default.Register<IDataService<Lookup>, LookupDataService>();
-            }
+            SimpleIoc.Default.Register<IDataService<Requirement>, RequirementDataService>();
+            SimpleIoc.Default.Register<IDataService<Lookup>, LookupDataService>();
+            
             if (!SimpleIoc.Default.IsRegistered<IHttpDataServiceFacade>())
             {
-                if (Constants.Props.ApiBaseURL == "Mocked")
+                if (Constants.Props.ApiBaseURL == Props.MOCKED)
                 {
                     SimpleIoc.Default.Register<IHttpDataServiceFacade>(() =>
                     {
@@ -51,7 +45,7 @@ namespace SixNations.Desktop.ViewModels
             }
             if (!SimpleIoc.Default.IsRegistered<IAuthTokenService>())
             {
-                if (Constants.Props.ApiBaseURL == "Mocked")
+                if (Constants.Props.ApiBaseURL == Props.MOCKED)
                 {
                     SimpleIoc.Default.Register<IAuthTokenService>(() =>
                     {

@@ -46,10 +46,6 @@ namespace SixNations.Desktop.ViewModels
             MessengerInstance.Register<StoryFilterMessage>(this, OnFindStory);
 
             Index = new ObservableCollection<Requirement>();
-            if (IsInDesignMode)
-            {
-                _ = LoadAsync();
-            }
         }
 
         public async Task LoadAsync()
@@ -66,15 +62,9 @@ namespace SixNations.Desktop.ViewModels
         private async Task LoadLookupAsync()
         {
             IEnumerable<Lookup> lookups = null;
-            if (IsInDesignMode)
-            {
-                lookups = await _lookupDataService.GetModelDataAsync(null, null);
-            }
-            else
-            {
-                lookups = await _lookupDataService.GetModelDataAsync(
+            lookups = await _lookupDataService.GetModelDataAsync(
                         User.Current.AuthToken, FeedbackActions.ReactToException);
-            }
+
             EstimationLookup = lookups.First(l => l.Name == "RequirementEstimation");
             PriorityLookup = lookups.First(l => l.Name == "RequirementPriority");
             StatusLookup = lookups.First(l => l.Name == "RequirementStatus");
@@ -83,10 +73,6 @@ namespace SixNations.Desktop.ViewModels
         private async Task LoadIndexAsync()
         {
             IEnumerable<Requirement> data = null;
-            if (IsInDesignMode)
-            {
-                data = await _requirementDataService.GetModelDataAsync(null, null);
-            }
             if (User.Current.IsLoggedIn)
             {
                 try
