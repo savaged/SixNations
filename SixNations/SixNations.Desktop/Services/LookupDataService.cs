@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SixNations.Desktop.Interfaces;
 using System.Threading.Tasks;
 using SixNations.Desktop.Models;
-using SixNations.Desktop.Facade;
+using CommonServiceLocator;
 
 namespace SixNations.Desktop.Services
 {
@@ -13,7 +13,8 @@ namespace SixNations.Desktop.Services
 
         private async Task<Lookup> GetLookup(string lookupName)
         {
-            var response = await HttpDataServiceFacade.HttpRequestAsync(
+            var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
+                .HttpRequestAsync(
                 lookupName.ToLower(), User.Current.AuthToken);
             return new Lookup(lookupName, response);
         }

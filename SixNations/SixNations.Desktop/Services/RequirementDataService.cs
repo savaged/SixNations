@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SixNations.Desktop.Facade;
+using CommonServiceLocator;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
@@ -86,7 +86,8 @@ namespace SixNations.Desktop.Services
             ResponseRootObject response = null;
             try
             {
-                response = await HttpDataServiceFacade.HttpRequestAsync(uri, authToken);
+                response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
+                    .HttpRequestAsync(uri, authToken);
             }
             catch (Exception ex)
             {

@@ -4,8 +4,10 @@ Requirements management loosely based on SCRUM.
 SixNations, is designed as lean tooling for an Agile development 
 team.
 
+It is designed to consume a RESTful data service but could be adapted to use something like Entity Framework.
+
 It is a work-in-progress but should compile after a "Restore NuGet Packages" and
-One must add a file in `Services` named `AuthTokenService.partial.cs` with the following contents:
+one must add a file in `Services` named `AuthTokenService.partial.cs` with the following contents:
 
 ```using System;
 
@@ -18,7 +20,7 @@ namespace SixNations.Desktop.Services
 }
 ```
 
-Don't forget to add it to your .gitignore file, otherwise the world will know your secret!
+Don't forget to add it to your `.gitignore` file, otherwise the world will know your secret!
 
 ---
 
