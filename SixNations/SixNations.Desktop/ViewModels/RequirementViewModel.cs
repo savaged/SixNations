@@ -24,6 +24,7 @@ namespace SixNations.Desktop.ViewModels
         private readonly IDataService<Requirement> _requirementDataService;
         private readonly IDataService<Lookup> _lookupDataService;
         private Requirement _selectedItem;
+        private bool _canSelectItem;
         private Lookup _estimationLookup;
         private Lookup _priorityLookup;
         private Lookup _statusLookup;
@@ -42,6 +43,7 @@ namespace SixNations.Desktop.ViewModels
             EditCmd = new RelayCommand(OnEdit, CanExecuteSelectedItemChange);
             DeleteCmd = new RelayCommand(OnDelete, CanExecuteSelectedItemChange);
             SaveCmd = new RelayCommand(OnSave, CanExecuteSelectedItemChange);
+            CancelCmd = new RelayCommand(OnCancel, CanExecuteCancel);
 
             MessengerInstance.Register<StoryFilterMessage>(this, OnFindStory);
 
@@ -55,6 +57,8 @@ namespace SixNations.Desktop.ViewModels
             await LoadLookupAsync();
 
             await LoadIndexAsync();
+
+            CanSelectItem = true;
 
             SelectedItem = Index.First();
 
@@ -110,20 +114,36 @@ namespace SixNations.Desktop.ViewModels
 
         public ICommand SaveCmd { get; }
 
+        public ICommand CancelCmd { get; }
+
         // TODO: Add permissions check on current user
         public bool CanExecute => !ServiceLocator.Current.GetInstance<MainViewModel>().IsBusy;
 
         // TODO: Add permissions check on current user
         public bool CanExecuteSelectedItemChange => CanExecute && SelectedItem != null;
 
+        public bool CanExecuteCancel => IsSelectedItemEditable;
+
         public ObservableCollection<Requirement> Index { get; }
 
         public bool IsSelectedItemEditable => SelectedItem != null && SelectedItem.IsLockedForEditing;
 
+        public bool CanSelectItem
+        {
+            get => _canSelectItem;
+            set => Set(ref _canSelectItem, value);
+        }
+
         public Requirement SelectedItem
         {
             get => _selectedItem;
-            set => Set(ref _selectedItem, value);
+            set
+            {
+                if (CanSelectItem)
+                {
+                    Set(ref _selectedItem, value);
+                }
+            }
         }
 
         public Lookup EstimationLookup
@@ -163,6 +183,7 @@ namespace SixNations.Desktop.ViewModels
                 SelectedItem = await _requirementDataService.CreateModelAsync(
                     User.Current.AuthToken, FeedbackActions.ReactToException);
                 RaisePropertyChanged(nameof(IsSelectedItemEditable));
+                CanSelectItem = false;
             }
             catch (Exception ex)
             {
@@ -183,6 +204,7 @@ namespace SixNations.Desktop.ViewModels
                 SelectedItem = await _requirementDataService.EditModelAsync(
                     User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
                 RaisePropertyChanged(nameof(IsSelectedItemEditable));
+                CanSelectItem = false;
             }
             catch (Exception ex)
             {
@@ -197,28 +219,32 @@ namespace SixNations.Desktop.ViewModels
 
         private async void OnDelete()
         {
-            MessengerInstance.Send(new BusyMessage(true));
-            bool result;
-            try
+            var confirmed = ActionConfirmation.Confirm(ActionConfirmations.Delete);
+            if (confirmed)
             {
-                result = await _requirementDataService.DeleteModelAsync(
-                    User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
-                RaisePropertyChanged(nameof(IsSelectedItemEditable));
-                if (result)
+                MessengerInstance.Send(new BusyMessage(true));
+                bool result;
+                try
                 {
-                    await LoadIndexAsync();
+                    result = await _requirementDataService.DeleteModelAsync(
+                        User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
+                    RaisePropertyChanged(nameof(IsSelectedItemEditable));
+                    if (result)
+                    {
+                        await LoadIndexAsync();
 
-                    SelectedItem = Index.First();
+                        SelectedItem = Index.First();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"Unexpected Error Deleting! {ex}");
-                throw;
-            }
-            finally
-            {
-                MessengerInstance.Send(new BusyMessage(false));
+                catch (Exception ex)
+                {
+                    Log.Error($"Unexpected Error Deleting! {ex}");
+                    throw;
+                }
+                finally
+                {
+                    MessengerInstance.Send(new BusyMessage(false));
+                }
             }
         }
 
@@ -239,6 +265,7 @@ namespace SixNations.Desktop.ViewModels
                         User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
                 }
                 RaisePropertyChanged(nameof(IsSelectedItemEditable));
+                CanSelectItem = true;
                 if (updated != null)
                 {
                     await LoadIndexAsync();
@@ -254,6 +281,12 @@ namespace SixNations.Desktop.ViewModels
             {
                 MessengerInstance.Send(new BusyMessage(false));
             }
+        }
+
+        private async void OnCancel()
+        {
+            await LoadIndexAsync();
+            CanSelectItem = true;
         }
     }
 }

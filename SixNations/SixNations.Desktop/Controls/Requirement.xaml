@@ -18,6 +18,9 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding CancelCmd}"/>
+    </UserControl.InputBindings>
     <Grid>
         <TextBox x:Name="StoryFilter" Visibility="Collapsed" 
                    Text="{Binding StoryFilter, UpdateSourceTrigger=PropertyChanged}" 
@@ -48,6 +51,7 @@
                         <MenuItem Header="New" Command="{Binding NewCmd}"/>
                         <MenuItem Header="Edit" Command="{Binding EditCmd}"/>
                         <MenuItem Header="Delete" Command="{Binding DeleteCmd}"/>
+                        <MenuItem Header="Cancel" Command="{Binding CancelCmd}"/>
                     </ContextMenu>
                 </StackPanel.ContextMenu>
                 <Label FontWeight="Bold">DETAIL</Label>
