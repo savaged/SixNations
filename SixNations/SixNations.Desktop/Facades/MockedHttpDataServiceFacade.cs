@@ -370,7 +370,7 @@ namespace SixNations.Desktop.Facade
                 {
                     var prop = typeof(DataTransferObject).GetProperty(
                         "Fields", BindingFlags.NonPublic | BindingFlags.Instance);
-                    var fields = (IDictionary<string, object>)prop.GetValue(null);
+                    var fields = (IDictionary<string, object>)prop.GetValue(dto);
 
                     var key = "IsLockedForEditing";
                     if (fields.ContainsKey(key))
