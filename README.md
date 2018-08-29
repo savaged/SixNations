@@ -37,9 +37,11 @@ namespace SixNations.Desktop.Constants
         /// <summary>
         /// Can use a Url or the word "Mocked/" for dummy services
         /// </summary>
-        internal static readonly string ApiBaseURL = MOCKED; // "http://homestead.test/";
+        internal static readonly string ApiBaseURL = MOCKED; 
+		// or something like "http://homestead.test/";
 #else
-        internal static readonly string ApiBaseURL = "http://192.168.0.22/";
+        internal static readonly string ApiBaseURL = 
+		    "http://192.168.0.22/";
 #endif
     }
 }
