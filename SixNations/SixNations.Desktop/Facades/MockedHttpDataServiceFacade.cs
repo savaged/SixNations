@@ -17,7 +17,7 @@ namespace SixNations.Desktop.Facade
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private IList<Requirement> MockRequirementDb { get; }
-        private IList<Lookup> MockLookupDb { get; }
+        private IDictionary<string, string> MockLookupDb { get; }
 
         public MockedHttpDataServiceFacade()
         {
@@ -70,7 +70,7 @@ namespace SixNations.Desktop.Facade
                 },
                 new Requirement
                 {
-                    RequirementID = 79,
+                    RequirementID = 80,
                     Story = "As a standard user, I want to add or edit email recipients, so that {need a reason here}.",
                     Estimation = 2,
                     Priority = 4,
@@ -79,33 +79,70 @@ namespace SixNations.Desktop.Facade
                 }
             };
 
-            MockLookupDb = new List<Lookup>
+            MockLookupDb = new Dictionary<string, string>
             {
-                { new Lookup("RequirementEstimation", new Dictionary<int, string>
-                            {
-                                { 1, "XS" },
-                                { 2, "Small" },
-                                { 3, "Medium" },
-                                { 5, "Large" },
-                                { 8, "XL" },
-                                { 13, "XXL" }
-                            })
+                { "RequirementEstimation", 
+                    "{" +
+                    "\"error\": \"\",  " +
+                    "\"success\": true,  " +
+                    "\"data\": [{" +
+                    "      \"RequirementEstimationID\": 1," +
+                    "      \"RequirementEstimationName\": \"XS\"," +
+                    "    },    {" +
+                    "      \"RequirementEstimationID\": 2," +
+                    "      \"RequirementEstimationName\": \"Small\"," +
+                    "    },    {" +
+                    "      \"RequirementEstimationID\": 3," +
+                    "      \"RequirementEstimationName\": \"Medium\"," +
+                    "    },    {" +
+                    "      \"RequirementEstimationID\": 5," +
+                    "      \"RequirementEstimationName\": \"Large\"," +
+                    "    },    {" +
+                    "      \"RequirementEstimationID\": 8," +
+                    "      \"RequirementEstimationName\": \"XL\"," +
+                    "    },    {" +
+                    "      \"RequirementEstimationID\": 13," +
+                    "      \"RequirementEstimationName\": \"XXL\"," +
+                    "    }]" +
+                    "}"
                 },
-                { new Lookup("RequirementPriority", new Dictionary<int, string>
-                            {
-                                { 1, "Must" },
-                                { 2, "Should" },
-                                { 3, "Could" },
-                                { 4, "Wont" }
-                            })
+                { "RequirementPriority",
+                    "{" +
+                    "\"error\": \"\",  " +
+                    "\"success\": true,  " +
+                    "\"data\": [{" +
+                    "      \"RequirementPriorityID\": 1," +
+                    "      \"RequirementPriorityName\": \"Must\"," +
+                    "    },    {" +
+                    "      \"RequirementPriorityID\": 2," +
+                    "      \"RequirementPriorityName\": \"Should\"," +
+                    "    },    {" +
+                    "      \"RequirementPriorityID\": 3," +
+                    "      \"RequirementPriorityName\": \"Could\"," +
+                    "    },    {" +
+                    "      \"RequirementPriorityID\": 4," +
+                    "      \"RequirementPriorityName\": \"Wont\"," +
+                    "    }]" +
+                    "}"
                 },
-                { new Lookup("RequirementStatus", new Dictionary<int, string>
-                            {
-                                { 1, "Prioritised" },
-                                { 2, "WIP" },
-                                { 3, "Test" },
-                                { 4, "Done" }
-                            })
+                { "RequirementStatus",
+                    "{" +
+                    "\"error\": \"\",  " +
+                    "\"success\": true,  " +
+                    "\"data\": [{" +
+                    "      \"RequirementStatusID\": 1," +
+                    "      \"RequirementStatusName\": \"Prioritised\"," +
+                    "    },    {" +
+                    "      \"RequirementStatusID\": 2," +
+                    "      \"RequirementStatusName\": \"WIP\"," +
+                    "    },    {" +
+                    "      \"RequirementStatusID\": 3," +
+                    "      \"RequirementStatusName\": \"Test\"," +
+                    "    },    {" +
+                    "      \"RequirementStatusID\": 4," +
+                    "      \"RequirementStatusName\": \"Done\"," +
+                    "    }]" +
+                    "}"
                 }
             };
         }
@@ -154,6 +191,10 @@ namespace SixNations.Desktop.Facade
                     {
                         responseRootObject = MockCreate(uri);
                     }
+                    else if (uri.EndsWith("edit"))
+                    {
+                        responseRootObject = MockEdit(uri);
+                    }
                     else
                     {
                         responseRootObject = MockGet(uri);
@@ -174,7 +215,7 @@ namespace SixNations.Desktop.Facade
                     var dto = Convert(data, uri);
                     requirement.Initialise(dto);
                     requirement.RequirementID = MockRequirementDb
-                        .OrderByDescending(r => r.Id).FirstOrDefault().Id;
+                        .OrderByDescending(r => r.Id).FirstOrDefault().Id + 1;
                     MockRequirementDb.Add(requirement);
                     responseRootObject = Convert(requirement);
                     break;
@@ -246,6 +287,23 @@ namespace SixNations.Desktop.Facade
             return responseRootObject;
         }
 
+        private ResponseRootObject MockEdit(string uri)
+        {
+            var resource = GetResourceNameFromUri(uri);
+            ResponseRootObject responseRootObject = null;
+            switch (resource)
+            {
+                case "requirement":
+                    var id = GetIdFromUri(uri);
+                    var requirement = MockRequirementDb.FirstOrDefault(r => r.Id == id);
+                    responseRootObject = Convert(requirement);
+                    break;
+                default:
+                    throw new NotSupportedException();
+            }
+            return responseRootObject;
+        }
+
         private ResponseRootObject MockGet(string uri)
         {
             var resource = GetResourceNameFromUri(uri);
@@ -256,16 +314,16 @@ namespace SixNations.Desktop.Facade
                     responseRootObject = Convert(MockRequirementDb);
                     break;
                 case "requirementestimation":
-                    responseRootObject = Convert(MockLookupDb
-                        .First(l => l.Name == "RequirementEstimation"));
+                    responseRootObject = DeserializeResponseRootObject(
+                        MockLookupDb["RequirementEstimation"], 200, $"Mocked/RequirementEstimation");
                     break;
                 case "requirementpriority":
-                    responseRootObject = Convert(MockLookupDb
-                        .First(l => l.Name == "RequirementPriority"));
+                    responseRootObject = DeserializeResponseRootObject(
+                        MockLookupDb["RequirementPriority"], 200, $"Mocked/RequirementPriority");
                     break;
                 case "requirementstatus":
-                    responseRootObject = Convert(MockLookupDb
-                        .First(l => l.Name == "RequirementStatus"));
+                    responseRootObject = DeserializeResponseRootObject(
+                        MockLookupDb["RequirementStatus"], 200, $"Mocked/RequirementStatus");
                     break;
             }
             return responseRootObject;
@@ -328,16 +386,6 @@ namespace SixNations.Desktop.Facade
             json += "}";
             var value = DeserializeResponseRootObject(
                 json, 200, "Mocked/requirement");
-            return value;
-        }
-
-        private ResponseRootObject Convert(Lookup lookup)
-        {
-            var json = "{\"error\":\"\",\"success\":true,\"data\":[";
-            json += JsonConvert.SerializeObject(lookup);
-            json += "]}";
-            var value = DeserializeResponseRootObject(
-                json, 200, $"Mocked/{lookup.Name}");
             return value;
         }
 

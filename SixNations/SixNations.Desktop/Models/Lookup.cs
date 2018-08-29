@@ -26,32 +26,11 @@ namespace SixNations.Desktop.Models
         public Lookup(string lookupName, ResponseRootObject response) 
             : this(lookupName, response?.Data) { }
 
-        public Lookup(string lookupName, string @default) : this(lookupName)
-        {
-            Add(0, @default);
-        }
-
-        public Lookup(string lookupName, int[] array) : this(lookupName)
-        {
-            foreach (var value in array)
-            {
-                Add(value, value.ToString());
-            }
-        }
-
         public Lookup(string lookupName, IDictionary<int, string> dict) : this(lookupName)
         {
             foreach (var kvp in dict)
             {
                 Add(kvp.Key, kvp.Value);
-            }
-        }
-
-        public Lookup(Enum @enum) : this(@enum.ToString())
-        {
-            foreach (var field in Enum.GetValues(@enum.GetType()))
-            {
-                Add((int)field, field.ToString());
             }
         }
 
