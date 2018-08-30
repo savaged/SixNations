@@ -23,6 +23,5 @@
                      IsChecked="{Binding ThemeOption, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static interfaces:ThemeOptions.Light}}">
             <TextBlock>Light</TextBlock>
         </RadioButton>
-        <!--TextBlock Text="TODO: allow theme change (https://mahapps.com/guides/styles.html)"/-->
     </StackPanel>
 </UserControl>
