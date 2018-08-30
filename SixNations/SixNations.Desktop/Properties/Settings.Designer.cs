@@ -34,5 +34,17 @@ namespace SixNations.Desktop.Properties {
                 this["UserEmail"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Dark")]
+        public global::SixNations.Desktop.Interfaces.ThemeOptions ThemeOption {
+            get {
+                return ((global::SixNations.Desktop.Interfaces.ThemeOptions)(this["ThemeOption"]));
+            }
+            set {
+                this["ThemeOption"] = value;
+            }
+        }
     }
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SixNations.Desktop.Interfaces
 {
@@ -13,5 +9,12 @@ namespace SixNations.Desktop.Interfaces
         Put,
         Delete,
         Patch
+    }
+
+    [Serializable]
+    public enum ThemeOptions
+    {
+        Dark, 
+        Light
     }
 }

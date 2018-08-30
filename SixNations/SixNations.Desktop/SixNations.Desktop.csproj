@@ -167,6 +167,7 @@
     <Compile Include="Controls\Wall.xaml.cs">
       <DependentUpon>Wall.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Exceptions\HttpDataServiceException.cs" />
     <Compile Include="Exceptions\AuthServiceException.cs" />
     <Compile Include="Facades\MockedHttpDataServiceFacade.cs" />
@@ -175,7 +176,7 @@
     <Compile Include="Interfaces\IHttpDataServiceFacade.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\FeedbackActions.cs" />
-    <Compile Include="Interfaces\HttpMethods.cs" />
+    <Compile Include="Interfaces\Enumerations.cs" />
     <Compile Include="Interfaces\IAsyncViewModel.cs" />
     <Compile Include="Interfaces\IHttpDataService.cs" />
     <Compile Include="Interfaces\IDataServiceModel.cs" />
