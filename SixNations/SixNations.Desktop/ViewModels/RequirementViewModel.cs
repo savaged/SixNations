@@ -39,11 +39,11 @@ namespace SixNations.Desktop.ViewModels
             _requirementDataService = requirementDataService;
             _lookupDataService = lookupService;
 
-            NewCmd = new RelayCommand(OnNew, CanExecute);
-            EditCmd = new RelayCommand(OnEdit, CanExecuteSelectedItemChange);
-            DeleteCmd = new RelayCommand(OnDelete, CanExecuteSelectedItemChange);
-            SaveCmd = new RelayCommand(OnSave, CanExecuteSelectedItemChange);
-            CancelCmd = new RelayCommand(OnCancel, CanExecuteCancel);
+            NewCmd = new RelayCommand(OnNew, () => CanExecute);
+            EditCmd = new RelayCommand(OnEdit, () => CanExecuteSelectedItemChange);
+            DeleteCmd = new RelayCommand(OnDelete, () => CanExecuteSelectedItemChange);
+            SaveCmd = new RelayCommand(OnSave, () => CanExecuteSelectedItemChange);
+            CancelCmd = new RelayCommand(OnCancel, () => CanExecuteCancel);
 
             MessengerInstance.Register<StoryFilterMessage>(this, OnFindStory);
 
@@ -131,7 +131,12 @@ namespace SixNations.Desktop.ViewModels
         public bool CanSelectItem
         {
             get => _canSelectItem;
-            set => Set(ref _canSelectItem, value);
+            set
+            {
+                Set(ref _canSelectItem, value);
+                RaisePropertyChanged(nameof(IsSelectedItemEditable));
+                RaisePropertyChanged(nameof(CanExecuteCancel));
+            }
         }
 
         public Requirement SelectedItem
@@ -139,7 +144,11 @@ namespace SixNations.Desktop.ViewModels
             get => _selectedItem;
             set
             {
-                if (CanSelectItem)
+                if (value == null)
+                {
+                    Set(ref _selectedItem, value);
+                }
+                else if (CanSelectItem)
                 {
                     Set(ref _selectedItem, value);
                 }
@@ -285,8 +294,11 @@ namespace SixNations.Desktop.ViewModels
 
         private async void OnCancel()
         {
+            MessengerInstance.Send(new BusyMessage(true));
             await LoadIndexAsync();
             CanSelectItem = true;
+            SelectedItem = Index.FirstOrDefault();
+            MessengerInstance.Send(new BusyMessage(false));
         }
     }
 }

@@ -20,6 +20,7 @@ namespace SixNations.Desktop.Models
             {
                 SetProperty(dto, p);
             }
+            RaisePropertyChanged(string.Empty);
         }
 
         private void SetProperty(DataTransferObject dto, PropertyInfo p)
