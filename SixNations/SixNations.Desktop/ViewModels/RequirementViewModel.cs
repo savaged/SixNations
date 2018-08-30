@@ -39,7 +39,7 @@ namespace SixNations.Desktop.ViewModels
             _requirementDataService = requirementDataService;
             _lookupDataService = lookupService;
 
-            NewCmd = new RelayCommand(OnNew, () => CanExecute);
+            NewCmd = new RelayCommand(OnNew, () => CanExecuteNew);
             EditCmd = new RelayCommand(OnEdit, () => CanExecuteSelectedItemChange);
             DeleteCmd = new RelayCommand(OnDelete, () => CanExecuteSelectedItemChange);
             SaveCmd = new RelayCommand(OnSave, () => CanExecuteSelectedItemChange);
@@ -120,7 +120,10 @@ namespace SixNations.Desktop.ViewModels
         public bool CanExecute => !ServiceLocator.Current.GetInstance<MainViewModel>().IsBusy;
 
         // TODO: Add permissions check on current user
-        public bool CanExecuteSelectedItemChange => CanExecute && SelectedItem != null;
+        public bool CanExecuteNew => CanExecute && CanSelectItem;
+
+        // TODO: Add permissions check on current user
+        public bool CanExecuteSelectedItemChange => CanExecute && !IsSelectedItemEditable;
 
         public bool CanExecuteCancel => IsSelectedItemEditable;
 
