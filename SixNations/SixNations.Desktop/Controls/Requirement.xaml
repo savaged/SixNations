@@ -30,8 +30,7 @@
                       AutoGenerateColumns="False" IsReadOnly="True" 
                       ItemsSource="{Binding Source={StaticResource IndexViewSource}}" 
                       SelectedItem="{Binding SelectedItem}"
-                      CanUserDeleteRows="False" CanUserAddRows="False"
-                      AlternatingRowBackground="AliceBlue">
+                      CanUserDeleteRows="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="40" Header="ID" Binding="{Binding Id}"/>
                     <DataGridTextColumn Width="280" Header="Story" Binding="{Binding Story}">
