@@ -52,7 +52,7 @@ namespace SixNations.Desktop.ViewModels
 
         public async Task LoadAsync()
         {
-            MessengerInstance.Send(new BusyMessage(true));
+            MessengerInstance.Send(new BusyMessage(true, this));
 
             await LoadLookupAsync();
 
@@ -62,7 +62,7 @@ namespace SixNations.Desktop.ViewModels
 
             SelectedItem = Index.First();
 
-            MessengerInstance.Send(new BusyMessage(false));
+            MessengerInstance.Send(new BusyMessage(false, this));
         }
 
         private async Task LoadLookupAsync()
@@ -117,7 +117,7 @@ namespace SixNations.Desktop.ViewModels
         public ICommand CancelCmd { get; }
 
         // TODO: Add permissions check on current user
-        public bool CanExecute => !ServiceLocator.Current.GetInstance<MainViewModel>().IsBusy;
+        public bool CanExecute => !ServiceLocator.Current.GetInstance<MainViewModel>().BusyStateManager.IsBusy;
 
         // TODO: Add permissions check on current user
         public bool CanExecuteNew => CanExecute && CanSelectItem;
@@ -187,7 +187,7 @@ namespace SixNations.Desktop.ViewModels
 
         private async void OnNew()
         {
-            MessengerInstance.Send(new BusyMessage(true));
+            MessengerInstance.Send(new BusyMessage(true, this));
             try
             {
                 SelectedItem = await _requirementDataService.CreateModelAsync(
@@ -202,13 +202,13 @@ namespace SixNations.Desktop.ViewModels
             }
             finally
             {
-                MessengerInstance.Send(new BusyMessage(false));
+                MessengerInstance.Send(new BusyMessage(false, this));
             }            
         }
 
         private async void OnEdit()
         {
-            MessengerInstance.Send(new BusyMessage(true));
+            MessengerInstance.Send(new BusyMessage(true, this));
             try
             {
                 SelectedItem = await _requirementDataService.EditModelAsync(
@@ -223,7 +223,7 @@ namespace SixNations.Desktop.ViewModels
             }
             finally
             {
-                MessengerInstance.Send(new BusyMessage(false));
+                MessengerInstance.Send(new BusyMessage(false, this));
             }
         }
 
@@ -232,7 +232,7 @@ namespace SixNations.Desktop.ViewModels
             var confirmed = ActionConfirmation.Confirm(ActionConfirmations.Delete);
             if (confirmed)
             {
-                MessengerInstance.Send(new BusyMessage(true));
+                MessengerInstance.Send(new BusyMessage(true, this));
                 bool result;
                 try
                 {
@@ -253,14 +253,14 @@ namespace SixNations.Desktop.ViewModels
                 }
                 finally
                 {
-                    MessengerInstance.Send(new BusyMessage(false));
+                    MessengerInstance.Send(new BusyMessage(false, this));
                 }
             }
         }
 
         private async void OnSave()
         {
-            MessengerInstance.Send(new BusyMessage(true));
+            MessengerInstance.Send(new BusyMessage(true, this));
             try
             {
                 Requirement updated;
@@ -289,7 +289,7 @@ namespace SixNations.Desktop.ViewModels
             }
             finally
             {
-                MessengerInstance.Send(new BusyMessage(false));
+                MessengerInstance.Send(new BusyMessage(false, this));
             }
         }
 
@@ -302,11 +302,11 @@ namespace SixNations.Desktop.ViewModels
             }            
             if (confirmed)
             {
-                MessengerInstance.Send(new BusyMessage(true));
+                MessengerInstance.Send(new BusyMessage(true, this));
                 await LoadIndexAsync();
                 CanSelectItem = true;
                 SelectedItem = Index.FirstOrDefault();
-                MessengerInstance.Send(new BusyMessage(false));
+                MessengerInstance.Send(new BusyMessage(false, this));
             }
         }
     }

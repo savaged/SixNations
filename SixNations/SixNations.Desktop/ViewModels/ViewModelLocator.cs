@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using SixNations.Desktop.Constants;
 using SixNations.Desktop.Facade;
+using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Services;
@@ -74,6 +75,7 @@ namespace SixNations.Desktop.ViewModels
                     return new MvvmDialogs.DialogService();
                 });
             }
+            SimpleIoc.Default.Register<BusyStateManager>();
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RequirementViewModel>();

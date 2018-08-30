@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
+using SixNations.Desktop.Messages;
 
 namespace SixNations.Desktop.Helpers
 {
@@ -15,5 +18,27 @@ namespace SixNations.Desktop.Helpers
     /// </summary>
     public class BusyStateManager : ObservableObject
     {
+        private IList<string> _registry;
+
+        public BusyStateManager()
+        {
+            _registry = new List<string>();
+            Messenger.Default.Register<BusyMessage>(this, OnBusyMessage);
+        }
+
+        public bool IsBusy => _registry.Count > 0;
+
+        private void OnBusyMessage(BusyMessage m)
+        {
+            if (m.IsBusy)
+            {
+                _registry.Add($"{m.CallerType}.{m.CallerMember}");
+            }
+            else
+            {
+                _registry.Remove($"{m.CallerType}.{m.CallerMember}");
+            }
+            RaisePropertyChanged(nameof(IsBusy));
+        }
     }
 }

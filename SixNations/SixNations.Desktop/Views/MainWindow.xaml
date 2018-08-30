@@ -47,7 +47,7 @@
         <KeyBinding Gesture="Shift+Ctrl+F" Command="{Binding ClearStoryFilterCmd}"/>
     </Window.InputBindings>
 
-    <xctk:BusyIndicator IsBusy="{Binding IsBusy}">
+    <xctk:BusyIndicator IsBusy="{Binding BusyStateManager.IsBusy}">
     <Grid>
         <mah:HamburgerMenu x:Name="HamburgerNav"
                            PaneBackground="#FF444444"

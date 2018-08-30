@@ -8,18 +8,20 @@ using SixNations.Desktop.Messages;
 using SixNations.Desktop.Constants;
 using GalaSoft.MvvmLight.Views;
 using SixNations.Desktop.Models;
+using SixNations.Desktop.Helpers;
 
 namespace SixNations.Desktop.ViewModels
 {
     public class MainViewModel : ViewModelBase, IShellViewModel
     {
         private readonly INavigationService _navigationService;
-        private bool _isBusy;
 
         public MainViewModel(
+            BusyStateManager busyStateManager,
             INavigationService navigationService, 
             MvvmDialogs.IDialogService dialogService)
         {
+            BusyStateManager = busyStateManager;
             _navigationService = navigationService;
             SelectedIndexManager = (ISelectedIndexManager)_navigationService;
             SelectedIndexManager.SelectedIndex = (int)HamburgerNavItemsIndex.Login;
@@ -31,8 +33,9 @@ namespace SixNations.Desktop.ViewModels
             ExitCmd = new RelayCommand(OnExit);
             
             MessengerInstance.Register<AuthenticatedMessage>(this, OnAuthenticated);
-            MessengerInstance.Register<BusyMessage>(this, (m) => IsBusy = m.IsBusy);
         }
+
+        public BusyStateManager BusyStateManager { get; }
 
         public ISelectedIndexManager SelectedIndexManager { get; }
 
@@ -44,31 +47,18 @@ namespace SixNations.Desktop.ViewModels
 
         public ICommand ClearStoryFilterCmd { get; }
 
-        public bool CanExecuteStoryFilter => !IsBusy && IsLoggedIn;
-
-        public bool IsBusy
-        {
-            get => _isBusy;
-            private set
-            {
-                if (_isBusy != value)
-                {
-                    _isBusy = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        public bool CanExecuteStoryFilter => !BusyStateManager.IsBusy && IsLoggedIn;
 
         public bool IsLoggedIn => User.Current.IsLoggedIn;
 
         private void OnAuthenticated(AuthenticatedMessage m)
         {
-            IsBusy = true;
+            MessengerInstance.Send(new BusyMessage(true, this));
             User.Current.Initialise(m.Token);
             RaisePropertyChanged(nameof(IsLoggedIn));
             _navigationService.NavigateTo(
                 HamburgerNavItemsIndex.Requirements.ToString());
-            IsBusy = false;
+            MessengerInstance.Send(new BusyMessage(false, this));
         }
 
         private void OnStoryFilter()
