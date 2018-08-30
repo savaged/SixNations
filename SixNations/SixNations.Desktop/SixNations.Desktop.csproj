@@ -171,6 +171,7 @@
     <Compile Include="Exceptions\AuthServiceException.cs" />
     <Compile Include="Facades\MockedHttpDataServiceFacade.cs" />
     <Compile Include="Helpers\ActionConfirmation.cs" />
+    <Compile Include="Helpers\BusyStateManager.cs" />
     <Compile Include="Interfaces\IHttpDataServiceFacade.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\FeedbackActions.cs" />
