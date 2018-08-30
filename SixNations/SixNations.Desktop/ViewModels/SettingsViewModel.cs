@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using MahApps.Metro;
 using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.ViewModels
@@ -12,6 +13,12 @@ namespace SixNations.Desktop.ViewModels
             {
                 if (Properties.Settings.Default.ThemeOption != value)
                 {
+                    var currentTheme = ThemeManager.DetectAppStyle(App.Current);
+                    ThemeManager.ChangeAppStyle(
+                        App.Current, 
+                        currentTheme.Item2, 
+                        ThemeManager.GetAppTheme($"Base{value.ToString()}")
+                    );
                     Properties.Settings.Default.ThemeOption = value;
                     Properties.Settings.Default.Save();
                     RaisePropertyChanged();
