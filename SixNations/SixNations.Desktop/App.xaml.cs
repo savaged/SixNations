@@ -6,6 +6,7 @@ using SixNations.Desktop.ViewModels;
 using SixNations.Desktop.Views;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Threading;
+using MahApps.Metro;
 
 namespace SixNations.Desktop
 {
@@ -26,6 +27,15 @@ namespace SixNations.Desktop
 
             app = new MainWindow();
             var context = ServiceLocator.Current.GetInstance<MainViewModel>();
+
+            var userTheme = Desktop.Properties.Settings.Default.ThemeOption;
+            var appStyle = ThemeManager.DetectAppStyle(App.Current);
+            ThemeManager.ChangeAppStyle(
+                        App.Current,
+                        appStyle.Item2,
+                        ThemeManager.GetAppTheme($"Base{userTheme.ToString()}")
+                    );
+
             app.Show();
         }
 
