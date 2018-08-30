@@ -17,6 +17,7 @@ namespace SixNations.Desktop.Helpers
 
     public enum ActionConfirmations
     {
+        Cancel,
         Delete
     }
 }

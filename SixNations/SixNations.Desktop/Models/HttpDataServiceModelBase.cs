@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using GalaSoft.MvvmLight;
 using SixNations.Desktop.Attributes;
@@ -11,16 +12,36 @@ namespace SixNations.Desktop.Models
     public abstract class HttpDataServiceModelBase : ObservableObject, IHttpDataServiceModel
     {
         private bool _isDirty;
-
+        private bool _isInitialised;
+        
         public virtual void Initialise(DataTransferObject dto)
         {
+            if (_isInitialised)
+            {
+                throw new NotSupportedException(
+                    "Trying to reinitialise which is not supported!");
+            }
             var type = GetType();
             var props = type.GetProperties();
             foreach (var p in props)
             {
                 SetProperty(dto, p);
             }
-            RaisePropertyChanged(string.Empty);
+            PropertyChanged += OnPropertyChanged;
+            _isInitialised = true;
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(IsDirty):
+                case nameof(IsLockedForEditing):
+                    break;
+                default:
+                    IsDirty = true;
+                    break;
+            }
         }
 
         private void SetProperty(DataTransferObject dto, PropertyInfo p)
@@ -127,7 +148,6 @@ namespace SixNations.Desktop.Models
                 }
             }
             return value;
-        }
-
+        }        
     }
 }

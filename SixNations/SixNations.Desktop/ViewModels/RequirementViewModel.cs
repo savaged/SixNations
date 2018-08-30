@@ -297,11 +297,19 @@ namespace SixNations.Desktop.ViewModels
 
         private async void OnCancel()
         {
-            MessengerInstance.Send(new BusyMessage(true));
-            await LoadIndexAsync();
-            CanSelectItem = true;
-            SelectedItem = Index.FirstOrDefault();
-            MessengerInstance.Send(new BusyMessage(false));
+            var confirmed = !SelectedItem.IsDirty;
+            if (!confirmed)
+            {
+                confirmed = ActionConfirmation.Confirm(ActionConfirmations.Cancel);
+            }            
+            if (confirmed)
+            {
+                MessengerInstance.Send(new BusyMessage(true));
+                await LoadIndexAsync();
+                CanSelectItem = true;
+                SelectedItem = Index.FirstOrDefault();
+                MessengerInstance.Send(new BusyMessage(false));
+            }
         }
     }
 }

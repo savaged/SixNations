@@ -67,7 +67,6 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
-                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Grid.Column="0" Grid.Row="0">Story</Label>
                     <TextBox Grid.Column="1" Grid.Row="0" 
@@ -99,7 +98,6 @@
                             FontFamily="Segoe MDL2 Assets"
                             Content="&#xE74E;"
                             Command="{Binding SaveCmd}"/>
-                    <TextBlock Grid.Column="1" Grid.Row="6" Text="{Binding IsSelectedItemEditable}"/>
                 </Grid>
             </StackPanel>
         </WrapPanel>
