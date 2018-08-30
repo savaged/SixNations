@@ -42,7 +42,7 @@ namespace SixNations.Desktop.ViewModels
             NewCmd = new RelayCommand(OnNew, () => CanExecuteNew);
             EditCmd = new RelayCommand(OnEdit, () => CanExecuteSelectedItemChange);
             DeleteCmd = new RelayCommand(OnDelete, () => CanExecuteSelectedItemChange);
-            SaveCmd = new RelayCommand(OnSave, () => CanExecuteSelectedItemChange);
+            SaveCmd = new RelayCommand(OnSave, () => CanExecuteSave);
             CancelCmd = new RelayCommand(OnCancel, () => CanExecuteCancel);
 
             MessengerInstance.Register<StoryFilterMessage>(this, OnFindStory);
@@ -127,6 +127,8 @@ namespace SixNations.Desktop.ViewModels
 
         public bool CanExecuteCancel => IsSelectedItemEditable;
 
+        public bool CanExecuteSave => CanExecute && IsSelectedItemEditable && SelectedItem.IsDirty;
+
         public ObservableCollection<Requirement> Index { get; }
 
         public bool IsSelectedItemEditable => SelectedItem != null && SelectedItem.IsLockedForEditing;
@@ -134,12 +136,7 @@ namespace SixNations.Desktop.ViewModels
         public bool CanSelectItem
         {
             get => _canSelectItem;
-            set
-            {
-                Set(ref _canSelectItem, value);
-                RaisePropertyChanged(nameof(IsSelectedItemEditable));
-                RaisePropertyChanged(nameof(CanExecuteCancel));
-            }
+            set => Set(ref _canSelectItem, value);
         }
 
         public Requirement SelectedItem
@@ -155,6 +152,7 @@ namespace SixNations.Desktop.ViewModels
                 {
                     Set(ref _selectedItem, value);
                 }
+                RaisePropertyChanged(nameof(IsSelectedItemEditable));
             }
         }
 
