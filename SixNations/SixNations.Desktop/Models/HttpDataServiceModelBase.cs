@@ -9,7 +9,8 @@ using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.Models
 {
-    public abstract class HttpDataServiceModelBase : ObservableObject, IHttpDataServiceModel
+    public abstract class HttpDataServiceModelBase 
+        : ObservableObject, IHttpDataServiceModel
     {
         private bool _isDirty;
         private bool _isInitialised;

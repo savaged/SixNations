@@ -121,6 +121,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\DataBoundViewModel.cs" />
     <Compile Include="ViewModels\WallDialogViewModel.cs" />
     <Compile Include="Views\WallDialog.xaml.cs">
       <DependentUpon>WallDialog.xaml</DependentUpon>

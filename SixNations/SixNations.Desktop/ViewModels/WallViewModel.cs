@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
-using SixNations.Desktop.Messages;
+using SixNations.Desktop.Interfaces;
+using SixNations.Desktop.Models;
 
 namespace SixNations.Desktop.ViewModels
 {
-    public class WallViewModel : ViewModelBase
+    public class WallViewModel : DataBoundViewModel<Requirement>
     {
-        public WallViewModel()
+        public WallViewModel(IDataService<Requirement> dataService) 
+            : base(dataService)
         {
         }
-
-        
     }
 }
