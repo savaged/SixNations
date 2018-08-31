@@ -7,12 +7,15 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:local="clr-namespace:SixNations.Desktop.Views"
                  xmlns:controls="clr-namespace:SixNations.Desktop.Controls"
+                 xmlns:converters="clr-namespace:SixNations.Desktop.Converters"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
                  md:DialogServiceViews.IsRegistered="True"
                  mc:Ignorable="d"
                  Height="600" Width="900"
                  WindowState="Normal"
+                 WindowStyle="SingleBorderWindow"
                  ResizeMode="CanResizeWithGrip"
                  SourceInitialized="OnSourceInitialized"
                  Closing="OnClosing"
@@ -40,8 +43,39 @@
                            Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
     </Window.Resources>
-    
+
+    <mah:MetroWindow.Style>
+        <Style TargetType="{x:Type Window}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsFullScreen}" Value="True">
+                    <Setter Property="WindowState" Value="Maximized"/>
+                    <Setter Property="WindowStyle" Value="None"/>
+                    <Setter Property="Topmost" Value="True"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsFullScreen}" Value="False">
+                    <Setter Property="WindowState" Value="Normal"/>
+                    <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </mah:MetroWindow.Style>
+
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button Margin="0,0,10,0" Command="{Binding FullScreenCmd}"
+                    Visibility="{Binding IsFullScreen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <iconPacks:Material Kind="Fullscreen"/>
+            </Button>
+            <Button Margin="0,0,10,0" Command="{Binding FullScreenExitCmd}"
+                    Visibility="{Binding IsFullScreen, Converter={StaticResource BoolToVisibilityConverter}}">
+                <iconPacks:Material Kind="FullscreenExit"/>
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+F" Command="{Binding StoryFilterCmd}"/>
         <KeyBinding Gesture="Shift+Ctrl+F" Command="{Binding ClearStoryFilterCmd}"/>
