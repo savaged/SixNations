@@ -30,12 +30,14 @@ namespace SixNations.Desktop.ViewModels
 
             StoryFilterCmd = new RelayCommand(OnStoryFilter, () => CanExecuteStoryFilter);
             ClearStoryFilterCmd = new RelayCommand(OnClearStoryFilter, () => CanExecuteStoryFilter);
-            FullScreenCmd = new RelayCommand(() => IsFullScreen = true, () => CanExecuteFullScreenToggle);
-            FullScreenExitCmd = new RelayCommand(() => IsFullScreen = false, () => CanExecuteFullScreenToggle);
+            FullScreenCmd = new RelayCommand(OnFullScreen, () => CanExecuteFullScreenToggle);
+            FullScreenExitCmd = new RelayCommand(OnFullScreenExit, () => CanExecuteFullScreenToggle);
             ExitCmd = new RelayCommand(OnExit);
             
             MessengerInstance.Register<AuthenticatedMessage>(this, OnAuthenticated);
         }
+
+        public event EventHandler<IIsFullScreenChangedEventArgs> IsFullScreenChanged;
 
         public BusyStateManager BusyStateManager { get; }
 
@@ -61,7 +63,11 @@ namespace SixNations.Desktop.ViewModels
         public bool IsFullScreen
         {
             get => _isFullScreen;
-            set => Set(ref _isFullScreen, value);
+            set
+            {
+                Set(ref _isFullScreen, value);
+                RaiseIsFullScreenChangedChanged();
+            }
         }
 
         public bool IsLoggedIn => User.Current.IsLoggedIn;
@@ -91,5 +97,33 @@ namespace SixNations.Desktop.ViewModels
         {
             App.Current.Shutdown();
         }
+
+        private void OnFullScreen()
+        {
+            IsFullScreen = true;
+            // TODO: Open new dialog with the wall control
+        }
+
+        private void OnFullScreenExit()
+        {
+            IsFullScreen = false;
+            // TODO: Close new dialog with the wall control
+        }
+
+        private void RaiseIsFullScreenChangedChanged()
+        {
+            var handler = IsFullScreenChanged;
+            handler?.Invoke(this, new IsFullScreenChangedEventArgs(IsFullScreen));
+        }
+    }
+
+    public class IsFullScreenChangedEventArgs : EventArgs, IIsFullScreenChangedEventArgs
+    {
+        public IsFullScreenChangedEventArgs(bool isFullScreenValue)
+        {
+            IsFullScreenValue = isFullScreenValue;
+        }
+
+        public bool IsFullScreenValue { get; }
     }
 }

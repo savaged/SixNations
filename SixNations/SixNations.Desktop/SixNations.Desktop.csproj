@@ -214,6 +214,7 @@
     <Compile Include="Services\RequirementDataService.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\FindStoryDialogViewModel.cs" />
+    <Compile Include="Interfaces\IIsFullScreenChangedEventArgs.cs" />
     <Compile Include="ViewModels\WallViewModel.cs" />
     <Compile Include="ViewModels\RequirementViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />

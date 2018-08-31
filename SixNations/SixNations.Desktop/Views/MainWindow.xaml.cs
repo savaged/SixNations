@@ -11,7 +11,7 @@ namespace SixNations.Desktop.Views
     /// </summary>
     public partial class MainWindow
     {
-        private ISelectedIndexManager _selectedIndexManager;
+        private IShellViewModel _shell;
 
         public MainWindow()
         {
@@ -20,9 +20,14 @@ namespace SixNations.Desktop.Views
 
         private void OnSourceInitialized(object sender, EventArgs e)
         {
-            var shellVM = (IShellViewModel)DataContext;
-            _selectedIndexManager = shellVM.SelectedIndexManager;
-            _selectedIndexManager.SelectedIndexChanged += OnSelectedIndexChanged;
+            _shell = (IShellViewModel)DataContext;
+            _shell.SelectedIndexManager.SelectedIndexChanged += OnSelectedIndexChanged;
+            _shell.IsFullScreenChanged += OnIsFullScreenChanged;
+        }
+
+        private void OnIsFullScreenChanged(object sender, IIsFullScreenChangedEventArgs e)
+        {
+            // TODO hide / unhide window and task bar entry
         }
 
         private void OnSelectedIndexChanged(object sender, EventArgs e)
@@ -47,7 +52,8 @@ namespace SixNations.Desktop.Views
 
         private void OnClosing(object sender, CancelEventArgs e)
         {
-            _selectedIndexManager.SelectedIndexChanged -= OnSelectedIndexChanged;
+            _shell.SelectedIndexManager.SelectedIndexChanged -= OnSelectedIndexChanged;
+            _shell.IsFullScreenChanged -= OnIsFullScreenChanged;
         }
     }
 }
