@@ -1,0 +1,25 @@
+﻿<mah:MetroWindow x:Class="SixNations.Desktop.Views.WallDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:SixNations.Desktop.Controls"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        mc:Ignorable="d"
+        Title="{Binding Title}" TitleCaps="False"
+        WindowState="Maximized"
+        WindowStyle="None" ShowTitleBar="False"
+        DataContext="{Binding Source={StaticResource Locator}, Path=WallDialog}">
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding FullScreenExitCmd}"/>
+    </Window.InputBindings>
+    <Grid>
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Exit Full Screen" Command="{Binding FullScreenExitCmd}"/>
+            </ContextMenu>
+        </Grid.ContextMenu>
+        <controls:Wall />
+    </Grid>
+</mah:MetroWindow>

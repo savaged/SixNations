@@ -8,6 +8,7 @@ using SixNations.Desktop.Messages;
 using SixNations.Desktop.Constants;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Helpers;
+using System.Reflection;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -21,6 +22,8 @@ namespace SixNations.Desktop.ViewModels
             INavigationService navigationService, 
             MvvmDialogs.IDialogService dialogService)
         {
+            Title = Assembly.GetEntryAssembly().GetName().Name;
+
             BusyStateManager = busyStateManager;
             _navigationService = navigationService;
             SelectedIndexManager = _navigationService;
@@ -31,7 +34,6 @@ namespace SixNations.Desktop.ViewModels
             StoryFilterCmd = new RelayCommand(OnStoryFilter, () => CanExecuteStoryFilter);
             ClearStoryFilterCmd = new RelayCommand(OnClearStoryFilter, () => CanExecuteStoryFilter);
             FullScreenCmd = new RelayCommand(OnFullScreen, () => CanExecuteFullScreenToggle);
-            FullScreenExitCmd = new RelayCommand(OnFullScreenExit, () => CanExecuteFullScreenToggle);
             ExitCmd = new RelayCommand(OnExit);
             
             MessengerInstance.Register<AuthenticatedMessage>(this, OnAuthenticated);
@@ -53,8 +55,6 @@ namespace SixNations.Desktop.ViewModels
 
         public ICommand FullScreenCmd { get; }
 
-        public ICommand FullScreenExitCmd { get; }
-
         public bool CanExecuteFullScreenToggle => 
             SelectedIndexManager.SelectedIndex == (int)HamburgerNavItemsIndex.Wall;
 
@@ -71,6 +71,8 @@ namespace SixNations.Desktop.ViewModels
         }
 
         public bool IsLoggedIn => User.Current.IsLoggedIn;
+
+        public string Title { get; }
 
         private void OnAuthenticated(AuthenticatedMessage m)
         {
@@ -101,13 +103,9 @@ namespace SixNations.Desktop.ViewModels
         private void OnFullScreen()
         {
             IsFullScreen = true;
-            // TODO: Open new dialog with the wall control
-        }
-
-        private void OnFullScreenExit()
-        {
+            var vm = ServiceLocator.Current.GetInstance<WallDialogViewModel>();
+            var result = DialogService.ShowDialog(this, vm);
             IsFullScreen = false;
-            // TODO: Close new dialog with the wall control
         }
 
         private void RaiseIsFullScreenChangedChanged()

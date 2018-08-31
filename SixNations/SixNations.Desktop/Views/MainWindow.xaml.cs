@@ -12,6 +12,7 @@ namespace SixNations.Desktop.Views
     public partial class MainWindow
     {
         private IShellViewModel _shell;
+        private WindowState _defaultWindowState;
 
         public MainWindow()
         {
@@ -20,6 +21,7 @@ namespace SixNations.Desktop.Views
 
         private void OnSourceInitialized(object sender, EventArgs e)
         {
+            _defaultWindowState = WindowState;
             _shell = (IShellViewModel)DataContext;
             _shell.SelectedIndexManager.SelectedIndexChanged += OnSelectedIndexChanged;
             _shell.IsFullScreenChanged += OnIsFullScreenChanged;
@@ -27,7 +29,16 @@ namespace SixNations.Desktop.Views
 
         private void OnIsFullScreenChanged(object sender, IIsFullScreenChangedEventArgs e)
         {
-            // TODO hide / unhide window and task bar entry
+            if (e.IsFullScreenValue)
+            {
+                WindowState = WindowState.Minimized;
+                ShowInTaskbar = false;
+            }
+            else
+            {
+                WindowState = _defaultWindowState;
+                ShowInTaskbar = true;
+            }
         }
 
         private void OnSelectedIndexChanged(object sender, EventArgs e)

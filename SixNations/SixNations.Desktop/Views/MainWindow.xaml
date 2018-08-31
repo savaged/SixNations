@@ -13,6 +13,7 @@
                  xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
                  md:DialogServiceViews.IsRegistered="True"
                  mc:Ignorable="d"
+                 Title="{Binding Title}" TitleCaps="False"
                  Height="600" Width="900"
                  WindowState="Normal"
                  WindowStyle="SingleBorderWindow"
@@ -51,12 +52,9 @@
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <Button Margin="0,0,10,0" Command="{Binding FullScreenCmd}"
+                    ToolTip="Enter full screen mode"
                     Visibility="{Binding IsFullScreen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <iconPacks:Material Kind="Fullscreen"/>
-            </Button>
-            <Button Margin="0,0,10,0" Command="{Binding FullScreenExitCmd}"
-                    Visibility="{Binding IsFullScreen, Converter={StaticResource BoolToVisibilityConverter}}">
-                <iconPacks:Material Kind="FullscreenExit"/>
             </Button>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>

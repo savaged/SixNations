@@ -78,6 +78,7 @@ namespace SixNations.Desktop.ViewModels
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RequirementViewModel>();
             SimpleIoc.Default.Register<WallViewModel>();
+            SimpleIoc.Default.Register<WallDialogViewModel>();
             SimpleIoc.Default.Register<AboutViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();            
             SimpleIoc.Default.Register<FindStoryDialogViewModel>();
@@ -90,6 +91,8 @@ namespace SixNations.Desktop.ViewModels
         public RequirementViewModel Requirement => ServiceLocator.Current.GetInstance<RequirementViewModel>();
 
         public WallViewModel Wall => ServiceLocator.Current.GetInstance<WallViewModel>();
+
+        public WallDialogViewModel WallDialog => ServiceLocator.Current.GetInstance<WallDialogViewModel>();
 
         public AboutViewModel About => ServiceLocator.Current.GetInstance<AboutViewModel>();
 
