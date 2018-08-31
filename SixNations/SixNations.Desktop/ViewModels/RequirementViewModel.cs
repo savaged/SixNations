@@ -54,15 +54,25 @@ namespace SixNations.Desktop.ViewModels
         {
             MessengerInstance.Send(new BusyMessage(true, this));
 
-            await LoadLookupAsync();
+            try
+            {
+                await LoadLookupAsync();
 
-            await LoadIndexAsync();
+                await LoadIndexAsync();
 
-            CanSelectItem = true;
+                CanSelectItem = true;
 
-            SelectedItem = Index.First();
-
-            MessengerInstance.Send(new BusyMessage(false, this));
+                SelectedItem = Index.First();
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Unexpexted exception loading! {0}", ex);
+                FeedbackActions.ReactToException(ex);
+            }
+            finally
+            {
+                MessengerInstance.Send(new BusyMessage(false, this));
+            }
         }
 
         private async Task LoadLookupAsync()

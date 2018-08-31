@@ -33,7 +33,7 @@ namespace SixNations.Desktop.Views
             }
             if (selected != null)
             {
-                HamburgerNav.Content = ((HamburgerMenuItem)selected);
+                HamburgerNav.Content = (HamburgerMenuItem)selected;
                 HamburgerNav.IsPaneOpen = false;
             }
         }
