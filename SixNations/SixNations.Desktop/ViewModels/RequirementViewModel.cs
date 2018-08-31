@@ -7,6 +7,7 @@ using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Models;
+using SixNations.Desktop.Constants;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -60,7 +61,7 @@ namespace SixNations.Desktop.ViewModels
 
             EstimationLookup = lookups.First(l => l.Name == "RequirementEstimation");
             PriorityLookup = lookups.First(l => l.Name == "RequirementPriority");
-            StatusLookup = lookups.First(l => l.Name == "RequirementStatus");
+            StatusLookup = new Lookup(RequirementStatus._);
         }
 
         public Lookup EstimationLookup

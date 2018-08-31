@@ -11,6 +11,7 @@ using SixNations.Desktop.Models;
 using SixNations.Desktop.Messages;
 using System.Windows.Input;
 using CommonServiceLocator;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -28,6 +29,12 @@ namespace SixNations.Desktop.ViewModels
         {
             _dataService = dataService;
             Index = new ObservableCollection<T>();
+
+            NewCmd = new RelayCommand(OnNew, () => CanExecuteNew);
+            EditCmd = new RelayCommand(OnEdit, () => CanExecuteSelectedItemChange);
+            DeleteCmd = new RelayCommand(OnDelete, () => CanExecuteSelectedItemChange);
+            SaveCmd = new RelayCommand(OnSave, () => CanExecuteSave);
+            CancelCmd = new RelayCommand(OnCancel, () => CanExecuteCancel);
         }
 
         public async virtual Task LoadAsync()

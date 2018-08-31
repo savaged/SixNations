@@ -38,9 +38,9 @@ namespace SixNations.Desktop.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Dark")]
-        public global::SixNations.Desktop.Interfaces.ThemeOptions ThemeOption {
+        public global::SixNations.Desktop.Constants.ThemeOptions ThemeOption {
             get {
-                return ((global::SixNations.Desktop.Interfaces.ThemeOptions)(this["ThemeOption"]));
+                return ((global::SixNations.Desktop.Constants.ThemeOptions)(this["ThemeOption"]));
             }
             set {
                 this["ThemeOption"] = value;

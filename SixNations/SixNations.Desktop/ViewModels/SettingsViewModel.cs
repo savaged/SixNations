@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using MahApps.Metro;
-using SixNations.Desktop.Interfaces;
+using SixNations.Desktop.Constants;
 
 namespace SixNations.Desktop.ViewModels
 {

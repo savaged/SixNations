@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SixNations.Desktop.Controls"
              xmlns:converters="clr-namespace:SixNations.Desktop.Converters"
-             xmlns:interfaces="clr-namespace:SixNations.Desktop.Interfaces"
+             xmlns:constants="clr-namespace:SixNations.Desktop.Constants"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding Source={StaticResource Locator}, Path=Settings}">
@@ -16,11 +16,11 @@
         <Label FontSize="24">Personalisation</Label>
         <Label FontSize="18">Choose Theme</Label>
         <RadioButton Margin="10" GroupName="Themes"
-                     IsChecked="{Binding ThemeOption, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static interfaces:ThemeOptions.Dark}}">
+                     IsChecked="{Binding ThemeOption, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static constants:ThemeOptions.Dark}}">
             <TextBlock>Dark</TextBlock>
         </RadioButton>
         <RadioButton Margin="10,0,0,0" GroupName="Themes"
-                     IsChecked="{Binding ThemeOption, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static interfaces:ThemeOptions.Light}}">
+                     IsChecked="{Binding ThemeOption, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static constants:ThemeOptions.Light}}">
             <TextBlock>Light</TextBlock>
         </RadioButton>
     </StackPanel>

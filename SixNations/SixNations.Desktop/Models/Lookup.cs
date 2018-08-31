@@ -34,6 +34,19 @@ namespace SixNations.Desktop.Models
             }
         }
 
+        public Lookup(Enum @enum)
+            : this(@enum.ToString())
+        {
+            foreach (var field in Enum.GetValues(@enum.GetType()))
+            {
+                var value = (int)field;
+                if (value > 0)
+                {
+                    Add(value, field.ToString());
+                }
+            }
+        }
+
         public void Initialise(DataTransferObject dto)
         {
             if (dto.ContainsKey($"{Name}ID") || dto.ContainsKey("ID"))
