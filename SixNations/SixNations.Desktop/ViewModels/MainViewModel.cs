@@ -6,7 +6,6 @@ using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Constants;
-using GalaSoft.MvvmLight.Views;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Helpers;
 
@@ -23,7 +22,7 @@ namespace SixNations.Desktop.ViewModels
         {
             BusyStateManager = busyStateManager;
             _navigationService = navigationService;
-            SelectedIndexManager = (ISelectedIndexManager)_navigationService;
+            SelectedIndexManager = _navigationService;
             SelectedIndexManager.SelectedIndex = (int)HamburgerNavItemsIndex.Login;
 
             DialogService = dialogService;

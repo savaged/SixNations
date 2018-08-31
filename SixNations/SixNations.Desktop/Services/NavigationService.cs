@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Views;
 using SixNations.Desktop.Constants;
 using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.Services
 {
-    public class NavigationService
-        : ObservableObject, INavigationService, ISelectedIndexManager
+    public class NavigationService : ObservableObject, INavigationService
     {
         private readonly IDictionary<string, int> _navItems;
         private HamburgerNavItemsIndex _previousNavItem;
