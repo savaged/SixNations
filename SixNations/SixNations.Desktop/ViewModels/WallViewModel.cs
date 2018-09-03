@@ -4,11 +4,11 @@ using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Constants;
 using GongSolutions.Wpf.DragDrop;
-using SixNations.Desktop.Helpers;
+using System.Windows;
 
 namespace SixNations.Desktop.ViewModels
 {
-    public class WallViewModel : DataBoundViewModel<Requirement>
+    public class WallViewModel : DataBoundViewModel<Requirement>, IDropTarget
     {
         public WallViewModel(IDataService<Requirement> dataService) 
             : base(dataService)
@@ -17,8 +17,6 @@ namespace SixNations.Desktop.ViewModels
             WIP = new RequirementStatusSwimlane();
             Test = new RequirementStatusSwimlane();
             Done = new RequirementStatusSwimlane();
-
-            DropHandler = new RequirementDropHandler();
         }
 
         public async override Task LoadAsync()
@@ -46,6 +44,20 @@ namespace SixNations.Desktop.ViewModels
 
         public RequirementStatusSwimlane Done { get; }
 
-        public IDropTarget DropHandler { get; }
+        public void DragOver(IDropInfo di)
+        {
+            if (di != null && di.Data != null && di.TargetItem != null)
+            {
+                di.DropTargetAdorner = DropTargetAdorners.Highlight;
+                di.Effects = DragDropEffects.Copy;
+            }
+        }
+
+        public void Drop(IDropInfo di)
+        {
+            var source = (RequirementStatusSwimlane)di.Data;
+            var target = (RequirementStatusSwimlane)di.TargetItem;
+            // TODO add to target and remove from source
+        }
     }
 }

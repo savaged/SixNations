@@ -124,7 +124,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helpers\RequirementDropHandler.cs" />
     <Compile Include="Models\RequirementStatusSwimlane.cs" />
     <Compile Include="ViewModels\DataBoundViewModel.cs" />
     <Compile Include="ViewModels\WallDialogViewModel.cs" />

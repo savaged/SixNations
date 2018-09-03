@@ -1,10 +1,9 @@
 ﻿using System;
-using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 
 namespace SixNations.Desktop.Models
 {
-    public class RequirementStatusSwimlane : ObservableObject
+    public class RequirementStatusSwimlane
     {
         public RequirementStatusSwimlane()
         {
