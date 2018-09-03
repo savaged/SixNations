@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Collections.ObjectModel;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Constants;
+using GongSolutions.Wpf.DragDrop;
+using SixNations.Desktop.Helpers;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -13,10 +13,12 @@ namespace SixNations.Desktop.ViewModels
         public WallViewModel(IDataService<Requirement> dataService) 
             : base(dataService)
         {
-            Prioritised = new ObservableCollection<Requirement>();
-            WIP = new ObservableCollection<Requirement>();
-            Test = new ObservableCollection<Requirement>();
-            Done = new ObservableCollection<Requirement>();
+            Prioritised = new RequirementStatusSwimlane();
+            WIP = new RequirementStatusSwimlane();
+            Test = new RequirementStatusSwimlane();
+            Done = new RequirementStatusSwimlane();
+
+            DropHandler = new RequirementDropHandler();
         }
 
         public async override Task LoadAsync()
@@ -24,24 +26,26 @@ namespace SixNations.Desktop.ViewModels
             await base.LoadAsync();
 
             Index.Where(r => r.Status == (int)RequirementStatus.Prioritised)
-                .ToList().ForEach(r => Prioritised.Add(r));
+                .ToList().ForEach(r => Prioritised.Index.Add(r));
 
             Index.Where(r => r.Status == (int)RequirementStatus.WIP)
-                .ToList().ForEach(r => WIP.Add(r));
+                .ToList().ForEach(r => WIP.Index.Add(r));
 
             Index.Where(r => r.Status == (int)RequirementStatus.Test)
-                .ToList().ForEach(r => Test.Add(r));
+                .ToList().ForEach(r => Test.Index.Add(r));
 
             Index.Where(r => r.Status == (int)RequirementStatus.Done)
-                .ToList().ForEach(r => Done.Add(r));
+                .ToList().ForEach(r => Done.Index.Add(r));
         }
 
-        public ObservableCollection<Requirement> Prioritised { get; }
+        public RequirementStatusSwimlane Prioritised { get; }
 
-        public ObservableCollection<Requirement> WIP { get; }
+        public RequirementStatusSwimlane WIP { get; }
 
-        public ObservableCollection<Requirement> Test { get; }
+        public RequirementStatusSwimlane Test { get; }
 
-        public ObservableCollection<Requirement> Done { get; }
+        public RequirementStatusSwimlane Done { get; }
+
+        public IDropTarget DropHandler { get; }
     }
 }
