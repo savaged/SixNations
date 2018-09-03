@@ -68,7 +68,8 @@
                       Background="White"
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
-                      dd:DragDrop.DropHandler="{Binding}"
+                      dd:DragDrop.DragHandler="{Binding Prioritised.RequirementDragHandler}"
+                      dd:DragDrop.DropHandler="{Binding Prioritised}"
                       ItemsSource="{Binding Prioritised.Index}"
                       ItemTemplate="{StaticResource Requirement}"/>
         </Border>
@@ -77,7 +78,8 @@
                       Background="White"
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
-                      dd:DragDrop.DropHandler="{Binding}"
+                      dd:DragDrop.DragHandler="{Binding WIP.RequirementDragHandler}"
+                      dd:DragDrop.DropHandler="{Binding WIP}"
                       ItemsSource="{Binding WIP.Index}"
                       ItemTemplate="{StaticResource Requirement}"/>
         </Border>
@@ -86,7 +88,8 @@
                       Background="White"
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
-                      dd:DragDrop.DropHandler="{Binding}"
+                      dd:DragDrop.DragHandler="{Binding Test.RequirementDragHandler}"
+                      dd:DragDrop.DropHandler="{Binding Test}"
                       ItemsSource="{Binding Test.Index}"
                       ItemTemplate="{StaticResource Requirement}"/>
         </Border>
@@ -95,7 +98,8 @@
                       Background="White"
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
-                      dd:DragDrop.DropHandler="{Binding}"
+                      dd:DragDrop.DragHandler="{Binding Done.RequirementDragHandler}"
+                      dd:DragDrop.DropHandler="{Binding Done}"
                       ItemsSource="{Binding Done.Index}"
                       ItemTemplate="{StaticResource Requirement}"/>
         </Border>

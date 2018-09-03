@@ -3,20 +3,18 @@ using System.Threading.Tasks;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Constants;
-using GongSolutions.Wpf.DragDrop;
-using System.Windows;
 
 namespace SixNations.Desktop.ViewModels
 {
-    public class WallViewModel : DataBoundViewModel<Requirement>, IDropTarget
+    public class WallViewModel : DataBoundViewModel<Requirement>
     {
         public WallViewModel(IDataService<Requirement> dataService) 
             : base(dataService)
         {
-            Prioritised = new RequirementStatusSwimlane();
-            WIP = new RequirementStatusSwimlane();
-            Test = new RequirementStatusSwimlane();
-            Done = new RequirementStatusSwimlane();
+            Prioritised = new RequirementStatusSwimlane(RequirementStatus.Prioritised);
+            WIP = new RequirementStatusSwimlane(RequirementStatus.WIP);
+            Test = new RequirementStatusSwimlane(RequirementStatus.Test);
+            Done = new RequirementStatusSwimlane(RequirementStatus.Done);
         }
 
         public async override Task LoadAsync()
@@ -43,21 +41,5 @@ namespace SixNations.Desktop.ViewModels
         public RequirementStatusSwimlane Test { get; }
 
         public RequirementStatusSwimlane Done { get; }
-
-        public void DragOver(IDropInfo di)
-        {
-            if (di != null && di.Data != null && di.TargetItem != null)
-            {
-                di.DropTargetAdorner = DropTargetAdorners.Highlight;
-                di.Effects = DragDropEffects.Copy;
-            }
-        }
-
-        public void Drop(IDropInfo di)
-        {
-            var source = (RequirementStatusSwimlane)di.Data;
-            var target = (RequirementStatusSwimlane)di.TargetItem;
-            // TODO add to target and remove from source
-        }
     }
 }
