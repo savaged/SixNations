@@ -62,33 +62,34 @@
 
         <Border Grid.Column="0" Grid.Row="1" 
                 BorderThickness="0,0,1,0" 
-                BorderBrush="Black"
-                Background="White">
+                BorderBrush="Black" Background="White">
             <ListView x:Name="LvPrioritised" 
                       Background="White"
                       dd:DragDrop.IsDragSource="True"
-                      dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DragHandler="{Binding Prioritised.RequirementDragHandler}"
+                      dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DropHandler="{Binding Prioritised}"
                       ItemsSource="{Binding Prioritised.Index}"
                       ItemTemplate="{StaticResource Requirement}"/>
         </Border>
-        <Border Grid.Column="1" Grid.Row="1" BorderThickness="0,0,1,0" BorderBrush="Black">
+        <Border Grid.Column="1" Grid.Row="1" 
+                BorderThickness="0,0,1,0" BorderBrush="Black">
             <ListView x:Name="LvWIP" 
                       Background="White"
                       dd:DragDrop.IsDragSource="True"
-                      dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DragHandler="{Binding WIP.RequirementDragHandler}"
+                      dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DropHandler="{Binding WIP}"
                       ItemsSource="{Binding WIP.Index}"
                       ItemTemplate="{StaticResource Requirement}"/>
         </Border>
-        <Border Grid.Column="2" Grid.Row="1" BorderThickness="0,0,1,0" BorderBrush="Black">
+        <Border Grid.Column="2" Grid.Row="1" 
+                BorderThickness="0,0,1,0" BorderBrush="Black">
             <ListView x:Name="LvTest" 
                       Background="White"
                       dd:DragDrop.IsDragSource="True"
-                      dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DragHandler="{Binding Test.RequirementDragHandler}"
+                      dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DropHandler="{Binding Test}"
                       ItemsSource="{Binding Test.Index}"
                       ItemTemplate="{StaticResource Requirement}"/>
@@ -97,8 +98,8 @@
             <ListView x:Name="LvDone" 
                       Background="White"
                       dd:DragDrop.IsDragSource="True"
-                      dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DragHandler="{Binding Done.RequirementDragHandler}"
+                      dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DropHandler="{Binding Done}"
                       ItemsSource="{Binding Done.Index}"
                       ItemTemplate="{StaticResource Requirement}"/>
