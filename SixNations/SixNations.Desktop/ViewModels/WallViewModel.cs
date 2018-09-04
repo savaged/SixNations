@@ -11,10 +11,10 @@ namespace SixNations.Desktop.ViewModels
         public WallViewModel(IDataService<Requirement> dataService) 
             : base(dataService)
         {
-            Prioritised = new RequirementStatusSwimlane(RequirementStatus.Prioritised);
-            WIP = new RequirementStatusSwimlane(RequirementStatus.WIP);
-            Test = new RequirementStatusSwimlane(RequirementStatus.Test);
-            Done = new RequirementStatusSwimlane(RequirementStatus.Done);
+            Prioritised = new SwimlaneViewModel(RequirementStatus.Prioritised);
+            WIP = new SwimlaneViewModel(RequirementStatus.WIP);
+            Test = new SwimlaneViewModel(RequirementStatus.Test);
+            Done = new SwimlaneViewModel(RequirementStatus.Done);
         }
 
         public async override Task LoadAsync()
@@ -38,12 +38,12 @@ namespace SixNations.Desktop.ViewModels
                 .ToList().ForEach(r => Done.Index.Add(r));
         }
 
-        public RequirementStatusSwimlane Prioritised { get; }
+        public SwimlaneViewModel Prioritised { get; }
 
-        public RequirementStatusSwimlane WIP { get; }
+        public SwimlaneViewModel WIP { get; }
 
-        public RequirementStatusSwimlane Test { get; }
+        public SwimlaneViewModel Test { get; }
 
-        public RequirementStatusSwimlane Done { get; }
+        public SwimlaneViewModel Done { get; }
     }
 }

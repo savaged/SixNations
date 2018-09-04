@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="SixNations.Desktop.Controls.Swimlane"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="175">
+    <UserControl.Resources>
+        <DataTemplate x:Key="PostIt">
+            <TextBlock Text="{Binding Story}"
+                       Width="175"
+                       HorizontalAlignment="Center"
+                       Margin="10"
+                       Padding="10"
+                       Background="LightGoldenrodYellow"
+                       Foreground="Black"
+                       TextWrapping="Wrap"
+                       FontFamily="Ink Free"
+                       FontSize="14"/>
+        </DataTemplate>
+        <ItemsPanelTemplate x:Key="WallColumn">
+            <StackPanel Background="Red"/>
+        </ItemsPanelTemplate>
+    </UserControl.Resources>
+    <ItemsControl Background="White"
+                  VerticalAlignment="Top"
+                  dd:DragDrop.IsDragSource="True"
+                  dd:DragDrop.DragHandler="{Binding RequirementDragHandler}"
+                  dd:DragDrop.IsDropTarget="True"
+                  dd:DragDrop.UseDefaultDragAdorner="True"
+                  dd:DragDrop.DropHandler="{Binding}"
+                  ItemsSource="{Binding Index}"
+                  ItemTemplate="{StaticResource PostIt}"
+                  ItemsPanel="{StaticResource WallColumn}"/>
+</UserControl>

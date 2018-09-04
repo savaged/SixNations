@@ -124,9 +124,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\Swimlane.xaml.cs">
+      <DependentUpon>Swimlane.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\RequirementDragHandler.cs" />
-    <Compile Include="Models\RequirementStatusSwimlane.cs" />
     <Compile Include="ViewModels\DataBoundViewModel.cs" />
+    <Compile Include="ViewModels\SwimlaneViewModel.cs" />
     <Compile Include="ViewModels\WallDialogViewModel.cs" />
     <Compile Include="Views\WallDialog.xaml.cs">
       <DependentUpon>WallDialog.xaml</DependentUpon>
@@ -144,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Swimlane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

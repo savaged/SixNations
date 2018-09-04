@@ -3,28 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dd="urn:gong-wpf-dragdrop"
+             xmlns:local="clr-namespace:SixNations.Desktop.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="OnLoaded"
              DataContext="{Binding Source={StaticResource Locator}, Path=Wall}">
-    <UserControl.Resources>
-        <DataTemplate x:Key="PostIt">
-            <TextBlock Text="{Binding Story}"
-                       Width="175"
-                       HorizontalAlignment="Center"
-                       Margin="10"
-                       Padding="10"
-                       Background="LightGoldenrodYellow"
-                       Foreground="Black"
-                       TextWrapping="Wrap"
-                       FontFamily="Ink Free"
-                       FontSize="14"/>
-        </DataTemplate>
-        <ItemsPanelTemplate x:Key="WallColumn">
-            <StackPanel Background="White"/>
-        </ItemsPanelTemplate>
-    </UserControl.Resources>
     <Grid x:Name="MainGrid" Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -58,56 +41,19 @@
                    HorizontalAlignment="Center">Done</Label>
         </Border>
 
-        <ItemsControl Grid.Column="0" Grid.Row="1" 
-                  Background="White"
-                  VerticalAlignment="Top"
-                  dd:DragDrop.IsDragSource="True"
-                  dd:DragDrop.DragHandler="{Binding Prioritised.RequirementDragHandler}"
-                  dd:DragDrop.IsDropTarget="True"
-                  dd:DragDrop.UseDefaultDragAdorner="True"
-                  dd:DragDrop.DropHandler="{Binding Prioritised}"
-                  ItemsSource="{Binding Prioritised.Index}"
-                  ItemTemplate="{StaticResource PostIt}"
-                  ItemsPanel="{StaticResource WallColumn}"/>
+        <local:Swimlane Grid.Column="0" Grid.Row="1" DataContext="{Binding Prioritised}"/>
         <Border Grid.Column="0" Grid.Row="1" 
                 BorderThickness="0,0,1,0" BorderBrush="Black"/>
 
-        <ItemsControl Grid.Column="1" Grid.Row="1" 
-                  Background="White"
-                  dd:DragDrop.IsDragSource="True"
-                  dd:DragDrop.DragHandler="{Binding WIP.RequirementDragHandler}"
-                  dd:DragDrop.IsDropTarget="True"
-                  dd:DragDrop.UseDefaultDragAdorner="True"
-                  dd:DragDrop.DropHandler="{Binding WIP}"
-                  ItemsSource="{Binding WIP.Index}"
-                  ItemTemplate="{StaticResource PostIt}"
-                  ItemsPanel="{StaticResource WallColumn}"/>
+        <local:Swimlane Grid.Column="1" Grid.Row="1" DataContext="{Binding WIP}"/>
         <Border Grid.Column="1" Grid.Row="1" 
                 BorderThickness="0,0,1,0" BorderBrush="Black"/>
 
-        <ItemsControl Grid.Column="2" Grid.Row="1" 
-                  Background="White"
-                  dd:DragDrop.IsDragSource="True"
-                  dd:DragDrop.DragHandler="{Binding Test.RequirementDragHandler}"
-                  dd:DragDrop.IsDropTarget="True"
-                  dd:DragDrop.UseDefaultDragAdorner="True"
-                  dd:DragDrop.DropHandler="{Binding Test}"
-                  ItemsSource="{Binding Test.Index}"
-                  ItemTemplate="{StaticResource PostIt}"
-                  ItemsPanel="{StaticResource WallColumn}"/>
+        <local:Swimlane Grid.Column="2" Grid.Row="1" DataContext="{Binding Test}"/>
         <Border Grid.Column="2" Grid.Row="1" 
                 BorderThickness="0,0,1,0" BorderBrush="Black"/>
 
-        <ItemsControl Grid.Column="3" Grid.Row="1"
-                  Background="White"
-                  dd:DragDrop.IsDragSource="True"
-                  dd:DragDrop.DragHandler="{Binding Done.RequirementDragHandler}"
-                  dd:DragDrop.IsDropTarget="True"
-                  dd:DragDrop.UseDefaultDragAdorner="True"
-                  dd:DragDrop.DropHandler="{Binding Done}"
-                  ItemsSource="{Binding Done.Index}"
-                  ItemTemplate="{StaticResource PostIt}"
-                  ItemsPanel="{StaticResource WallColumn}"/>
+        <local:Swimlane Grid.Column="3" Grid.Row="1" DataContext="{Binding Done}"/>
         <Border Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Background="Black"/>
     </Grid>
 </UserControl>
