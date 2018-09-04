@@ -8,7 +8,8 @@
              d:DesignHeight="480" d:DesignWidth="213">
     <UserControl.Resources>
         <DataTemplate x:Key="PostIt">
-            <TextBlock Text="{Binding Story}"
+            <Grid VerticalAlignment="Top">
+                <TextBlock Text="{Binding Story}"
                        Width="165"
                        Margin="5"
                        Padding="10"
@@ -17,17 +18,18 @@
                        TextWrapping="Wrap"
                        FontFamily="Ink Free"
                        FontSize="14"/>
+            </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    <ListBox Background="Transparent" 
-             Height="Auto" 
-             Width="Auto"
-             VerticalAlignment="Stretch"
-             dd:DragDrop.IsDragSource="True"
-             dd:DragDrop.DragHandler="{Binding RequirementDragHandler}"
-             dd:DragDrop.IsDropTarget="True"
-             dd:DragDrop.DropHandler="{Binding}"
-             ItemsSource="{Binding Index}"
-             ItemTemplate="{StaticResource PostIt}">
-    </ListBox>
+    <ListView Background="Transparent" 
+              Height="Auto" 
+              Width="Auto"
+              VerticalAlignment="Stretch"
+              dd:DragDrop.IsDragSource="True"
+              dd:DragDrop.DragHandler="{Binding RequirementDragHandler}"
+              dd:DragDrop.IsDropTarget="True"
+              dd:DragDrop.DropHandler="{Binding}"
+              ItemsSource="{Binding Index}"
+              ItemTemplate="{StaticResource PostIt}">
+    </ListView>
 </UserControl>

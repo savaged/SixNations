@@ -50,5 +50,10 @@ namespace SixNations.Desktop.Models
             get => _status;
             set => Set(ref _status, value);
         }
+
+        public override string ToString()
+        {
+            return Story;
+        }
     }
 }
