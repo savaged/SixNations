@@ -21,15 +21,19 @@ namespace SixNations.Desktop.ViewModels
         {
             await base.LoadAsync();
 
+            Prioritised.Index.Clear();
             Index.Where(r => r.Status == (int)RequirementStatus.Prioritised)
                 .ToList().ForEach(r => Prioritised.Index.Add(r));
 
+            WIP.Index.Clear();
             Index.Where(r => r.Status == (int)RequirementStatus.WIP)
                 .ToList().ForEach(r => WIP.Index.Add(r));
 
+            Test.Index.Clear();
             Index.Where(r => r.Status == (int)RequirementStatus.Test)
                 .ToList().ForEach(r => Test.Index.Add(r));
 
+            Done.Index.Clear();
             Index.Where(r => r.Status == (int)RequirementStatus.Done)
                 .ToList().ForEach(r => Done.Index.Add(r));
         }
