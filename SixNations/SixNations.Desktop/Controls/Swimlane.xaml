@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="213">
+             d:DesignHeight="480" d:DesignWidth="213">
     <ListView Background="White" 
-              Height="480" Width="213"
-              VerticalAlignment="Top"
+              Height="Auto" Width="Auto"
+              VerticalAlignment="Stretch"
               dd:DragDrop.IsDragSource="True"
               dd:DragDrop.DragHandler="{Binding RequirementDragHandler}"
               dd:DragDrop.IsDropTarget="True"
@@ -35,7 +35,7 @@
         </ListView.View>
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem">
-                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
                 <Setter Property="Margin" Value="5"/>
             </Style>
