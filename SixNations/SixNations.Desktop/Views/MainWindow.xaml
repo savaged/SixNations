@@ -17,7 +17,7 @@
                  Height="600" Width="900"
                  WindowState="Normal"
                  WindowStyle="SingleBorderWindow"
-                 ResizeMode="CanResizeWithGrip"
+                 ResizeMode="CanMinimize"
                  SourceInitialized="OnSourceInitialized"
                  Closing="OnClosing"
                  DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
