@@ -5,23 +5,23 @@ namespace SixNations.Desktop.Helpers
 {
     public class RequirementDragHandler : DefaultDragHandler
     {
-        public event EventHandler<DropEventArgs> DroppedHandler;
+        public event EventHandler<DragDroppingEventArgs> DragDroppingHandler;
 
         public override void Dropped(IDropInfo di)
         {
-            RaiseDropped(di);
+            RaiseDragDropping(di);
         }
 
-        private void RaiseDropped(IDropInfo di)
+        private void RaiseDragDropping(IDropInfo di)
         {
-            var handler = DroppedHandler;
-            handler?.Invoke(this, new DropEventArgs(di));
+            var handler = DragDroppingHandler;
+            handler?.Invoke(this, new DragDroppingEventArgs(di));
         }
     }
 
-    public class DropEventArgs
+    public class DragDroppingEventArgs
     {
-        public DropEventArgs(IDropInfo dropInfo)
+        public DragDroppingEventArgs(IDropInfo dropInfo)
         {
             DropInfo = dropInfo;
         }

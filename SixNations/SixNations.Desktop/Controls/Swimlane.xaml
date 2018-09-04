@@ -6,53 +6,28 @@
              xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="213">
-    <ListView Background="White" 
-              Height="Auto" Width="Auto"
-              VerticalAlignment="Stretch"
-              dd:DragDrop.IsDragSource="True"
-              dd:DragDrop.DragHandler="{Binding RequirementDragHandler}"
-              dd:DragDrop.IsDropTarget="True"
-              dd:DragDrop.UseDefaultDragAdorner="True"
-              dd:DragDrop.DropHandler="{Binding}"
-              ItemsSource="{Binding Index}">
-        <ListView.View>
-            <GridView>
-                <GridViewColumn Width="183">
-                    <GridViewColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Story}"
-                                       Width="Auto"                                       
-                                       Padding="10"
-                                       Background="LightGoldenrodYellow"
-                                       Foreground="Black"
-                                       TextWrapping="Wrap"
-                                       FontFamily="Ink Free"
-                                       FontSize="14"/>
-                        </DataTemplate>
-                    </GridViewColumn.CellTemplate>
-                </GridViewColumn>
-            </GridView>
-        </ListView.View>
-        <ListView.ItemContainerStyle>
-            <Style TargetType="ListViewItem">
-                <Setter Property="VerticalAlignment" Value="Stretch"/>
-                <Setter Property="HorizontalAlignment" Value="Center"/>
-                <Setter Property="Margin" Value="5"/>
-                <Style.Triggers>
-                    <MultiTrigger>
-                        <MultiTrigger.Conditions>
-                            <Condition Property="IsSelected" Value="true" />
-                            <Condition Property="Selector.IsSelectionActive" Value="true" />
-                        </MultiTrigger.Conditions>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderBrush" Value="Transparent"/>
-                    </MultiTrigger>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderBrush" Value="Transparent"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-        </ListView.ItemContainerStyle>
-    </ListView>
+    <UserControl.Resources>
+        <DataTemplate x:Key="PostIt">
+            <TextBlock Text="{Binding Story}"
+                       Width="165"
+                       Margin="5"
+                       Padding="10"
+                       Background="LightGoldenrodYellow"
+                       Foreground="Black"
+                       TextWrapping="Wrap"
+                       FontFamily="Ink Free"
+                       FontSize="14"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <ListBox Background="Transparent" 
+             Height="Auto" 
+             Width="Auto"
+             VerticalAlignment="Stretch"
+             dd:DragDrop.IsDragSource="True"
+             dd:DragDrop.DragHandler="{Binding RequirementDragHandler}"
+             dd:DragDrop.IsDropTarget="True"
+             dd:DragDrop.DropHandler="{Binding}"
+             ItemsSource="{Binding Index}"
+             ItemTemplate="{StaticResource PostIt}">
+    </ListBox>
 </UserControl>

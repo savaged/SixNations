@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace SixNations.Desktop.ViewModels
 {
-    public class SwimlaneViewModel : ViewModelBase
+    public class SwimlaneViewModel : ViewModelBase, IDropTarget
     {
         private readonly RequirementStatus _requirementStatus;
 
@@ -18,7 +18,7 @@ namespace SixNations.Desktop.ViewModels
             _requirementStatus = requirementStatus;
             Index = new ObservableCollection<Requirement>();
             RequirementDragHandler = new RequirementDragHandler();
-            RequirementDragHandler.DroppedHandler += OnDropped;
+            RequirementDragHandler.DragDroppingHandler += OnDragDropping;
         }
 
         public ObservableCollection<Requirement> Index { get; }
@@ -30,26 +30,32 @@ namespace SixNations.Desktop.ViewModels
             if (di != null && di.Data != null && di.TargetItem != null)
             {
                 di.DropTargetAdorner = DropTargetAdorners.Highlight;
-                di.Effects = DragDropEffects.Copy;
+                di.Effects = DragDropEffects.Move;
             }
         }
 
         public void Drop(IDropInfo di)
         {
             var source = (Requirement)di.Data;
-            if (source.Status != (int)_requirementStatus && !Index.Contains(source))
+            if (source.Status != (int)_requirementStatus)
             {
-                source.Status = (int)_requirementStatus;
-                Index.Add(source);
+                if (!Index.Contains(source))
+                {
+                    source.Status = (int)_requirementStatus;
+                    Index.Add(source);
+                }
             }
         }
 
-        private void OnDropped(object sender, DropEventArgs e)
+        private void OnDragDropping(object sender, DragDroppingEventArgs e)
         {
             var source = (Requirement)e.DropInfo.Data;
-            if (source.Status != (int)_requirementStatus && Index.Contains(source))
+            if (source.Status != (int)_requirementStatus)
             {
-                Index.Remove(source);
+                if (Index.Contains(source))
+                {
+                    Index.Remove(source);
+                }
             }
         }
     }
