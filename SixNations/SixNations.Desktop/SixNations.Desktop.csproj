@@ -124,6 +124,7 @@
     <Compile Include="Controls\Swimlane.xaml.cs">
       <DependentUpon>Swimlane.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DimensionLessMarginConvertercs.cs" />
     <Compile Include="Interfaces\IRequirement.cs" />
     <Compile Include="Messages\ReloadRequestMessage.cs" />
     <Compile Include="ViewModels\DataBoundViewModel.cs" />

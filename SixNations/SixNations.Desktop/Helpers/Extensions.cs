@@ -30,5 +30,51 @@ namespace SixNations.Desktop.Helpers
                     return false;
             }
         }
+
+        public static bool IsNumeric(this object value)
+        {
+            if (value is byte
+                || value is sbyte
+                || value is short
+                || value is ushort
+                || value is int
+                || value is uint
+                || value is long
+                || value is ulong
+                || value is float
+                || value is double
+                || value is decimal)
+            {
+                return true;
+            }
+            else if (value is string s)
+            {
+                return s.IsNumeric();
+            }
+            return false;
+        }
+
+        public static bool IsNumeric(this string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                if (byte.TryParse(value, out byte b)
+                    || sbyte.TryParse(value, out sbyte sb)
+                    || short.TryParse(value, out short s)
+                    || ushort.TryParse(value, out ushort us)
+                    || int.TryParse(value, out int i)
+                    || uint.TryParse(value, out uint ui)
+                    || long.TryParse(value, out long l)
+                    || ulong.TryParse(value, out ulong ul)
+                    || float.TryParse(value, out float f)
+                    || double.TryParse(value, out double d)
+                    || decimal.TryParse(value, out decimal n))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
+    

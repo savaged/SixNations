@@ -3,15 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:SixNations.Desktop.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="480" d:DesignWidth="213">
+             d:DesignHeight="480" d:DesignWidth="213"
+             Name="UcSwimlane">
     <UserControl.Resources>
+        <converters:DimensionLessMarginConvertercs x:Key="WidthLessMargin"/>
         <DataTemplate x:Key="PostIt">
             <Grid VerticalAlignment="Top">
                 <TextBlock Text="{Binding Story}"
                            Tag="{Binding Id}"
                            MouseMove="PostIt_MouseMove"
-                           Width="165"
+                           Width="{Binding Path=ActualWidth, ElementName=UcSwimlane, Converter={StaticResource WidthLessMargin}, ConverterParameter=40}"
                            Margin="5"
                            Padding="10"
                            Background="LightGoldenrodYellow"
