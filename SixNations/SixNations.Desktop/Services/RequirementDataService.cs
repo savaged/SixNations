@@ -57,17 +57,24 @@ namespace SixNations.Desktop.Services
         }
 
         public async Task<Requirement> EditModelAsync(
-            string authToken, Action<Exception> exceptionHandler, Requirement model)
+            string authToken, Action<Exception> exceptionHandler, int modelId)
         {
-            if (model.IsNew)
+            var isNew = modelId < 1;
+            if (isNew)
             {
-                throw new ArgumentException("Trying to edit a new model!", nameof(model));
+                throw new NotSupportedException("Trying to edit a new model! Use the store method instead.");
             }
-            var uri = $"{typeof(Requirement).NameToUriFormat()}/{model.Id}/edit";
-            var data = model.GetData();
+            var uri = $"{typeof(Requirement).NameToUriFormat()}/{modelId}/edit";
             var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
                     .HttpRequestAsync(uri, authToken);
-            model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
+            var model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
+            return model;
+        }
+
+        public async Task<Requirement> EditModelAsync(
+            string authToken, Action<Exception> exceptionHandler, Requirement model)
+        {
+            model = await EditModelAsync(authToken, exceptionHandler, model.Id);
             return model;
         }
 

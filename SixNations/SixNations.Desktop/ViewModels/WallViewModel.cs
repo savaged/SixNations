@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Constants;
+using SixNations.Desktop.Messages;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -11,14 +12,16 @@ namespace SixNations.Desktop.ViewModels
         public WallViewModel(IDataService<Requirement> dataService) 
             : base(dataService)
         {
-            Prioritised = new SwimlaneViewModel(RequirementStatus.Prioritised);
-            WIP = new SwimlaneViewModel(RequirementStatus.WIP);
-            Test = new SwimlaneViewModel(RequirementStatus.Test);
-            Done = new SwimlaneViewModel(RequirementStatus.Done);
+            Prioritised = new SwimlaneViewModel(dataService, RequirementStatus.Prioritised);
+            WIP = new SwimlaneViewModel(dataService, RequirementStatus.WIP);
+            Test = new SwimlaneViewModel(dataService, RequirementStatus.Test);
+            Done = new SwimlaneViewModel(dataService, RequirementStatus.Done);
+            MessengerInstance.Register<ReloadRequestMessage>(this, OnReloadRequest);
         }
 
         public async override Task LoadAsync()
         {
+            MessengerInstance.Send(new BusyMessage(true, this));
             await base.LoadAsync();
 
             Prioritised.Index.Clear();
@@ -36,6 +39,8 @@ namespace SixNations.Desktop.ViewModels
             Done.Index.Clear();
             Index.Where(r => r.Status == (int)RequirementStatus.Done)
                 .ToList().ForEach(r => Done.Index.Add(r));
+
+            MessengerInstance.Send(new BusyMessage(false, this));
         }
 
         public SwimlaneViewModel Prioritised { get; }
@@ -45,5 +50,10 @@ namespace SixNations.Desktop.ViewModels
         public SwimlaneViewModel Test { get; }
 
         public SwimlaneViewModel Done { get; }
+
+        private async void OnReloadRequest(ReloadRequestMessage m)
+        {
+            await LoadAsync();
+        }
     }
 }

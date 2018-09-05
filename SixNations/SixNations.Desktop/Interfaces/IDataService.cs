@@ -12,6 +12,8 @@ namespace SixNations.Desktop.Interfaces
 
         Task<T> EditModelAsync(string authToken, Action<Exception> exceptionHandler, T model);
 
+        Task<T> EditModelAsync(string authToken, Action<Exception> exceptionHandler, int modelId);
+
         Task<T> UpdateModelAsync(string authToken, Action<Exception> exceptionHandler, T model);
 
         Task<bool> DeleteModelAsync(string authToken, Action<Exception> exceptionHandler, T model);

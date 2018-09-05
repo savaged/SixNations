@@ -3,32 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="213">
     <UserControl.Resources>
         <DataTemplate x:Key="PostIt">
             <Grid VerticalAlignment="Top">
                 <TextBlock Text="{Binding Story}"
-                       Width="165"
-                       Margin="5"
-                       Padding="10"
-                       Background="LightGoldenrodYellow"
-                       Foreground="Black"
-                       TextWrapping="Wrap"
-                       FontFamily="Ink Free"
-                       FontSize="14"/>
+                           Tag="{Binding Id}"
+                           MouseMove="PostIt_MouseMove"
+                           Width="165"
+                           Margin="5"
+                           Padding="10"
+                           Background="LightGoldenrodYellow"
+                           Foreground="Black"
+                           TextWrapping="Wrap"
+                           FontFamily="Ink Free"
+                           FontSize="14"/>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    <ListView Background="Transparent" 
+    <ListView x:Name="LvRequirements"
+              Tag="{Binding Name}" 
+              Background="Transparent" 
               Height="Auto" 
               Width="Auto"
               VerticalAlignment="Stretch"
-              dd:DragDrop.IsDragSource="True"
-              dd:DragDrop.DragHandler="{Binding RequirementDragHandler}"
-              dd:DragDrop.IsDropTarget="True"
-              dd:DragDrop.DropHandler="{Binding}"
+              AllowDrop="True"
+              DragOver="ListView_DragOver"
+              Drop="ListView_Drop"
               ItemsSource="{Binding Index}"
               ItemTemplate="{StaticResource PostIt}">
     </ListView>

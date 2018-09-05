@@ -52,6 +52,12 @@ namespace SixNations.Desktop.Services
         }
 
         public Task<Lookup> EditModelAsync(
+            string authToken, Action<Exception> exceptionHandler, int modelId)
+        {
+            throw new NotSupportedException();
+        }
+
+        public Task<Lookup> EditModelAsync(
             string authToken, Action<Exception> exceptionHandler, Lookup model)
         {
             throw new NotSupportedException();

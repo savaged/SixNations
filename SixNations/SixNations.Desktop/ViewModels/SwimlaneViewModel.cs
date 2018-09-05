@@ -1,61 +1,49 @@
-﻿using System;
-using System.Windows;
+﻿using System.Linq;
 using GalaSoft.MvvmLight;
-using GongSolutions.Wpf.DragDrop;
-using SixNations.Desktop.Models;
-using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Constants;
 using System.Collections.ObjectModel;
+using SixNations.Desktop.Interfaces;
+using SixNations.Desktop.Messages;
+using SixNations.Desktop.Models;
+using SixNations.Desktop.Helpers;
 
 namespace SixNations.Desktop.ViewModels
 {
-    public class SwimlaneViewModel : ViewModelBase, IDropTarget
+    public class SwimlaneViewModel : ViewModelBase, ISwimlaneDropTarget
     {
-        private readonly RequirementStatus _requirementStatus;
+        private readonly IDataService<Requirement> _dataService;
 
-        public SwimlaneViewModel(RequirementStatus requirementStatus)
+        public SwimlaneViewModel(IDataService<Requirement> dataService, RequirementStatus name)
         {
-            _requirementStatus = requirementStatus;
-            Index = new ObservableCollection<Requirement>();
-            RequirementDragHandler = new RequirementDragHandler();
-            RequirementDragHandler.DragDroppingHandler += OnDragDropping;
+            Name = name;
+            Index = new ObservableCollection<IRequirement>();
+            _dataService = dataService;
         }
 
-        public ObservableCollection<Requirement> Index { get; }
+        public RequirementStatus Name { get; }
 
-        public RequirementDragHandler RequirementDragHandler { get; }
+        public ObservableCollection<IRequirement> Index { get; }
 
-        public void DragOver(IDropInfo di)
+        public async void OnDrop(int droppedRequirementId, RequirementStatus target)
         {
-            if (di != null && di.Data != null && di.TargetItem != null)
+            var requirement = Index.Where(r => r.Id == droppedRequirementId).FirstOrDefault();
+            var isDroppedOnSameSwimlane = requirement != null;
+            if (!isDroppedOnSameSwimlane)
             {
-                di.DropTargetAdorner = DropTargetAdorners.Highlight;
-                di.Effects = DragDropEffects.Move;
-            }
-        }
+                MessengerInstance.Send(new BusyMessage(true, this));
 
-        public void Drop(IDropInfo di)
-        {
-            var source = (Requirement)di.Data;
-            if (source.Status != (int)_requirementStatus)
-            {
-                if (!Index.Contains(source))
-                {
-                    source.Status = (int)_requirementStatus;
-                    Index.Add(source);
-                }
-            }
-        }
+                var authToken = User.Current.AuthToken;
 
-        private void OnDragDropping(object sender, DragDroppingEventArgs e)
-        {
-            var source = (Requirement)e.DropInfo.Data;
-            if (source.Status != (int)_requirementStatus)
-            {
-                if (Index.Contains(source))
-                {
-                    Index.Remove(source);
-                }
+                var dropped = await _dataService.EditModelAsync(
+                    authToken, FeedbackActions.ReactToException, droppedRequirementId);
+
+                dropped.Status = (int)target;
+
+                var updated = await _dataService.UpdateModelAsync(
+                    authToken, FeedbackActions.ReactToException, dropped as Requirement);
+                MessengerInstance.Send(new BusyMessage(false, this));
+
+                MessengerInstance.Send(new ReloadRequestMessage(this));
             }
         }
     }
