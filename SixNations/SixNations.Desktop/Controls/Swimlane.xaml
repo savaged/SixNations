@@ -10,20 +10,45 @@
     <UserControl.Resources>
         <converters:DimensionLessMarginConvertercs x:Key="WidthLessMargin"/>
         <DataTemplate x:Key="PostIt">
-            <Grid VerticalAlignment="Top">
+            <Border VerticalAlignment="Top" Margin="5"
+                    BorderBrush="Silver" BorderThickness="0,0,2,2"
+                    Width="{Binding Path=ActualWidth, ElementName=UcSwimlane, Converter={StaticResource WidthLessMargin}, ConverterParameter=40}">
                 <TextBlock Text="{Binding Story}"
                            Tag="{Binding Id}"
                            MouseMove="PostIt_MouseMove"
-                           Width="{Binding Path=ActualWidth, ElementName=UcSwimlane, Converter={StaticResource WidthLessMargin}, ConverterParameter=40}"
-                           Margin="5"
+                           Width="Auto"
                            Padding="10"
-                           Background="LightGoldenrodYellow"
                            Foreground="Black"
                            TextWrapping="Wrap"
                            FontFamily="Ink Free"
                            FontSize="14"
-                           ToolTip="{Binding Info}"/>
-            </Grid>
+                           ToolTip="{Binding Info}">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Estimation}" Value="1">
+                                    <Setter Property="Background" Value="GreenYellow"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Estimation}" Value="2">
+                                    <Setter Property="Background" Value="PaleGreen"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Estimation}" Value="3">
+                                    <Setter Property="Background" Value="LightGoldenrodYellow"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Estimation}" Value="5">
+                                    <Setter Property="Background" Value="Gold"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Estimation}" Value="8">
+                                    <Setter Property="Background" Value="LightSalmon"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Estimation}" Value="13">
+                                    <Setter Property="Background" Value="Tomato"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Border>
         </DataTemplate>
     </UserControl.Resources>
     <ListView x:Name="LvRequirements"
