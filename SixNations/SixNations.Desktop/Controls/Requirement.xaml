@@ -41,6 +41,9 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
+                    <DataGridTextColumn Width="92" Header="Status" Binding="{Binding StatusName}"/>
+                    <DataGridTextColumn Width="92" Header="Priority" Binding="{Binding PriorityName}"/>
+                    <DataGridTextColumn Width="92" Header="Estimation" Binding="{Binding EstimationName}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Margin="10,0,0,0" 

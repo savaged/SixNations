@@ -14,7 +14,7 @@
                  md:DialogServiceViews.IsRegistered="True"
                  mc:Ignorable="d"
                  Title="{Binding Title}" TitleCaps="False"
-                 Height="600" Width="900"
+                 Height="800" Width="1200"
                  WindowState="Normal"
                  WindowStyle="SingleBorderWindow"
                  ResizeMode="CanMinimize"

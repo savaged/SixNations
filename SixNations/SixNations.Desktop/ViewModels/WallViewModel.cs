@@ -12,7 +12,6 @@ namespace SixNations.Desktop.ViewModels
         public WallViewModel(IDataService<Requirement> requirementDataService) 
             : base(requirementDataService)
         {
-            ((IRequirementDataService)requirementDataService).DecorateWithLookupNames = true;
             Prioritised = new SwimlaneViewModel(requirementDataService, RequirementStatus.Prioritised);
             WIP = new SwimlaneViewModel(requirementDataService, RequirementStatus.WIP);
             Test = new SwimlaneViewModel(requirementDataService, RequirementStatus.Test);

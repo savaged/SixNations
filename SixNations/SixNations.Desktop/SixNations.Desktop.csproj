@@ -128,7 +128,6 @@
     <Compile Include="Helpers\LogFileLocator.cs" />
     <Compile Include="Interfaces\IRequirement.cs" />
     <Compile Include="Messages\ReloadRequestMessage.cs" />
-    <Compile Include="Interfaces\IRequirementDataService.cs" />
     <Compile Include="ViewModels\DataBoundViewModel.cs" />
     <Compile Include="Interfaces\ISwimlaneDropTarget.cs" />
     <Compile Include="ViewModels\SwimlaneViewModel.cs" />

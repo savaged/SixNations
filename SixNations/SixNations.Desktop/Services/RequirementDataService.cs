@@ -10,7 +10,7 @@ using SixNations.Desktop.Models;
 
 namespace SixNations.Desktop.Services
 {
-    public class RequirementDataService : IHttpDataService<Requirement>, IRequirementDataService
+    public class RequirementDataService : IHttpDataService<Requirement>
     {
         private readonly IDataService<Lookup> _lookupDataService;
 
@@ -22,11 +22,6 @@ namespace SixNations.Desktop.Services
         {
             _lookupDataService = lookupDataService;
         }
-
-        /// <summary>
-        /// Not required if requirements do not need decorating with lookup names
-        /// </summary>
-        public bool DecorateWithLookupNames { get; set; }
 
         public async Task<Requirement> CreateModelAsync(
             string authToken, Action<Exception> exceptionHandler)
@@ -70,10 +65,7 @@ namespace SixNations.Desktop.Services
                 response = new ResponseRootObject(ex.Message);
             }
             var index = new ResponseRootObjectToModelMapper<Requirement>(response).AllMapped();
-            if (DecorateWithLookupNames)
-            {
-                index = await Decorate(index);
-            }
+            index = await Decorate(index);
             return index;
         }
 
@@ -152,8 +144,8 @@ namespace SixNations.Desktop.Services
                 estimationLookup[requirement.Estimation] : string.Empty;
             requirement.PriorityName = priorityLookup.ContainsKey(requirement.Priority) ?
                 priorityLookup[requirement.Priority] : string.Empty;
-            requirement.StatusName = priorityLookup.ContainsKey(requirement.Status) ?
-                priorityLookup[requirement.Status] : string.Empty;
+            requirement.StatusName = statusLookup.ContainsKey(requirement.Status) ?
+                statusLookup[requirement.Status] : string.Empty;
 
             return requirement;
         }
