@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SixNations.Desktop.Controls"
-             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="850"
@@ -69,25 +70,24 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Grid.Column="0" Grid.Row="0">Story</Label>
                     <TextBox Grid.Column="1" Grid.Row="0" 
+                             mah:TextBoxHelper.Watermark="As a {user role}, I want to {the thing that is needed}, so that {the business value that allows prioritisation}."
                              TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"
                              Text="{Binding SelectedItem.Story}"/>
                     <Label Grid.Column="0" Grid.Row="1">Estimation</Label>
-                    <!--TextBox IsReadOnly="True" Grid.Column="1" Grid.Row="1" Text="{Binding SelectedItem.EstimationName}"/-->
                     <ComboBox Grid.Column="1" Grid.Row="1" MaxHeight="30" 
                               ItemsSource="{Binding EstimationLookup}"
                               SelectedValuePath="Key" DisplayMemberPath="Value"
                               SelectedValue="{Binding SelectedItem.Estimation}"/>
                     <Label Grid.Column="0" Grid.Row="2">Priority</Label>
-                    <!--TextBox IsReadOnly="True" Grid.Column="1" Grid.Row="2" Text="{Binding SelectedItem.PriorityName}"/-->
                     <ComboBox Grid.Column="1" Grid.Row="2" MaxHeight="30" 
                               ItemsSource="{Binding PriorityLookup}"
                               SelectedValuePath="Key" DisplayMemberPath="Value"
                               SelectedValue="{Binding SelectedItem.Priority}"/>
                     <Label Grid.Column="0" Grid.Row="3">Status</Label>
-                    <!--TextBox IsReadOnly="True" Grid.Column="1" Grid.Row="3" Text="{Binding SelectedItem.StatusName}"/-->
                     <ComboBox Grid.Column="1" Grid.Row="3" MaxHeight="30" 
                               ItemsSource="{Binding StatusLookup}"
                               SelectedValuePath="Key" DisplayMemberPath="Value"
