@@ -25,9 +25,7 @@
                            ToolTip="{Binding Requirement.Info}">
                     <TextBlock.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Go to edit" 
-                                      Command="{Binding GoToEditCmd}"
-                                      CommandParameter="{Binding Requirement.Id}"/>
+                            <MenuItem Header="Go to..." Command="{Binding NavigateToCmd}"/>
                         </ContextMenu>
                     </TextBlock.ContextMenu>
                     <TextBlock.Style>

@@ -15,6 +15,7 @@
                  mc:Ignorable="d"
                  Title="{Binding Title}" TitleCaps="False"
                  Height="800" Width="1200"
+                 WindowStartupLocation="CenterScreen"
                  WindowState="Normal"
                  WindowStyle="SingleBorderWindow"
                  ResizeMode="CanMinimize"

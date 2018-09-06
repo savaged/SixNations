@@ -46,8 +46,6 @@ namespace SixNations.Desktop.ViewModels
                 await LoadIndexAsync();
 
                 CanSelectItem = true;
-
-                SelectedItem = Index.First();
             }
             catch (Exception ex)
             {

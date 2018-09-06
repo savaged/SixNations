@@ -3,6 +3,9 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows.Input;
 using SixNations.Desktop.Models;
+using CommonServiceLocator;
+using SixNations.Desktop.Interfaces;
+using SixNations.Desktop.Constants;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -11,15 +14,15 @@ namespace SixNations.Desktop.ViewModels
         public PostItViewModel(Requirement requirement)
         {
             Requirement = requirement;
-            GoToEditCmd = new RelayCommand<int>(OnGoToEdit, (b) => true);
+            NavigateToCmd = new RelayCommand(OnNavigateTo, () => true);
         }
 
-        public ICommand GoToEditCmd { get; }
+        public ICommand NavigateToCmd { get; }
 
-        private void OnGoToEdit(int requirementId)
+        private void OnNavigateTo()
         {
-            // TODO navigate to requirements screen and open editing
-            throw new NotImplementedException();
+            var nav = ServiceLocator.Current.GetInstance<INavigationService>();
+            nav.NavigateTo(HamburgerNavItemsIndex.Requirement.ToString(), Requirement);
         }
 
         public Requirement Requirement { get; }

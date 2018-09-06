@@ -4,6 +4,7 @@ using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using SixNations.Desktop.Constants;
 using SixNations.Desktop.Interfaces;
+using SixNations.Desktop.ViewModels;
 
 namespace SixNations.Desktop.Services
 {
@@ -22,8 +23,8 @@ namespace SixNations.Desktop.Services
                     (int)HamburgerNavItemsIndex.Login
                 },
                 {
-                    HamburgerNavItemsIndex.Requirements.ToString(),
-                    (int)HamburgerNavItemsIndex.Requirements
+                    HamburgerNavItemsIndex.Requirement.ToString(),
+                    (int)HamburgerNavItemsIndex.Requirement
                 }
             };
         }
@@ -44,6 +45,7 @@ namespace SixNations.Desktop.Services
         {
             if (_navItems.ContainsKey(pageKey))
             {
+                SelectedIndex = _navItems[pageKey];
                 if (parameter != null)
                 {
                     var mainVM = App.Current.MainWindow.DataContext;
@@ -55,7 +57,6 @@ namespace SixNations.Desktop.Services
                         ((IParameterised)pageVm).Initialise(parameter);
                     }
                 }
-                SelectedIndex = _navItems[pageKey];
             }
         }        
 

@@ -8,10 +8,12 @@ using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Constants;
+using GalaSoft.MvvmLight.Threading;
 
 namespace SixNations.Desktop.ViewModels
 {
-    public class RequirementViewModel : DataBoundViewModel<Requirement>
+    public class RequirementViewModel 
+        : DataBoundViewModel<Requirement>, IParameterised
     {
         private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -21,6 +23,7 @@ namespace SixNations.Desktop.ViewModels
         private Lookup _priorityLookup;
         private Lookup _statusLookup;
         private string _storyFilter;
+        private Requirement _preLoaded;
 
         public RequirementViewModel(
             IDataService<Requirement> requirementDataService,
@@ -34,10 +37,26 @@ namespace SixNations.Desktop.ViewModels
             MessengerInstance.Register<StoryFilterMessage>(this, OnFindStory);
         }
 
+        public void Initialise(object parameter)
+        {
+            if (parameter != null && parameter is Requirement requirement)
+            {
+                _preLoaded = requirement;
+            }
+        }
+
         public override async Task LoadAsync()
         {
             MessengerInstance.Send(new BusyMessage(true, this));
             await base.LoadAsync();
+            if (_preLoaded != null)
+            {
+                SelectedItem = Index.Where(r => r.Id == _preLoaded.Id).FirstOrDefault();
+            }
+            else
+            {
+                SelectedItem = Index.FirstOrDefault();
+            }
             try
             {
                 await LoadLookupAsync();

@@ -3,7 +3,7 @@
     public enum HamburgerNavItemsIndex
     {
         Login,
-        Requirements,
+        Requirement,
         Wall
     }
     public enum HamburgerNavOptionsItemsIndex

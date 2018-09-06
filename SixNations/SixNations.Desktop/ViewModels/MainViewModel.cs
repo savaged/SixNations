@@ -80,7 +80,7 @@ namespace SixNations.Desktop.ViewModels
             User.Current.Initialise(m.Token);
             RaisePropertyChanged(nameof(IsLoggedIn));
             _navigationService.NavigateTo(
-                HamburgerNavItemsIndex.Requirements.ToString());
+                HamburgerNavItemsIndex.Requirement.ToString());
             MessengerInstance.Send(new BusyMessage(false, this));
         }
 
