@@ -1,7 +1,5 @@
 # SixNations
 
-[![Join the chat at https://gitter.im/savagedinfo/SixNations](https://badges.gitter.im/savagedinfo/SixNations.svg)](https://gitter.im/savagedinfo/SixNations?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 Requirements management loosely based on SCRUM.
 
 SixNations, is designed as lean tooling for an Agile development 
@@ -52,6 +50,10 @@ namespace SixNations.Desktop.Constants
 Or similar; one can change these 'developer settings' as much as
 desired and not effect other developers because the extension
 `.partial.cs` should be in the `.gitignore` file.
+
+---
+
+[![Join the chat at https://gitter.im/savagedinfo/SixNations](https://badges.gitter.im/savagedinfo/SixNations.svg)](https://gitter.im/savagedinfo/SixNations?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ---
 
