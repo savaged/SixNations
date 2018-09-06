@@ -6,6 +6,7 @@ using SixNations.Desktop.Models;
 using CommonServiceLocator;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Constants;
+using SixNations.Desktop.Messages;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -23,6 +24,7 @@ namespace SixNations.Desktop.ViewModels
         {
             var nav = ServiceLocator.Current.GetInstance<INavigationService>();
             nav.NavigateTo(HamburgerNavItemsIndex.Requirement.ToString(), Requirement);
+            MessengerInstance.Send(new CloseDialogRequestMessage(this, true));
         }
 
         public Requirement Requirement { get; }
