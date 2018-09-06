@@ -9,13 +9,14 @@ namespace SixNations.Desktop.ViewModels
 {
     public class WallViewModel : DataBoundViewModel<Requirement>
     {
-        public WallViewModel(IDataService<Requirement> dataService) 
-            : base(dataService)
+        public WallViewModel(IDataService<Requirement> requirementDataService) 
+            : base(requirementDataService)
         {
-            Prioritised = new SwimlaneViewModel(dataService, RequirementStatus.Prioritised);
-            WIP = new SwimlaneViewModel(dataService, RequirementStatus.WIP);
-            Test = new SwimlaneViewModel(dataService, RequirementStatus.Test);
-            Done = new SwimlaneViewModel(dataService, RequirementStatus.Done);
+            ((IRequirementDataService)requirementDataService).DecorateWithLookupNames = true;
+            Prioritised = new SwimlaneViewModel(requirementDataService, RequirementStatus.Prioritised);
+            WIP = new SwimlaneViewModel(requirementDataService, RequirementStatus.WIP);
+            Test = new SwimlaneViewModel(requirementDataService, RequirementStatus.Test);
+            Done = new SwimlaneViewModel(requirementDataService, RequirementStatus.Done);
             MessengerInstance.Register<ReloadRequestMessage>(this, OnReloadRequest);
         }
 

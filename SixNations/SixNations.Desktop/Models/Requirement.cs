@@ -1,5 +1,5 @@
 ﻿using System;
-using GalaSoft.MvvmLight;
+using SixNations.Desktop.Attributes;
 using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.Models
@@ -51,9 +51,24 @@ namespace SixNations.Desktop.Models
             set => Set(ref _status, value);
         }
 
+
+        [Hidden]
+        public string EstimationName { get; set; }
+
+        [Hidden]
+        public string PriorityName { get; set; }
+
+        [Hidden]
+        public string StatusName { get; set; }
+
+        [Hidden]
+        public string Info => $"Id: {Id}{Environment.NewLine}" +
+            $"Estimation: {EstimationName}{Environment.NewLine}" +
+            $"Priority: {PriorityName}";
+
         public override string ToString()
         {
-            return Story;
+            return $"{Id}: {Story}";
         }
     }
 }

@@ -55,8 +55,7 @@ namespace SixNations.Desktop.ViewModels
 
         private async Task LoadLookupAsync()
         {
-            IEnumerable<Lookup> lookups = null;
-            lookups = await _lookupDataService.GetModelDataAsync(
+            var lookups = await _lookupDataService.GetModelDataAsync(
                         User.Current.AuthToken, FeedbackActions.ReactToException);
 
             EstimationLookup = lookups.First(l => l.Name == "RequirementEstimation");

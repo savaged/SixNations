@@ -61,6 +61,7 @@ namespace SixNations.Desktop.ViewModels
             {
                 throw new ArgumentException("Expected to have a password set!");
             }
+            MessengerInstance.Send(new BusyMessage(true, this));
             string token = null;
             try
             {
@@ -70,6 +71,10 @@ namespace SixNations.Desktop.ViewModels
             catch (AuthServiceException ex)
             {
                 FeedbackActions.ReactToException(ex);
+            }
+            finally
+            {
+                MessengerInstance.Send(new BusyMessage(false, this));
             }
             if (!string.IsNullOrEmpty(token))
             {

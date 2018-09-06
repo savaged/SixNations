@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommonServiceLocator;
@@ -9,8 +10,24 @@ using SixNations.Desktop.Models;
 
 namespace SixNations.Desktop.Services
 {
-    public class RequirementDataService : IHttpDataService<Requirement>
+    public class RequirementDataService : IHttpDataService<Requirement>, IRequirementDataService
     {
+        private readonly IDataService<Lookup> _lookupDataService;
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="lookupDataService">Used if lookup names are required</param>
+        public RequirementDataService(IDataService<Lookup> lookupDataService)
+        {
+            _lookupDataService = lookupDataService;
+        }
+
+        /// <summary>
+        /// Not required if requirements do not need decorating with lookup names
+        /// </summary>
+        public bool DecorateWithLookupNames { get; set; }
+
         public async Task<Requirement> CreateModelAsync(
             string authToken, Action<Exception> exceptionHandler)
         {
@@ -53,6 +70,10 @@ namespace SixNations.Desktop.Services
                 response = new ResponseRootObject(ex.Message);
             }
             var index = new ResponseRootObjectToModelMapper<Requirement>(response).AllMapped();
+            if (DecorateWithLookupNames)
+            {
+                index = await Decorate(index);
+            }
             return index;
         }
 
@@ -105,6 +126,36 @@ namespace SixNations.Desktop.Services
             var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
                 .HttpRequestAsync(uri, User.Current.AuthToken, HttpMethods.Delete, null);
             return response.Success;
+        }
+
+        private async Task<IList<Requirement>> Decorate(IEnumerable<Requirement> index)
+        {
+            var decoratedIndex = new List<Requirement>();
+            foreach (var requirement in index)
+            {
+                var decoratedRequirement = await Decorate(requirement);
+                decoratedIndex.Add(decoratedRequirement);
+            }
+            return decoratedIndex;
+        }
+
+        private async Task<Requirement> Decorate(Requirement requirement)
+        {
+            var lookups = await _lookupDataService.GetModelDataAsync(
+                        User.Current.AuthToken, FeedbackActions.ReactToException);
+
+            var estimationLookup = lookups.First(l => l.Name == "RequirementEstimation");
+            var priorityLookup = lookups.First(l => l.Name == "RequirementPriority");
+            var statusLookup = new Lookup(RequirementStatus._);
+
+            requirement.EstimationName = estimationLookup.ContainsKey(requirement.Estimation) ?
+                estimationLookup[requirement.Estimation] : string.Empty;
+            requirement.PriorityName = priorityLookup.ContainsKey(requirement.Priority) ?
+                priorityLookup[requirement.Priority] : string.Empty;
+            requirement.StatusName = priorityLookup.ContainsKey(requirement.Status) ?
+                priorityLookup[requirement.Status] : string.Empty;
+
+            return requirement;
         }
     }
 }

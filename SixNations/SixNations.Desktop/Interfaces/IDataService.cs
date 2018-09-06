@@ -18,7 +18,6 @@ namespace SixNations.Desktop.Interfaces
 
         Task<bool> DeleteModelAsync(string authToken, Action<Exception> exceptionHandler, T model);
 
-        Task<IEnumerable<T>> GetModelDataAsync(
-            string authToken, Action<Exception> exceptionHandler);
+        Task<IEnumerable<T>> GetModelDataAsync(string authToken, Action<Exception> exceptionHandler);
     }
 }

@@ -14,8 +14,7 @@ namespace SixNations.Desktop.Services
         private async Task<Lookup> GetLookup(string lookupName)
         {
             var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
-                .HttpRequestAsync(
-                lookupName.ToLower(), User.Current.AuthToken);
+                .HttpRequestAsync(lookupName.ToLower(), User.Current.AuthToken);
             return new Lookup(lookupName, response);
         }
 

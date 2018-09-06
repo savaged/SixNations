@@ -11,13 +11,15 @@ namespace SixNations.Desktop.ViewModels
 {
     public class SwimlaneViewModel : ViewModelBase, ISwimlaneDropTarget
     {
-        private readonly IDataService<Requirement> _dataService;
+        private readonly IDataService<Requirement> _requirementDataService;
 
-        public SwimlaneViewModel(IDataService<Requirement> dataService, RequirementStatus name)
+        public SwimlaneViewModel(
+            IDataService<Requirement> requirementDataService,
+            RequirementStatus name)
         {
             Name = name;
             Index = new ObservableCollection<IRequirement>();
-            _dataService = dataService;
+            _requirementDataService = requirementDataService;
         }
 
         public RequirementStatus Name { get; }
@@ -34,12 +36,12 @@ namespace SixNations.Desktop.ViewModels
 
                 var authToken = User.Current.AuthToken;
 
-                var dropped = await _dataService.EditModelAsync(
+                var dropped = await _requirementDataService.EditModelAsync(
                     authToken, FeedbackActions.ReactToException, droppedRequirementId);
 
                 dropped.Status = (int)target;
 
-                var updated = await _dataService.UpdateModelAsync(
+                var updated = await _requirementDataService.UpdateModelAsync(
                     authToken, FeedbackActions.ReactToException, dropped as Requirement);
                 MessengerInstance.Send(new BusyMessage(false, this));
 

@@ -7,6 +7,7 @@ using SixNations.Desktop.Views;
 using CommonServiceLocator;
 using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro;
+using SixNations.Desktop.Helpers;
 
 namespace SixNations.Desktop
 {
@@ -42,8 +43,7 @@ namespace SixNations.Desktop
         static void UnhandledExceptionOccured(object sender, UnhandledExceptionEventArgs args)
         {
             // Here change path to the log.txt file
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
-                + "\\SixNations.Desktop\\log.txt";
+            var path = LogFileLocator.GetLogFileLocation();
 
             // Show a message before closing application
             

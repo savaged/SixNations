@@ -11,7 +11,12 @@ namespace SixNations.Desktop.Helpers
             DispatcherHelper.CheckBeginInvokeOnUI(() =>
             {
                 var msg = $"{ex.GetType().Name} : {ex.Message} {Environment.NewLine}" +
-                        $"Source : {ex.Source}";
+                        $"Source : {ex.Source} {Environment.NewLine}" +
+#if DEBUG
+                        $"Stack Trace : {ex.StackTrace} {Environment.NewLine}" +
+#endif
+                        $"See log for more detail (found here: {Environment.NewLine}" +
+                        $"{LogFileLocator.GetLogFileLocation()})";
                 MessageBox.Show(
                         msg,
                         "Action Aborted",

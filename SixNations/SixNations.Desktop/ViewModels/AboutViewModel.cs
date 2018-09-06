@@ -1,6 +1,7 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
 using System.Reflection;
+using SixNations.Desktop.Helpers;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -29,9 +30,7 @@ namespace SixNations.Desktop.ViewModels
             AppVersionText = $"{AppNameText} v{Assembly.GetEntryAssembly().GetName().Version}";
             OSVersionText = $"Operating System {Environment.OSVersion.VersionString}";
             DotNetVersionText = $".Net v{Environment.Version.ToString()}";
-            LogFileLocationText = $"Log file is at " +
-                $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}" +
-                $"\\SixNations.Desktop\\log.txt";
+            LogFileLocationText = $"Log file is at {LogFileLocator.GetLogFileLocation()}";
         }
 
         public string AppNameText { get; }

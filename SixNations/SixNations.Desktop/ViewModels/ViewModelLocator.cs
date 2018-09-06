@@ -22,12 +22,12 @@ namespace SixNations.Desktop.ViewModels
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            SimpleIoc.Default.Register<IDataService<Requirement>, RequirementDataService>();
             SimpleIoc.Default.Register<IDataService<Lookup>, LookupDataService>();
+            SimpleIoc.Default.Register<IDataService<Requirement>, RequirementDataService>();
             
             if (!SimpleIoc.Default.IsRegistered<IHttpDataServiceFacade>())
             {
-                if (Constants.Props.ApiBaseURL == Props.MOCKED)
+                if (Props.ApiBaseURL == Props.MOCKED)
                 {
                     SimpleIoc.Default.Register<IHttpDataServiceFacade>(() =>
                     {
@@ -44,7 +44,7 @@ namespace SixNations.Desktop.ViewModels
             }
             if (!SimpleIoc.Default.IsRegistered<IAuthTokenService>())
             {
-                if (Constants.Props.ApiBaseURL == Props.MOCKED)
+                if (Props.ApiBaseURL == Props.MOCKED)
                 {
                     SimpleIoc.Default.Register<IAuthTokenService>(() =>
                     {

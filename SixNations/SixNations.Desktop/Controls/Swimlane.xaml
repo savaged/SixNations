@@ -21,7 +21,8 @@
                            Foreground="Black"
                            TextWrapping="Wrap"
                            FontFamily="Ink Free"
-                           FontSize="14"/>
+                           FontSize="14"
+                           ToolTip="{Binding Info}"/>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>

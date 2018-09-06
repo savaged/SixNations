@@ -8,5 +8,7 @@
         string Release { get; set; }
         int Status { get; set; }
         string Story { get; set; }
+
+        string Info { get; }
     }
 }
