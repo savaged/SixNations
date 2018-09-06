@@ -28,19 +28,19 @@ namespace SixNations.Desktop.ViewModels
 
             Prioritised.Index.Clear();
             filtered.Where(r => r.Status == (int)RequirementStatus.Prioritised)
-                .ToList().ForEach(r => Prioritised.Index.Add(r));
+                .ToList().ForEach(r => Prioritised.Index.Add(new PostItViewModel(r)));
 
             WIP.Index.Clear();
             filtered.Where(r => r.Status == (int)RequirementStatus.WIP)
-                .ToList().ForEach(r => WIP.Index.Add(r));
+                .ToList().ForEach(r => WIP.Index.Add(new PostItViewModel(r)));
 
             Test.Index.Clear();
             filtered.Where(r => r.Status == (int)RequirementStatus.Test)
-                .ToList().ForEach(r => Test.Index.Add(r));
+                .ToList().ForEach(r => Test.Index.Add(new PostItViewModel(r)));
 
             Done.Index.Clear();
             filtered.Where(r => r.Status == (int)RequirementStatus.Done)
-                .ToList().ForEach(r => Done.Index.Add(r));
+                .ToList().ForEach(r => Done.Index.Add(new PostItViewModel(r)));
 
             MessengerInstance.Send(new BusyMessage(false, this));
         }

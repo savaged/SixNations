@@ -130,6 +130,7 @@
     <Compile Include="Messages\ReloadRequestMessage.cs" />
     <Compile Include="ViewModels\DataBoundViewModel.cs" />
     <Compile Include="Interfaces\ISwimlaneDropTarget.cs" />
+    <Compile Include="ViewModels\PostItViewModel.cs" />
     <Compile Include="ViewModels\SwimlaneViewModel.cs" />
     <Compile Include="ViewModels\WallDialogViewModel.cs" />
     <Compile Include="Views\WallDialog.xaml.cs">

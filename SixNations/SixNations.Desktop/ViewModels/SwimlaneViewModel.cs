@@ -6,6 +6,9 @@ using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Helpers;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.CommandWpf;
+using System;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -18,18 +21,18 @@ namespace SixNations.Desktop.ViewModels
             RequirementStatus name)
         {
             Name = name;
-            Index = new ObservableCollection<IRequirement>();
+            Index = new ObservableCollection<PostItViewModel>();
             _requirementDataService = requirementDataService;
         }
 
         public RequirementStatus Name { get; }
 
-        public ObservableCollection<IRequirement> Index { get; }
+        public ObservableCollection<PostItViewModel> Index { get; }        
 
         public async void OnDrop(int droppedRequirementId, RequirementStatus target)
         {
-            var requirement = Index.Where(r => r.Id == droppedRequirementId).FirstOrDefault();
-            var isDroppedOnSameSwimlane = requirement != null;
+            var postIt = Index.Where(r => r.Requirement.Id == droppedRequirementId).FirstOrDefault();
+            var isDroppedOnSameSwimlane = postIt != null;
             if (!isDroppedOnSameSwimlane)
             {
                 MessengerInstance.Send(new BusyMessage(true, this));
