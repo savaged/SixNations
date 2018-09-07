@@ -63,6 +63,10 @@
     <Reference Include="MahApps.Metro.IconPacks.Material, Version=2.3.0.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MahApps.Metro.IconPacks.Material.2.3.0\lib\net46\MahApps.Metro.IconPacks.Material.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="MvvmDialogs, Version=5.1.0.0, Culture=neutral, PublicKeyToken=3d3b9708589bc73e, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MvvmDialogs.5.1.0\lib\net45\MvvmDialogs.dll</HintPath>
     </Reference>
@@ -121,12 +125,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IIndexToExcelAdapter.cs" />
+    <Compile Include="Adapters\IndexToExcelAdapter.cs" />
     <Compile Include="Controls\Swimlane.xaml.cs">
       <DependentUpon>Swimlane.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DimensionLessMarginConvertercs.cs" />
     <Compile Include="Helpers\LogFileLocator.cs" />
-    <Compile Include="Interfaces\IRequirement.cs" />
     <Compile Include="Messages\CloseDialogRequestMessage.cs" />
     <Compile Include="Messages\ReloadRequestMessage.cs" />
     <Compile Include="ViewModels\DataBoundViewModel.cs" />

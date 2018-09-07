@@ -1,6 +1,5 @@
 ﻿using log4net;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SixNations.Desktop.Helpers;
@@ -8,7 +7,9 @@ using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Constants;
-using GalaSoft.MvvmLight.Threading;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.CommandWpf;
+using SixNations.Desktop.Adapters;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -24,6 +25,7 @@ namespace SixNations.Desktop.ViewModels
         private Lookup _statusLookup;
         private string _storyFilter;
         private Requirement _preLoaded;
+        private readonly IIndexToExcelAdapter<Requirement> _excelAdapter;
 
         public RequirementViewModel(
             IDataService<Requirement> requirementDataService,
@@ -33,6 +35,9 @@ namespace SixNations.Desktop.ViewModels
             _storyFilter = string.Empty;
 
             _lookupDataService = lookupService;
+
+            _excelAdapter = new IndexToExcelAdapter<Requirement>();
+            IndexToExcelCmd = new RelayCommand(OnIndexToExcel, () => _excelAdapter.CanExecute);
 
             MessengerInstance.Register<StoryFilterMessage>(this, OnFindStory);
         }
@@ -44,6 +49,8 @@ namespace SixNations.Desktop.ViewModels
                 _preLoaded = requirement;
             }
         }
+
+        public ICommand IndexToExcelCmd { get; }
 
         public override async Task LoadAsync()
         {
@@ -109,6 +116,11 @@ namespace SixNations.Desktop.ViewModels
         private void OnFindStory(StoryFilterMessage m)
         {
             StoryFilter = m.Filter;
+        }
+
+        private void OnIndexToExcel()
+        {
+            _excelAdapter.Adapt(Index);
         }
     }
 }

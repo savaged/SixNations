@@ -4,7 +4,7 @@ using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.Models
 {
-    public class Requirement : HttpDataServiceModelBase, IRequirement
+    public class Requirement : HttpDataServiceModelBase
     {
         private int _requirementID;
         private string _story;
