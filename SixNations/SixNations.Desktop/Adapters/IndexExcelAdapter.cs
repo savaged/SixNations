@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 namespace SixNations.Desktop.Adapters
 {
     public class IndexExcelAdapter<T> : IIndexExcelAdapter<T>
-        where T : IHttpDataServiceModel
+        where T : IHttpDataServiceModel, new()
     {
         private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -45,7 +45,7 @@ namespace SixNations.Desktop.Adapters
         public IList<T> Adapt(FileInfo fi)
         {
             Prechecks(fi);
-            var list = new List<T>();
+            var index = new List<T>();
 
             var wbs = _excel.Workbooks;
             Workbook wb = null;
@@ -59,14 +59,21 @@ namespace SixNations.Desktop.Adapters
             }
             if (wb != null)
             {
-                // TODO read headings and check for match with T fields
+                var sheets = wb.Worksheets;
+                var ws = sheets[1];
 
-                // TODO read rows and map to T fields
+                var fields = FetchFields(ws);
+
+                index = FetchData(fields, ws);
+
+                Marshal.ReleaseComObject(ws);
+                Marshal.ReleaseComObject(sheets);
             }
             wb?.Close(false, fi.Name, null);
+
             Marshal.ReleaseComObject(wb);
             Marshal.ReleaseComObject(wbs);
-            return list;
+            return index;
         }
 
         public void Adapt(IList<T> index)
@@ -131,6 +138,69 @@ namespace SixNations.Desktop.Adapters
             }
         }
 
+        private IList<string> FetchFields(Worksheet ws)
+        {
+            var fields = new List<string>();
+            var schema = new T().GetData();
+            var cells = ws.Cells;
+            for (var i = 1; i < schema.Count; i++)
+            {
+                var heading = cells[1, i++];
+                if (schema.ContainsKey(heading))
+                {
+                    fields.Add(heading);
+                }
+            }
+            if (fields.Count != schema.Count)
+            {
+                throw new ArgumentException(
+                    $"The worksheet headings do not match the fields for a {typeof(T).Name}!");
+            }
+            return fields;
+        }
+
+        private IList<T> FetchData(IList<string> fields, Worksheet ws)
+        {
+            var columns = new Dictionary<string, IList<object>>();
+            var cells = ws.Cells;
+            var data = new Dictionary<string, object>();
+            var col = 1;
+            var count = 0;
+            var index = new List<T>();
+            foreach (var field in fields)
+            {
+                var row = 2;
+                var column = new List<object>();
+                while (true)
+                {                                        
+                    if (!RowHasData(fields, ws, row))
+                    {
+                        count = row - 1;
+                        break;
+                    }
+                    var value = cells[row++, col];
+                    column.Add(value);
+                    // TODO map the model
+                }
+                columns.Add(field, column);
+                col++;
+            }
+            return index;
+        }
+
+        private bool RowHasData(IList<string> fields, Worksheet ws, int row)
+        {
+            var cells = ws.Cells;
+            var hasData = true;
+            var col = 1;
+            foreach (var f in fields)
+            {
+                var content = cells[row, col++];
+                hasData &= !string.IsNullOrEmpty(content);
+            }
+            return hasData;
+        }
+
         private void ApplyHeading(IList<T> index, Worksheet ws)
         {
             var col = 1;
@@ -146,13 +216,14 @@ namespace SixNations.Desktop.Adapters
             KeyValuePair<string, object> kvp, Worksheet ws, int row, ref int col, bool heading = false)
         {
             var value = kvp.Value;
+            var cells = ws.Cells;
             if (heading)
             {
                 value = kvp.Key;
             }
             try
             {
-                ws.Cells[row, col] = value;
+                cells[row, col] = value;
             }
             catch
             {

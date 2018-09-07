@@ -63,6 +63,7 @@
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+F" Command="{Binding StoryFilterCmd}"/>
         <KeyBinding Gesture="Shift+Ctrl+F" Command="{Binding ClearStoryFilterCmd}"/>
+        <KeyBinding Gesture="Shift+F5" Command="{Binding TinkerCmd}"/>
     </Window.InputBindings>
 
     <xctk:BusyIndicator IsBusy="{Binding BusyStateManager.IsBusy}">
@@ -113,8 +114,7 @@
 
                     <mah:HamburgerMenuGlyphItem Glyph="&#xE7BC;" Label="Requirement">
                         <mah:HamburgerMenuGlyphItem.Tag>
-                                <controls:Requirement 
-                                    ToolTip="Ctrl+F to filter stories and Shift+Ctrl+F to clear"/>
+                                <controls:Requirement />
                         </mah:HamburgerMenuGlyphItem.Tag>
                     </mah:HamburgerMenuGlyphItem>
 

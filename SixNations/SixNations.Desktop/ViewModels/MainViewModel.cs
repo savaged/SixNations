@@ -34,6 +34,7 @@ namespace SixNations.Desktop.ViewModels
             StoryFilterCmd = new RelayCommand(OnStoryFilter, () => CanExecuteStoryFilter);
             ClearStoryFilterCmd = new RelayCommand(OnClearStoryFilter, () => CanExecuteStoryFilter);
             FullScreenCmd = new RelayCommand(OnFullScreen, () => CanExecuteFullScreenToggle);
+            TinkerCmd = new RelayCommand(() => Tinker.Run(), () => true);
             ExitCmd = new RelayCommand(OnExit);
             
             MessengerInstance.Register<AuthenticatedMessage>(this, OnAuthenticated);
@@ -54,6 +55,8 @@ namespace SixNations.Desktop.ViewModels
         public ICommand ClearStoryFilterCmd { get; }
 
         public ICommand FullScreenCmd { get; }
+
+        public ICommand TinkerCmd { get; }
 
         public bool CanExecuteFullScreenToggle => 
             SelectedIndexManager.SelectedIndex == (int)HamburgerNavItemsIndex.Wall;

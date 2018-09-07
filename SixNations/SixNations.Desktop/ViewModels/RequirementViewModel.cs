@@ -10,6 +10,7 @@ using SixNations.Desktop.Constants;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.Desktop.Adapters;
+using System.IO;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -38,6 +39,7 @@ namespace SixNations.Desktop.ViewModels
 
             _excelAdapter = new IndexExcelAdapter<Requirement>();
             IndexToExcelCmd = new RelayCommand(OnIndexToExcel, () => _excelAdapter.CanExecute);
+            ExcelToIndexCmd = new RelayCommand(OnExcelToIndex, () => _excelAdapter.CanExecute);
 
             MessengerInstance.Register<StoryFilterMessage>(this, OnFindStory);
         }
@@ -50,7 +52,13 @@ namespace SixNations.Desktop.ViewModels
             }
         }
 
+        public ICommand StoryFilterCmd { get; }
+
+        public ICommand ClearStoryFilterCmd { get; }
+
         public ICommand IndexToExcelCmd { get; }
+
+        public ICommand ExcelToIndexCmd { get; }
 
         public override async Task LoadAsync()
         {
@@ -122,6 +130,15 @@ namespace SixNations.Desktop.ViewModels
         {
             MessengerInstance.Send(new BusyMessage(true, this));
             _excelAdapter.Adapt(Index);
+            MessengerInstance.Send(new BusyMessage(false, this));
+        }
+
+        private void OnExcelToIndex()
+        {
+            MessengerInstance.Send(new BusyMessage(true, this));
+            FileInfo file = null;
+            // TODO open file dialog also implement drag and drop
+            _excelAdapter.Adapt(file);
             MessengerInstance.Send(new BusyMessage(false, this));
         }
     }

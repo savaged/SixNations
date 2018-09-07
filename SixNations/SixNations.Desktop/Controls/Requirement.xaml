@@ -31,11 +31,18 @@
                       AutoGenerateColumns="False" IsReadOnly="True" 
                       ItemsSource="{Binding Source={StaticResource IndexViewSource}}" 
                       SelectedItem="{Binding SelectedItem}"
-                      CanUserDeleteRows="False" CanUserAddRows="False"
-                      ToolTip="Right-click for options">
+                      CanUserDeleteRows="False" CanUserAddRows="False">
+                <DataGrid.ToolTip>
+                    <TextBlock>
+                        Right-click for options. 
+                        <LineBreak/>
+                        Ctrl+F to filter stories and Shift+Ctrl+F to clear.
+                    </TextBlock>
+                </DataGrid.ToolTip>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Open in Excel" Command="{Binding IndexToExcelCmd}"/>
+                        <MenuItem Header="Import from Excel" Command="{Binding ExcelToIndexCmd}"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>

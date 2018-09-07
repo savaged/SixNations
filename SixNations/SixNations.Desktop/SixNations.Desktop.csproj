@@ -125,6 +125,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\Tinker.cs" />
     <Compile Include="Interfaces\IIndexExcelAdapter.cs" />
     <Compile Include="Adapters\IndexExcelAdapter.cs" />
     <Compile Include="Controls\Swimlane.xaml.cs">
