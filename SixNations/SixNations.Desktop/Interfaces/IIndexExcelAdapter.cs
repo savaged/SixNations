@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SixNations.Desktop.Interfaces
 {
-    public interface IIndexExcelAdapter<T> : IDisposable
+    public interface IIndexExcelAdapter<T>
         where T : IHttpDataServiceModel
     {
         bool CanExecute { get; }

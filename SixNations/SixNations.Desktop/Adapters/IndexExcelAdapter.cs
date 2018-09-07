@@ -14,9 +14,7 @@ namespace SixNations.Desktop.Adapters
     {
         private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
         private Application _excel;
-        private int _hiddenCols;
         private int _endCol;
         private int _endRow;
 
@@ -33,48 +31,39 @@ namespace SixNations.Desktop.Adapters
             CanExecute = _excel != null;
         }
 
+        ~IndexExcelAdapter()
+        {
+            _excel.Quit();
+            Marshal.ReleaseComObject(_excel);
+        }
+
         public bool CanExecute { get; }
 
         public IList<T> Adapt(FileInfo fi)
         {
             Prechecks(fi);
             var list = new List<T>();
+
+            var wbs = _excel.Workbooks;
             Workbook wb = null;
             try
             {
-                wb = _excel.Workbooks.Open(fi.Name);
+                wb = wbs.Open(fi.Name);
             }
             catch (Exception ex)
             {
                 Log.ErrorFormat("Opening {0} failed! {1}", fi.Name, ex.Message);
-                wb?.Close(false);
-                return list;
             }
+            if (wb != null)
+            {
+                // TODO read headings and check for match with T fields
 
-            // TODO read headings and check for match with T fields
-
-            // TODO read rows and map to T fields
-
-            wb.Close(false);
+                // TODO read rows and map to T fields
+            }
+            wb?.Close(false);
             Marshal.ReleaseComObject(wb);
+            Marshal.ReleaseComObject(wbs);
             return list;
-        }
-
-        private void Prechecks(FileInfo fi)
-        {
-            if (!fi.Exists || !IsExcelExtension())
-            {
-                throw new ArgumentException("Expected a valid Excel file!");
-            }
-            bool IsExcelExtension()
-            {
-                string[] possibleExtensions = {
-                    "xls", "xlsx", "ods"
-                };
-                var matchedExtension = possibleExtensions
-                    .Where(e => e == fi.Extension).FirstOrDefault();
-                return !string.IsNullOrEmpty(matchedExtension);
-            }
         }
 
         public void Adapt(IList<T> index)
@@ -121,6 +110,23 @@ namespace SixNations.Desktop.Adapters
             }
         }
 
+        private void Prechecks(FileInfo fi)
+        {
+            if (!fi.Exists || !IsExcelExtension())
+            {
+                throw new ArgumentException("Expected a valid Excel file!");
+            }
+            bool IsExcelExtension()
+            {
+                string[] possibleExtensions = {
+                    "xls", "xlsx", "ods"
+                };
+                var matchedExtension = possibleExtensions
+                    .Where(e => e == fi.Extension).FirstOrDefault();
+                return !string.IsNullOrEmpty(matchedExtension);
+            }
+        }
+
         private void ApplyHeading(IList<T> index, Worksheet ws)
         {
             var col = 1;
@@ -129,7 +135,7 @@ namespace SixNations.Desktop.Adapters
             {
                 ApplyValidCell(kvp, ws, 1, ref col, true);
             }
-            _endCol = col - _hiddenCols;
+            _endCol = col;
         }
 
         private void ApplyValidCell(
@@ -140,15 +146,8 @@ namespace SixNations.Desktop.Adapters
             {
                 value = kvp.Key;
             }
-            if (!kvp.Key.ToLower().EndsWith("id"))
-            {
-                ws.Cells[row, col] = value;
-                col++;
-            }
-            else
-            {
-                _hiddenCols++;
-            }
+            ws.Cells[row, col] = value;
+            col++;
         }
 
         private void FormatHeading(Worksheet ws)
@@ -157,12 +156,6 @@ namespace SixNations.Desktop.Adapters
             var row = cells.EntireRow;
             var font = row.Font;
             font.Bold = true;
-        }
-
-        public void Dispose()
-        {
-            _excel.Quit();
-            Marshal.FinalReleaseComObject(_excel);
         }
     }
 }
