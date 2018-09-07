@@ -150,7 +150,17 @@ namespace SixNations.Desktop.Adapters
             {
                 value = kvp.Key;
             }
-            ws.Cells[row, col] = value;
+            try
+            {
+                ws.Cells[row, col] = value;
+            }
+            catch
+            {
+                Log.ErrorFormat(
+                    "Possible data error with field [{0}] which has the " +
+                    "value [{1}] trying to import to row [{2}] col [{3}]!",
+                    kvp.Key, kvp.Value, row, col);
+            }
             col++;
         }
 
