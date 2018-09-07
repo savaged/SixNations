@@ -125,8 +125,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Interfaces\IIndexToExcelAdapter.cs" />
-    <Compile Include="Adapters\IndexToExcelAdapter.cs" />
+    <Compile Include="Interfaces\IIndexExcelAdapter.cs" />
+    <Compile Include="Adapters\IndexExcelAdapter.cs" />
     <Compile Include="Controls\Swimlane.xaml.cs">
       <DependentUpon>Swimlane.xaml</DependentUpon>
     </Compile>

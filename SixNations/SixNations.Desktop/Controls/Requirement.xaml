@@ -31,7 +31,8 @@
                       AutoGenerateColumns="False" IsReadOnly="True" 
                       ItemsSource="{Binding Source={StaticResource IndexViewSource}}" 
                       SelectedItem="{Binding SelectedItem}"
-                      CanUserDeleteRows="False" CanUserAddRows="False">
+                      CanUserDeleteRows="False" CanUserAddRows="False"
+                      ToolTip="Right-click for options">
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Open in Excel" Command="{Binding IndexToExcelCmd}"/>

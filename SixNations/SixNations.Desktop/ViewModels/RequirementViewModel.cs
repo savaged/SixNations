@@ -25,7 +25,7 @@ namespace SixNations.Desktop.ViewModels
         private Lookup _statusLookup;
         private string _storyFilter;
         private Requirement _preLoaded;
-        private readonly IIndexToExcelAdapter<Requirement> _excelAdapter;
+        private readonly IIndexExcelAdapter<Requirement> _excelAdapter;
 
         public RequirementViewModel(
             IDataService<Requirement> requirementDataService,
@@ -36,7 +36,7 @@ namespace SixNations.Desktop.ViewModels
 
             _lookupDataService = lookupService;
 
-            _excelAdapter = new IndexToExcelAdapter<Requirement>();
+            _excelAdapter = new IndexExcelAdapter<Requirement>();
             IndexToExcelCmd = new RelayCommand(OnIndexToExcel, () => _excelAdapter.CanExecute);
 
             MessengerInstance.Register<StoryFilterMessage>(this, OnFindStory);
@@ -120,7 +120,9 @@ namespace SixNations.Desktop.ViewModels
 
         private void OnIndexToExcel()
         {
+            MessengerInstance.Send(new BusyMessage(true, this));
             _excelAdapter.Adapt(Index);
+            MessengerInstance.Send(new BusyMessage(false, this));
         }
     }
 }
