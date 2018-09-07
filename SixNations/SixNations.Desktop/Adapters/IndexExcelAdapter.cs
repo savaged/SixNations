@@ -161,7 +161,6 @@ namespace SixNations.Desktop.Adapters
 
         private IList<T> FetchData(IList<string> fields, Worksheet ws)
         {
-            var columns = new Dictionary<string, IList<object>>();
             var cells = ws.Cells;
             var data = new Dictionary<string, object>();
             var col = 1;
@@ -170,7 +169,7 @@ namespace SixNations.Desktop.Adapters
             foreach (var field in fields)
             {
                 var row = 2;
-                var column = new List<object>();
+                var column = new Dictionary<string, object>();
                 while (true)
                 {                                        
                     if (!RowHasData(fields, ws, row))
@@ -179,10 +178,10 @@ namespace SixNations.Desktop.Adapters
                         break;
                     }
                     var value = cells[row++, col];
-                    column.Add(value);
+                    column.Add(field, value);
                     // TODO map the model
                 }
-                columns.Add(field, column);
+                // ?? columns.Add(field, column);
                 col++;
             }
             return index;
