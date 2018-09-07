@@ -33,8 +33,11 @@ namespace SixNations.Desktop.Adapters
 
         ~IndexExcelAdapter()
         {
-            _excel.Quit();
-            Marshal.ReleaseComObject(_excel);
+            if (_excel != null)
+            {
+                _excel.Quit();
+                Marshal.ReleaseComObject(_excel);
+            }
         }
 
         public bool CanExecute { get; }
@@ -60,7 +63,7 @@ namespace SixNations.Desktop.Adapters
 
                 // TODO read rows and map to T fields
             }
-            wb?.Close(false);
+            wb?.Close(false, fi.Name, null);
             Marshal.ReleaseComObject(wb);
             Marshal.ReleaseComObject(wbs);
             return list;
@@ -74,8 +77,8 @@ namespace SixNations.Desktop.Adapters
             }
             Prechecks(index);
 
-            var wbs = _excel.Workbooks;
-            var wb = wbs.Add();
+            Workbooks wbs = _excel.Workbooks;
+            var wb = wbs[1];
             var sheets = wb.Worksheets;
             var ws = sheets[1];
 
@@ -96,9 +99,10 @@ namespace SixNations.Desktop.Adapters
 
             FormatHeading(ws);
             _excel.Visible = true;
-            
+
             Marshal.ReleaseComObject(ws);
             Marshal.ReleaseComObject(sheets);
+            Marshal.ReleaseComObject(wb);
             Marshal.ReleaseComObject(wbs);
         }
 
