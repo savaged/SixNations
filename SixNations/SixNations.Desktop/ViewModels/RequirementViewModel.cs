@@ -11,6 +11,9 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.Desktop.Adapters;
 using System.IO;
+using CommonServiceLocator;
+using MvvmDialogs;
+using MvvmDialogs.FrameworkDialogs.OpenFile;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -137,8 +140,20 @@ namespace SixNations.Desktop.ViewModels
         {
             MessengerInstance.Send(new BusyMessage(true, this));
             FileInfo file = null;
-            // TODO open file dialog also implement drag and drop
-            _excelAdapter.Adapt(file);
+            var fileDialogInfo = new OpenFileDialogSettings
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                Filter = "Excel (*.xlsx)|*.xlsx|Legacy Excel (*.xls)|*.xls| Open Format (*.ods)|*.ods"
+            };
+            var dialogService = ServiceLocator.Current.GetInstance<IDialogService>();
+            var owner = ServiceLocator.Current.GetInstance<MainViewModel>();
+            var success = dialogService.ShowOpenFileDialog(owner, fileDialogInfo);
+            if (success == true)
+            {
+                var path = fileDialogInfo.FileName;
+                file = new FileInfo(path);
+                _excelAdapter.Adapt(file);
+            }            
             MessengerInstance.Send(new BusyMessage(false, this));
         }
     }

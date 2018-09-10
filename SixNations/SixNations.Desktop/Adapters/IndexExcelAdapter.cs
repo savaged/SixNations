@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Microsoft.Office.Interop.Excel;
 using SixNations.Desktop.Interfaces;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
+using SixNations.Desktop.Models;
 
 namespace SixNations.Desktop.Adapters
 {
@@ -45,33 +47,48 @@ namespace SixNations.Desktop.Adapters
         public IList<T> Adapt(FileInfo fi)
         {
             Prechecks(fi);
-            var index = new List<T>();
+            IList<T> index = null;
 
             var wbs = _excel.Workbooks;
             Workbook wb = null;
             try
             {
-                wb = wbs.Open(fi.Name);
+                wb = wbs.Open(fi.FullName);
             }
             catch (Exception ex)
             {
                 Log.ErrorFormat("Opening {0} failed! {1}", fi.Name, ex.Message);
+                throw;
             }
             if (wb != null)
             {
-                var sheets = wb.Worksheets;
-                var ws = sheets[1];
+                Sheets sheets = null;
+                Worksheet ws = null;
+                try
+                {
+                    sheets = wb.Worksheets;
+                    ws = sheets[1];
 
-                var fields = FetchFields(ws);
+                    var fields = FetchFields(ws);
 
-                index = FetchData(fields, ws);
-
-                Marshal.ReleaseComObject(ws);
-                Marshal.ReleaseComObject(sheets);
-            }
-            wb?.Close(false, fi.Name, null);
-
-            Marshal.ReleaseComObject(wb);
+                    index = FetchData(fields, ws);
+                }
+                catch (ArgumentException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    Log.ErrorFormat("Unexpected error processing import! {0}", ex);
+                }
+                finally
+                {
+                    wb.Close(false, fi.Name, null);
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(ws);
+                    Marshal.ReleaseComObject(sheets);
+                }                
+            }            
             Marshal.ReleaseComObject(wbs);
             return index;
         }
@@ -130,7 +147,7 @@ namespace SixNations.Desktop.Adapters
             bool IsExcelExtension()
             {
                 string[] possibleExtensions = {
-                    "xls", "xlsx", "ods"
+                    ".xls", ".xlsx", ".ods"
                 };
                 var matchedExtension = possibleExtensions
                     .Where(e => e == fi.Extension).FirstOrDefault();
@@ -142,10 +159,10 @@ namespace SixNations.Desktop.Adapters
         {
             var fields = new List<string>();
             var schema = new T().GetData();
-            var cells = ws.Cells;
+            Range cells = ws.Cells;
             for (var i = 1; i < schema.Count; i++)
             {
-                var heading = cells[1, i++];
+                var heading = cells[1, i++].Value;
                 if (schema.ContainsKey(heading))
                 {
                     fields.Add(heading);
@@ -161,29 +178,29 @@ namespace SixNations.Desktop.Adapters
 
         private IList<T> FetchData(IList<string> fields, Worksheet ws)
         {
-            var cells = ws.Cells;
-            var data = new Dictionary<string, object>();
-            var col = 1;
-            var count = 0;
+            Range cells = ws.Cells;
             var index = new List<T>();
-            foreach (var field in fields)
+            var col = 1;
+            var row = 2;
+            while (true)
             {
-                var row = 2;
-                var column = new Dictionary<string, object>();
-                while (true)
-                {                                        
-                    if (!RowHasData(fields, ws, row))
-                    {
-                        count = row - 1;
-                        break;
-                    }
-                    var value = cells[row++, col];
-                    column.Add(field, value);
-                    // TODO map the model
+                if (!RowHasData(fields, ws, row))
+                {
+                    break;
                 }
-                // ?? columns.Add(field, column);
-                col++;
-            }
+                var data = new Dictionary<string, object>();
+                foreach (var field in fields)
+                {
+                    var value = cells[row, col++].Value;
+                    data.Add(field, value);
+                }
+                var json = JsonConvert.SerializeObject(data);
+                var root = JsonConvert.DeserializeObject<ResponseRootObject>(
+                        json, new ResponseConverter());
+                var model = new T();
+                model.Initialise(root.Data[0]);
+                index.Add(model);
+            }            
             return index;
         }
 
