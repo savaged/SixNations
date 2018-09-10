@@ -21,13 +21,13 @@ namespace SixNations.Desktop.ViewModels
         private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private readonly IDataService<T> _dataService;
+        protected readonly IDataService<T> DataService;
         private T _selectedItem;
         private bool _canSelectItem;
 
         public DataBoundViewModel(IDataService<T> dataService)
         {
-            _dataService = dataService;
+            DataService = dataService;
             Index = new ObservableCollection<T>();
 
             NewCmd = new RelayCommand(OnNew, () => CanExecuteNew);
@@ -65,7 +65,7 @@ namespace SixNations.Desktop.ViewModels
             {
                 try
                 {
-                    data = await _dataService.GetModelDataAsync(
+                    data = await DataService.GetModelDataAsync(
                         User.Current.AuthToken, FeedbackActions.ReactToException);
                 }
                 catch (Exception ex)
@@ -146,7 +146,7 @@ namespace SixNations.Desktop.ViewModels
             MessengerInstance.Send(new BusyMessage(true, this));
             try
             {
-                SelectedItem = await _dataService.CreateModelAsync(
+                SelectedItem = await DataService.CreateModelAsync(
                     User.Current.AuthToken, FeedbackActions.ReactToException);
                 RaisePropertyChanged(nameof(IsSelectedItemEditable));
                 CanSelectItem = false;
@@ -167,7 +167,7 @@ namespace SixNations.Desktop.ViewModels
             MessengerInstance.Send(new BusyMessage(true, this));
             try
             {
-                SelectedItem = await _dataService.EditModelAsync(
+                SelectedItem = await DataService.EditModelAsync(
                     User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
                 RaisePropertyChanged(nameof(IsSelectedItemEditable));
                 CanSelectItem = false;
@@ -192,7 +192,7 @@ namespace SixNations.Desktop.ViewModels
                 bool result;
                 try
                 {
-                    result = await _dataService.DeleteModelAsync(
+                    result = await DataService.DeleteModelAsync(
                         User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
                     RaisePropertyChanged(nameof(IsSelectedItemEditable));
                     if (result)
@@ -222,12 +222,12 @@ namespace SixNations.Desktop.ViewModels
                 T updated;
                 if (SelectedItem.IsNew)
                 {
-                    updated = await _dataService.StoreModelAsync(
+                    updated = await DataService.StoreModelAsync(
                         User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
                 }
                 else
                 {
-                    updated = await _dataService.UpdateModelAsync(
+                    updated = await DataService.UpdateModelAsync(
                         User.Current.AuthToken, FeedbackActions.ReactToException, SelectedItem);
                 }
                 RaisePropertyChanged(nameof(IsSelectedItemEditable));

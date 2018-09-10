@@ -8,6 +8,7 @@ using SixNations.Desktop.Interfaces;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using SixNations.Desktop.Models;
+using System.Threading.Tasks;
 
 namespace SixNations.Desktop.Adapters
 {
@@ -101,33 +102,42 @@ namespace SixNations.Desktop.Adapters
             }
             Prechecks(index);
 
-            Workbooks wbs = _excel.Workbooks;
-            var wb = wbs[1];
-            var sheets = wb.Worksheets;
-            var ws = sheets[1];
-
-            ApplyHeading(index, ws);
-
-            var row = 2;
-            foreach (var model in index)
+            Workbooks wbs = null;
+            Workbook wb = null;
+            Sheets sheets = null;
+            Worksheet ws = null;
+            try
             {
-                var col = 1;
-                var data = model.GetData();
-                foreach (var kvp in data)
+                wbs = _excel.Workbooks;
+                wb = wbs[1];
+                sheets = wb.Worksheets;
+                ws = sheets[1];
+
+                ApplyHeading(index, ws);
+
+                var row = 2;
+                foreach (var model in index)
                 {
-                    ApplyValidCell(kvp, ws, row, ref col);
+                    var col = 1;
+                    var data = model.GetData();
+                    foreach (var kvp in data)
+                    {
+                        ApplyValidCell(kvp, ws, row, ref col);
+                    }
+                    row++;
                 }
-                row++;
+                _endRow = row;
+
+                FormatHeading(ws);
+                _excel.Visible = true;
             }
-            _endRow = row;
-
-            FormatHeading(ws);
-            _excel.Visible = true;
-
-            Marshal.ReleaseComObject(ws);
-            Marshal.ReleaseComObject(sheets);
-            Marshal.ReleaseComObject(wb);
-            Marshal.ReleaseComObject(wbs);
+            finally
+            {
+                Marshal.ReleaseComObject(ws);
+                Marshal.ReleaseComObject(sheets);
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(wbs);
+            }
         }
 
         private void Prechecks(IList<T> index)
@@ -159,14 +169,30 @@ namespace SixNations.Desktop.Adapters
         {
             var fields = new List<string>();
             var schema = new T().GetData();
-            Range cells = ws.Cells;
-            for (var i = 1; i < schema.Count; i++)
+            Range cells = null;
+            try
             {
-                var heading = cells[1, i++].Value;
-                if (schema.ContainsKey(heading))
+                cells = ws.Cells;
+                for (var i = 1; i < schema.Count + 1; i++)
                 {
-                    fields.Add(heading);
+                    Range cell = cells[1, i];
+                    try
+                    {
+                        var heading = cell.Value;
+                        if (schema.ContainsKey(heading))
+                        {
+                            fields.Add(heading);
+                        }
+                    }
+                    finally
+                    {
+                        Marshal.ReleaseComObject(cell);
+                    }
                 }
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(cells);
             }
             if (fields.Count != schema.Count)
             {
@@ -176,44 +202,102 @@ namespace SixNations.Desktop.Adapters
             return fields;
         }
 
+        // TODO create FetchDataAsync
+
         private IList<T> FetchData(IList<string> fields, Worksheet ws)
         {
-            Range cells = ws.Cells;
             var index = new List<T>();
-            var col = 1;
-            var row = 2;
-            while (true)
+            var data = new List<IDictionary<string, object>>();
+            Range cells = null;
+            try
             {
-                if (!RowHasData(fields, ws, row))
+                cells = ws.Cells;
+                var col = 1;
+                var row = 2;
+                while (true)
                 {
-                    break;
+                    Log.DebugFormat("Importing row {0}", row);
+                    if (!RowHasData(fields, ws, row))
+                    {
+                        break;
+                    }
+                    var item = new Dictionary<string, object>();
+                    foreach (var field in fields)
+                    {
+                        Range cell = null;
+                        try
+                        {
+                            Log.DebugFormat("Importing cell at column {0}", col);
+                            cell = cells[row, col++];
+                            var value = cell?.Value;
+                            if (field.EndsWith("Id") || field.EndsWith("ID"))
+                            {
+                                value = value != null ? (int)value : 0;
+                            }
+                            item.Add(field, value);
+                        }
+                        finally
+                        {
+                            Marshal.ReleaseComObject(cell);
+                        }                        
+                    }
+                    data.Add(item);
+                    row++;
+                    col = 1;
                 }
-                var data = new Dictionary<string, object>();
-                foreach (var field in fields)
+                var wrapper = new Dictionary<string, IList<IDictionary<string, object>>>
                 {
-                    var value = cells[row, col++].Value;
-                    data.Add(field, value);
-                }
-                var json = JsonConvert.SerializeObject(data);
+                    { "Data", data }
+                };
+                var json = JsonConvert.SerializeObject(wrapper);
                 var root = JsonConvert.DeserializeObject<ResponseRootObject>(
-                        json, new ResponseConverter());
-                var model = new T();
-                model.Initialise(root.Data[0]);
-                index.Add(model);
+                    json, new ResponseConverter());
+                root.Success = true;
+                foreach (var dto in root?.Data)
+                {
+                    var model = new T();
+                    model.Initialise(dto);
+                    index.Add(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.ErrorFormat("Unexpected error converting data! {0}", ex);
+                throw;
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(cells);
             }            
             return index;
         }
 
         private bool RowHasData(IList<string> fields, Worksheet ws, int row)
         {
-            var cells = ws.Cells;
             var hasData = true;
-            var col = 1;
-            foreach (var f in fields)
+            Range cells =null;
+            try
             {
-                var content = cells[row, col++];
-                hasData &= !string.IsNullOrEmpty(content);
+                cells = ws.Cells;
+                var col = 1;
+                foreach (var f in fields)
+                {
+                    Range content = cells[row, col++];
+                    try
+                    {
+                        dynamic value = content?.Value;
+                        hasData &= !string.IsNullOrEmpty(value?.ToString());
+                    }
+                    finally
+                    {
+                        Marshal.ReleaseComObject(content);
+                    }
+                }
             }
+            finally
+            {
+                Marshal.ReleaseComObject(cells);
+            }            
             return hasData;
         }
 
@@ -232,14 +316,16 @@ namespace SixNations.Desktop.Adapters
             KeyValuePair<string, object> kvp, Worksheet ws, int row, ref int col, bool heading = false)
         {
             var value = kvp.Value;
-            var cells = ws.Cells;
+            Range cells = null;
             if (heading)
             {
                 value = kvp.Key;
             }
             try
             {
+                cells = ws.Cells;
                 cells[row, col] = value;
+                col++;
             }
             catch
             {
@@ -248,15 +334,30 @@ namespace SixNations.Desktop.Adapters
                     "value [{1}] trying to import to row [{2}] col [{3}]!",
                     kvp.Key, kvp.Value, row, col);
             }
-            col++;
+            finally
+            {
+                Marshal.ReleaseComObject(cells);
+            }
         }
 
         private void FormatHeading(Worksheet ws)
         {
-            var cells = ws.Cells[1, 1];
-            var row = cells.EntireRow;
-            var font = row.Font;
-            font.Bold = true;
+            Range cell = null;
+            Range row = null;
+            Font font = null;
+            try
+            {
+                cell = ws.Cells[1, 1];
+                row = cell.EntireRow;
+                font = row.Font;
+                font.Bold = true;
+            }
+            finally
+            {
+                Marshal.ReleaseComObject(font);
+                Marshal.ReleaseComObject(row);
+                Marshal.ReleaseComObject(cell);
+            }
         }
     }
 }

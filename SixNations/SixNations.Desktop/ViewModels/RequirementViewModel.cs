@@ -14,6 +14,8 @@ using System.IO;
 using CommonServiceLocator;
 using MvvmDialogs;
 using MvvmDialogs.FrameworkDialogs.OpenFile;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -136,7 +138,7 @@ namespace SixNations.Desktop.ViewModels
             MessengerInstance.Send(new BusyMessage(false, this));
         }
 
-        private void OnExcelToIndex()
+        private async void OnExcelToIndex()
         {
             MessengerInstance.Send(new BusyMessage(true, this));
             FileInfo file = null;
@@ -152,9 +154,38 @@ namespace SixNations.Desktop.ViewModels
             {
                 var path = fileDialogInfo.FileName;
                 file = new FileInfo(path);
-                _excelAdapter.Adapt(file);
+                var imported = _excelAdapter.Adapt(file);
+                await UpdateIndex(imported);
             }            
             MessengerInstance.Send(new BusyMessage(false, this));
+        }
+
+        private async Task UpdateIndex(IList<Requirement> updated)
+        {
+            if (updated == null || updated.Count == 0)
+            {
+                Log.Error("Nothing to import!");
+                return;
+            }
+            var authToken = User.Current.AuthToken;
+            foreach (var requirement in updated)
+            {
+                var matched = Index.Where(r => r.Id == requirement.Id).FirstOrDefault();
+                Requirement saved = null;
+                if (matched != null)
+                {
+                    saved = await DataService.UpdateModelAsync(
+                        authToken, FeedbackActions.ReactToException, matched);
+                }
+                else
+                {
+                    saved = await DataService.StoreModelAsync(
+                        authToken, FeedbackActions.ReactToException, matched);
+                }
+                Log.DebugFormat("Imported: {0}", JsonConvert.SerializeObject(saved));
+            }
+            Log.Info("Import completed.");
+            await LoadIndexAsync();
         }
     }
 }
