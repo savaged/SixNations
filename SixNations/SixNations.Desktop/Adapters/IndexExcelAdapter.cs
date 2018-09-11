@@ -53,6 +53,12 @@ namespace SixNations.Desktop.Adapters
 
         public bool CanExecute { get; }
 
+        public async Task<IList<T>> AdaptAsync(FileInfo fi)
+        {
+            var result = await Task.Run(() => Adapt(fi));
+            return result;
+        }
+
         public IList<T> Adapt(FileInfo fi)
         {
             Prechecks(fi);
@@ -100,6 +106,11 @@ namespace SixNations.Desktop.Adapters
             }            
             Marshal.ReleaseComObject(wbs);
             return index;
+        }
+
+        public async Task AdaptAsync(IList<T> index)
+        {
+            await Task.Run(() => Adapt(index));
         }
 
         public void Adapt(IList<T> index)
@@ -209,8 +220,6 @@ namespace SixNations.Desktop.Adapters
             }
             return fields;
         }
-
-        // TODO create FetchDataAsync
 
         private IList<T> FetchData(IList<string> fields, Worksheet ws)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SixNations.Desktop.Interfaces
 {
@@ -9,7 +10,11 @@ namespace SixNations.Desktop.Interfaces
     {
         bool CanExecute { get; }
 
+        Task AdaptAsync(IList<T> index);
+
         void Adapt(IList<T> index);
+
+        Task<IList<T>> AdaptAsync(FileInfo fi);
 
         IList<T> Adapt(FileInfo fi);
     }

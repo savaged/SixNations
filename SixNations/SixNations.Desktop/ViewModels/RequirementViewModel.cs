@@ -131,10 +131,10 @@ namespace SixNations.Desktop.ViewModels
             StoryFilter = m.Filter;
         }
 
-        private void OnIndexToExcel()
+        private async void OnIndexToExcel()
         {
             MessengerInstance.Send(new BusyMessage(true, this));
-            _excelAdapter.Adapt(Index);
+            await _excelAdapter.AdaptAsync(Index);
             MessengerInstance.Send(new BusyMessage(false, this));
         }
 
@@ -154,7 +154,7 @@ namespace SixNations.Desktop.ViewModels
             {
                 var path = fileDialogInfo.FileName;
                 file = new FileInfo(path);
-                var imported = _excelAdapter.Adapt(file);
+                var imported = await _excelAdapter.AdaptAsync(file);
                 await UpdateIndex(imported);
             }            
             MessengerInstance.Send(new BusyMessage(false, this));
