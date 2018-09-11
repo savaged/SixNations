@@ -75,7 +75,7 @@
                 <Grid IsEnabled="{Binding IsSelectedItemEditable}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="70"/>
-                        <ColumnDefinition Width="270"/>
+                        <ColumnDefinition Width="380"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="180"/>

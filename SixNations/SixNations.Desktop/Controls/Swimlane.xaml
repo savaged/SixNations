@@ -21,7 +21,7 @@
                            Foreground="Black"
                            TextWrapping="Wrap"
                            FontFamily="Ink Free"
-                           FontSize="14"
+                           FontSize="18"
                            ToolTip="{Binding Requirement.Info}">
                     <TextBlock.ContextMenu>
                         <ContextMenu>
