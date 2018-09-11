@@ -9,5 +9,7 @@ namespace SixNations.Desktop.Interfaces
         bool IsNew { get; }
 
         int Id { get; }
+
+        string ToJson();
     }
 }

@@ -172,17 +172,27 @@ namespace SixNations.Desktop.ViewModels
             {
                 var matched = Index.Where(r => r.Id == requirement.Id).FirstOrDefault();
                 Requirement saved = null;
-                if (matched != null)
+                if (!matched.AreSame(requirement))
                 {
-                    saved = await DataService.UpdateModelAsync(
-                        authToken, FeedbackActions.ReactToException, matched);
+                    if (matched != null)
+                    {
+                        saved = await DataService.UpdateModelAsync(
+                            authToken, FeedbackActions.ReactToException, requirement);
+                    }
+                    else
+                    {
+                        saved = await DataService.StoreModelAsync(
+                            authToken, FeedbackActions.ReactToException, requirement);
+                    }
+                    if (saved != null)
+                    {
+                        Log.DebugFormat("Imported: {0}", saved.ToJson());
+                    }
+                    else
+                    {
+                        Log.ErrorFormat("Import failure! For: {0}", requirement.ToJson());
+                    }
                 }
-                else
-                {
-                    saved = await DataService.StoreModelAsync(
-                        authToken, FeedbackActions.ReactToException, matched);
-                }
-                Log.DebugFormat("Imported: {0}", JsonConvert.SerializeObject(saved));
             }
             Log.Info("Import completed.");
             await LoadIndexAsync();

@@ -38,6 +38,13 @@ namespace SixNations.Desktop.Adapters
         {
             if (_excel != null)
             {
+                Workbooks wbs = _excel.Workbooks;
+                foreach (Workbook wb in wbs)
+                {
+                    wb.Close(0);
+                    Marshal.ReleaseComObject(wb);
+                }
+                Marshal.ReleaseComObject(wbs);
                 _excel.Quit();
                 Marshal.ReleaseComObject(_excel);
             }
@@ -109,9 +116,9 @@ namespace SixNations.Desktop.Adapters
             try
             {
                 wbs = _excel.Workbooks;
-                wb = wbs[1];
+                wb = wbs[0];
                 sheets = wb.Worksheets;
-                ws = sheets[1];
+                ws = sheets[0];
 
                 ApplyHeading(index, ws);
 
@@ -178,7 +185,7 @@ namespace SixNations.Desktop.Adapters
                     Range cell = cells[1, i];
                     try
                     {
-                        var heading = cell.Value;
+                        dynamic heading = cell.Value;
                         if (schema.ContainsKey(heading))
                         {
                             fields.Add(heading);
@@ -216,24 +223,26 @@ namespace SixNations.Desktop.Adapters
                 var row = 2;
                 while (true)
                 {
-                    Log.DebugFormat("Importing row {0}", row);
                     if (!RowHasData(fields, ws, row))
                     {
+                        Log.Debug("End of data to import.");
                         break;
                     }
+                    Log.DebugFormat("Importing row {0}", row);
                     var item = new Dictionary<string, object>();
                     foreach (var field in fields)
                     {
                         Range cell = null;
                         try
                         {
-                            Log.DebugFormat("Importing cell at column {0}", col);
+                            Log.DebugFormat("\tImporting cell at column {0}", col);
                             cell = cells[row, col++];
-                            var value = cell?.Value;
-                            if (field.EndsWith("Id") || field.EndsWith("ID"))
+                            dynamic value = cell?.Value;
+                            if (value is double)
                             {
-                                value = value != null ? (int)value : 0;
+                                value = (int)value;
                             }
+                            Log.DebugFormat("\t\tImporting value {0}:{1}", field, value);
                             item.Add(field, value);
                         }
                         finally
@@ -275,6 +284,7 @@ namespace SixNations.Desktop.Adapters
         private bool RowHasData(IList<string> fields, Worksheet ws, int row)
         {
             var hasData = true;
+            var joined = string.Empty;
             Range cells =null;
             try
             {
@@ -282,17 +292,19 @@ namespace SixNations.Desktop.Adapters
                 var col = 1;
                 foreach (var f in fields)
                 {
+                    joined = string.Empty;
                     Range content = cells[row, col++];
                     try
                     {
                         dynamic value = content?.Value;
-                        hasData &= !string.IsNullOrEmpty(value?.ToString());
+                        joined += value?.ToString();
                     }
                     finally
                     {
                         Marshal.ReleaseComObject(content);
                     }
                 }
+                hasData = joined.Length > 0;
             }
             finally
             {

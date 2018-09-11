@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
 using SixNations.Desktop.Attributes;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
@@ -150,5 +151,17 @@ namespace SixNations.Desktop.Models
             }
             return value;
         }        
+
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
+        public virtual bool AreSame(IHttpDataServiceModel rhs)
+        {
+            var lhs = ToJson();
+            var result = lhs == rhs.ToJson();
+            return result;
+        }
     }
 }

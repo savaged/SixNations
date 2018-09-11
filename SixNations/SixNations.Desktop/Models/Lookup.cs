@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.Models
@@ -74,5 +75,10 @@ namespace SixNations.Desktop.Models
         public bool IsReadOnly => true;
 
         public IDictionary<string, object> GetData() => throw new NotSupportedException();
+
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }
