@@ -5,7 +5,7 @@ using SixNations.Desktop.Helpers;
 
 namespace SixNations.Desktop.Converters
 {
-    public class DimensionLessMarginConvertercs : IValueConverter
+    public class DimensionLessParameterConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

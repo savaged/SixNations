@@ -8,7 +8,7 @@
              d:DesignHeight="480" d:DesignWidth="213"
              Name="UcSwimlane">
     <UserControl.Resources>
-        <converters:DimensionLessMarginConvertercs x:Key="WidthLessMargin"/>
+        <converters:DimensionLessParameterConverter x:Key="WidthLessMargin"/>
         <DataTemplate x:Key="PostIt">
             <Border VerticalAlignment="Top" Margin="5"
                     BorderBrush="Silver" BorderThickness="0,0,2,2"

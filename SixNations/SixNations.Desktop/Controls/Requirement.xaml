@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SixNations.Desktop.Controls"
+             xmlns:converters="clr-namespace:SixNations.Desktop.Converters"
              xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
@@ -18,6 +19,7 @@
                 <scm:SortDescription PropertyName="Priority" Direction="Ascending" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
+        <converters:DimensionLessParameterConverter x:Key="WidthLessParam"/>
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding CancelCmd}"/>
@@ -26,8 +28,14 @@
         <TextBox x:Name="StoryFilter" Visibility="Collapsed" 
                    Text="{Binding StoryFilter, UpdateSourceTrigger=PropertyChanged}" 
                    TextChanged="StoryFilter_TextChanged"/>
-        <WrapPanel Height="Auto">
-            <DataGrid x:Name="DgRequirements" Height="Auto"
+        <Grid Height="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="688"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="DgRequirements" 
+                      Grid.Column="0"
+                      Height="Auto"
                       AutoGenerateColumns="False" IsReadOnly="True" 
                       ItemsSource="{Binding Source={StaticResource IndexViewSource}}" 
                       SelectedItem="{Binding SelectedItem}"
@@ -46,8 +54,8 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="40" Header="ID" Binding="{Binding Id}"/>
-                    <DataGridTextColumn Width="280" Header="Story" Binding="{Binding Story}">
+                    <DataGridTextColumn Width="6*" Header="ID" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Width="38*" Header="Story" Binding="{Binding Story}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="TextWrapping" Value="Wrap" />
@@ -55,13 +63,14 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Width="92" Header="Status" Binding="{Binding StatusName}"/>
-                    <DataGridTextColumn Width="92" Header="Priority" Binding="{Binding PriorityName}"/>
-                    <DataGridTextColumn Width="92" Header="Estimation" Binding="{Binding EstimationName}"/>
-                    <DataGridTextColumn Width="92" Header="Release" Binding="{Binding Release}"/>
+                    <DataGridTextColumn Width="14*" Header="Status" Binding="{Binding StatusName}"/>
+                    <DataGridTextColumn Width="14*" Header="Priority" Binding="{Binding PriorityName}"/>
+                    <DataGridTextColumn Width="14*" Header="Estimation" Binding="{Binding EstimationName}"/>
+                    <DataGridTextColumn Width="14*" Header="Release" Binding="{Binding Release}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Margin="10,0,0,0" 
+                        Grid.Column="1"
                         ToolTip="Right-click for options">
                 <StackPanel.ContextMenu>
                     <ContextMenu>
@@ -72,10 +81,10 @@
                     </ContextMenu>
                 </StackPanel.ContextMenu>
                 <Label FontWeight="Bold">DETAIL</Label>
-                <Grid IsEnabled="{Binding IsSelectedItemEditable}">
+                <Grid IsEnabled="{Binding IsSelectedItemEditable}" Margin="0,0,20,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="70"/>
-                        <ColumnDefinition Width="380"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="180"/>
@@ -116,6 +125,6 @@
                             Command="{Binding SaveCmd}"/>
                 </Grid>
             </StackPanel>
-        </WrapPanel>
+        </Grid>
     </Grid>
 </UserControl>

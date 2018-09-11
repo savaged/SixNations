@@ -27,7 +27,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -161,7 +161,7 @@
     <Compile Include="Controls\Swimlane.xaml.cs">
       <DependentUpon>Swimlane.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\DimensionLessMarginConvertercs.cs" />
+    <Compile Include="Converters\DimensionLessParameterConverter.cs" />
     <Compile Include="Helpers\LogFileLocator.cs" />
     <Compile Include="Messages\CloseDialogRequestMessage.cs" />
     <Compile Include="Messages\ReloadRequestMessage.cs" />
