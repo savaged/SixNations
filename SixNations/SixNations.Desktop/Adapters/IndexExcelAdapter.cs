@@ -47,6 +47,7 @@ namespace SixNations.Desktop.Adapters
                 Marshal.ReleaseComObject(wbs);
                 _excel.Quit();
                 Marshal.ReleaseComObject(_excel);
+                _excel = null;
             }
         }
 
@@ -116,9 +117,9 @@ namespace SixNations.Desktop.Adapters
             try
             {
                 wbs = _excel.Workbooks;
-                wb = wbs[0];
+                wb = wbs[1];
                 sheets = wb.Worksheets;
-                ws = sheets[0];
+                ws = sheets[1];
 
                 ApplyHeading(index, ws);
 
