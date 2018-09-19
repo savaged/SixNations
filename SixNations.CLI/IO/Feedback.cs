@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SixNations.API.Interfaces;
+using System;
 
 namespace SixNations.CLI.IO
 {
@@ -33,6 +34,11 @@ namespace SixNations.CLI.IO
                     Console.WriteLine(value);
                     break;
             }
+        }
+
+        internal static void Show(IDataServiceModel model)
+        {
+            Console.WriteLine(model.ToJson());
         }
 
         internal static void Splash()

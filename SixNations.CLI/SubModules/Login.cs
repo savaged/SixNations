@@ -11,11 +11,6 @@ namespace SixNations.CLI.Modules
 {
     public class Login : BaseModule, ISubModule
     {
-        public void Run()
-        {
-            throw new NotSupportedException();
-        }
-
         public async Task RunAsync()
         {
             var email = Entry.Read("Email");

@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Threading.Tasks;
 using SixNations.CLI.Interfaces;
+using SixNations.CLI.IO;
 
 namespace SixNations.CLI.Modules
 {
     public class About : BaseModule, IModule
     {
-        public void Run()
+        private void Run()
         {
-            // TODO
+            var about = new Data.Models.About();
+            Feedback.Show(about);
         }
 
-        public Task RunAsync()
+        public async Task RunAsync()
         {
-            throw new NotSupportedException();
+            Run();
+            await Task.CompletedTask;
         }
     }
 }

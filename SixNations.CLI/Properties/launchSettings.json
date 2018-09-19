@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SixNations.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "about"
+    }
+  }
+}

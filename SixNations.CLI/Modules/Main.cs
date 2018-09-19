@@ -9,11 +9,6 @@ namespace SixNations.CLI.Modules
 {
     public class Main : BaseModule, IModule
     {
-        public void Run()
-        {
-            throw new NotSupportedException();
-        }
-
         public async Task RunAsync()
         {
             await SimpleIoc.Default.GetInstance<Login>().RunAsync();
@@ -23,7 +18,7 @@ namespace SixNations.CLI.Modules
                 return;
             }
             Feedback.Show("Login Success!", Formats.Success);
-            // TODO more logic here ;)
+            // TODO load first requirement and feedback page fwd/back, search and CRUD
         }
     }
 }

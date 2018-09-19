@@ -157,7 +157,6 @@
       <DependentUpon>Swimlane.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DimensionLessParameterConverter.cs" />
-    <Compile Include="Helpers\LogFileLocator.cs" />
     <Compile Include="Messages\CloseDialogRequestMessage.cs" />
     <Compile Include="Messages\ReloadRequestMessage.cs" />
     <Compile Include="ViewModels\DataBoundViewModel.cs" />

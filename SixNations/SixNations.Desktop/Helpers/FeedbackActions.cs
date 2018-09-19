@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using GalaSoft.MvvmLight.Threading;
+using SixNations.Data.Helpers;
 
 namespace SixNations.Desktop.Helpers
 {

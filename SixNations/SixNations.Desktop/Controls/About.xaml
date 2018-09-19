@@ -11,24 +11,24 @@
         <TextBox Margin="10" TextAlignment="Center" 
                  IsReadOnly="True" BorderThickness="0"
                  FontSize="24" FontWeight="DemiBold"
-                 Text="{Binding AppNameText, Mode=OneTime}"/>
+                 Text="{Binding SelectedItem.AppNameText, Mode=OneTime}"/>
         <TextBox Margin="20" TextAlignment="Center" 
                  IsReadOnly="True" BorderThickness="0"
-                 Text="{Binding AppBlurbText, Mode=OneTime}"/>
+                 Text="{Binding SelectedItem.AppBlurbText, Mode=OneTime}"/>
         <TextBox Margin="10" TextAlignment="Center" 
                  IsReadOnly="True" BorderThickness="0"
-                 Text="{Binding AppSourceCodeRepoText, Mode=OneTime}"/>
+                 Text="{Binding SelectedItem.AppSourceCodeRepoText, Mode=OneTime}"/>
         <TextBox Margin="10" TextAlignment="Center" 
                  IsReadOnly="True" BorderThickness="0"
-                 Text="{Binding AppVersionText, Mode=OneTime}"/>
+                 Text="{Binding SelectedItem.AppVersionText, Mode=OneTime}"/>
         <TextBox Margin="10" TextAlignment="Center" 
                  IsReadOnly="True" BorderThickness="0"
-                 Text="{Binding OSVersionText, Mode=OneTime}"/>
+                 Text="{Binding SelectedItem.OSVersionText, Mode=OneTime}"/>
         <TextBox Margin="10" TextAlignment="Center" 
                  IsReadOnly="True" BorderThickness="0"
-                 Text="{Binding DotNetVersionText, Mode=OneTime}"/>
+                 Text="{Binding SelectedItem.DotNetVersionText, Mode=OneTime}"/>
         <TextBox Margin="10" TextAlignment="Center" 
                  IsReadOnly="True" BorderThickness="0"
-                 Text="{Binding LogFileLocationText, Mode=OneTime}"/>
+                 Text="{Binding SelectedItem.LogFileLocationText, Mode=OneTime}"/>
     </StackPanel>
 </UserControl>

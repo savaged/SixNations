@@ -8,7 +8,7 @@ using SixNations.Desktop.ViewModels;
 using SixNations.Desktop.Views;
 using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro;
-using SixNations.Desktop.Helpers;
+using SixNations.Data.Helpers;
 
 namespace SixNations.Desktop
 {
