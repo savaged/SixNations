@@ -1,6 +1,7 @@
+// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
+using GalaSoft.MvvmLight.Ioc;
 using System;
 using System.Windows.Input;
-using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.Desktop.Interfaces;
@@ -9,6 +10,7 @@ using SixNations.Desktop.Constants;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Helpers;
 using System.Reflection;
+using SixNations.Data.Models;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -89,7 +91,7 @@ namespace SixNations.Desktop.ViewModels
 
         private void OnStoryFilter()
         {
-            var vm = ServiceLocator.Current.GetInstance<FindStoryDialogViewModel>();
+            var vm = SimpleIoc.Default.GetInstance<FindStoryDialogViewModel>();
             DialogService.ShowDialog(this, vm);
         }
 
@@ -106,7 +108,7 @@ namespace SixNations.Desktop.ViewModels
         private void OnFullScreen()
         {
             IsFullScreen = true;
-            var vm = ServiceLocator.Current.GetInstance<WallDialogViewModel>();
+            var vm = SimpleIoc.Default.GetInstance<WallDialogViewModel>();
             var result = DialogService.ShowDialog(this, vm);
             IsFullScreen = false;
         }

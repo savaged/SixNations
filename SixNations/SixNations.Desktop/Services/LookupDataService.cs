@@ -1,9 +1,11 @@
-﻿using System;
+﻿// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
+using GalaSoft.MvvmLight.Ioc;
+using System;
 using System.Collections.Generic;
 using SixNations.Desktop.Interfaces;
 using System.Threading.Tasks;
 using SixNations.Desktop.Models;
-using CommonServiceLocator;
+using SixNations.Data.Models;
 
 namespace SixNations.Desktop.Services
 {
@@ -13,7 +15,7 @@ namespace SixNations.Desktop.Services
 
         private async Task<Lookup> GetLookup(string lookupName)
         {
-            var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
+            var response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
                 .HttpRequestAsync(lookupName.ToLower(), User.Current.AuthToken);
             return new Lookup(lookupName, response);
         }

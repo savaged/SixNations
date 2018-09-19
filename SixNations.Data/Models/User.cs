@@ -1,9 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
-using System;
 
-namespace SixNations.Desktop.Models
+namespace SixNations.Data.Models
 {
-    sealed class User : ObservableObject
+    public sealed class User : ObservableObject
     {
         #region threadsafe singleton
 

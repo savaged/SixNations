@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SixNations.Desktop.Attributes
+namespace SixNations.API.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class HiddenAttribute : Attribute

@@ -1,5 +1,5 @@
 ﻿using System;
-using SixNations.Desktop.Attributes;
+using SixNations.API.Attributes;
 using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.Models

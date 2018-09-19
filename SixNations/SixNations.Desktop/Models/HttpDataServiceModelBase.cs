@@ -4,8 +4,8 @@ using System.ComponentModel;
 using System.Reflection;
 using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
-using SixNations.Desktop.Attributes;
-using SixNations.Desktop.Helpers;
+using SixNations.API.Attributes;
+using SixNations.API.Helpers;
 using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.Models

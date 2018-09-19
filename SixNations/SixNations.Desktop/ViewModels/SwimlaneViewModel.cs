@@ -9,6 +9,7 @@ using SixNations.Desktop.Helpers;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
+using SixNations.Data.Models;
 
 namespace SixNations.Desktop.ViewModels
 {

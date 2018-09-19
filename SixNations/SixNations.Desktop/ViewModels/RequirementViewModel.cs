@@ -1,21 +1,22 @@
-﻿using log4net;
+﻿// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
+using GalaSoft.MvvmLight.Ioc;
+using log4net;
 using System;
+using System.IO;
 using System.Linq;
+using System.Windows.Input;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using MvvmDialogs;
+using MvvmDialogs.FrameworkDialogs.OpenFile;
+using GalaSoft.MvvmLight.CommandWpf;
+using SixNations.Desktop.Adapters;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Constants;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.CommandWpf;
-using SixNations.Desktop.Adapters;
-using System.IO;
-using CommonServiceLocator;
-using MvvmDialogs;
-using MvvmDialogs.FrameworkDialogs.OpenFile;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+using SixNations.Data.Models;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -147,8 +148,8 @@ namespace SixNations.Desktop.ViewModels
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 Filter = "Excel (*.xlsx)|*.xlsx|Legacy Excel (*.xls)|*.xls| Open Format (*.ods)|*.ods"
             };
-            var dialogService = ServiceLocator.Current.GetInstance<IDialogService>();
-            var owner = ServiceLocator.Current.GetInstance<MainViewModel>();
+            var dialogService = SimpleIoc.Default.GetInstance<IDialogService>();
+            var owner = SimpleIoc.Default.GetInstance<MainViewModel>();
             var success = dialogService.ShowOpenFileDialog(owner, fileDialogInfo);
             if (success == true)
             {

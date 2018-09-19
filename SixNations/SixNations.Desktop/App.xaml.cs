@@ -1,10 +1,11 @@
-﻿using log4net;
+﻿// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
+using GalaSoft.MvvmLight.Ioc;
+using log4net;
 using System;
 using System.Reflection;
 using System.Windows;
 using SixNations.Desktop.ViewModels;
 using SixNations.Desktop.Views;
-using CommonServiceLocator;
 using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro;
 using SixNations.Desktop.Helpers;
@@ -27,7 +28,7 @@ namespace SixNations.Desktop
             DispatcherHelper.Initialize();
 
             app = new MainWindow();
-            var context = ServiceLocator.Current.GetInstance<MainViewModel>();
+            var context = SimpleIoc.Default.GetInstance<MainViewModel>();
 
             var userTheme = Desktop.Properties.Settings.Default.ThemeOption;
             var appStyle = ThemeManager.DetectAppStyle(App.Current);

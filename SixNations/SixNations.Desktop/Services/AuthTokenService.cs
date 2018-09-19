@@ -21,7 +21,8 @@ namespace SixNations.Desktop.Services
     {
         private readonly string url;
 
-        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = 
+            LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public AuthTokenService()
         {

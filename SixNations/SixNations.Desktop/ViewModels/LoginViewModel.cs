@@ -1,8 +1,9 @@
-﻿using System;
+﻿// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
+using GalaSoft.MvvmLight.Ioc;
+using System;
 using GalaSoft.MvvmLight;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using CommonServiceLocator;
 using SixNations.Desktop.Messages;
 using System.Windows.Controls;
 using SixNations.Desktop.Exceptions;
@@ -65,7 +66,7 @@ namespace SixNations.Desktop.ViewModels
             string token = null;
             try
             {
-                token = await ServiceLocator.Current.GetInstance<IAuthTokenService>()
+                token = await SimpleIoc.Default.GetInstance<IAuthTokenService>()
                     .GetTokenAsync(Email, pb.Password);
             }
             catch (AuthServiceException ex)

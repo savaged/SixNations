@@ -212,9 +212,9 @@ namespace SixNations.Desktop.Models
         }
     }
 
-    public class ResponseConverter : CustomCreationConverter<ResponseRootObject>
+    public class ResponseConverter : CustomCreationConverter<IResponseRootObject>
     {
-        public override ResponseRootObject Create(Type T)
+        public override IResponseRootObject Create(Type T)
         {
             return new ResponseRootObject();
         }

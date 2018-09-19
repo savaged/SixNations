@@ -1,12 +1,15 @@
-﻿using System;
+﻿// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
+using GalaSoft.MvvmLight.Ioc;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CommonServiceLocator;
 using SixNations.Desktop.Constants;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
+using SixNations.API.Helpers;
+using SixNations.Data.Models;
 
 namespace SixNations.Desktop.Services
 {
@@ -27,7 +30,7 @@ namespace SixNations.Desktop.Services
             string authToken, Action<Exception> exceptionHandler)
         {
             var uri = $"{typeof(Requirement).NameToUriFormat()}/create";
-            var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
+            var response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
                 .HttpRequestAsync(uri, User.Current.AuthToken);
             var model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
@@ -42,7 +45,7 @@ namespace SixNations.Desktop.Services
             }
             var uri = typeof(Requirement).NameToUriFormat();
             var data = model.GetData();
-            var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
+            var response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
                 .HttpRequestAsync(uri, User.Current.AuthToken, API.Constants.HttpMethods.Post, data);
             model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
@@ -56,7 +59,7 @@ namespace SixNations.Desktop.Services
             IResponseRootObject response = null;
             try
             {
-                response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
+                response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
                     .HttpRequestAsync(uri, authToken);
             }
             catch (Exception ex)
@@ -78,7 +81,7 @@ namespace SixNations.Desktop.Services
                 throw new NotSupportedException("Trying to edit a new model! Use the store method instead.");
             }
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{modelId}/edit";
-            var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
+            var response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
                     .HttpRequestAsync(uri, authToken);
             var model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
@@ -100,7 +103,7 @@ namespace SixNations.Desktop.Services
             }
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{model.Id}";
             var data = model.GetData();
-            var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
+            var response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
                 .HttpRequestAsync(uri, User.Current.AuthToken, API.Constants.HttpMethods.Put, data);
             model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
@@ -115,7 +118,7 @@ namespace SixNations.Desktop.Services
             }
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{model.Id}";
             var data = model.GetData();
-            var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
+            var response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
                 .HttpRequestAsync(uri, User.Current.AuthToken, API.Constants.HttpMethods.Delete, null);
             return response.Success;
         }

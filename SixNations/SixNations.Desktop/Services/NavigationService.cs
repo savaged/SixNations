@@ -1,6 +1,7 @@
-﻿using System;
+﻿// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
+using GalaSoft.MvvmLight.Ioc;
+using System;
 using System.Collections.Generic;
-using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using SixNations.Desktop.Constants;
 using SixNations.Desktop.Interfaces;
@@ -51,7 +52,7 @@ namespace SixNations.Desktop.Services
                     var mainVM = App.Current.MainWindow.DataContext;
                     var pageVmType = GetType().Assembly.GetType(
                         $"{mainVM.GetType().Namespace}.{pageKey}ViewModel");
-                    var pageVm = ServiceLocator.Current.GetInstance(pageVmType);
+                    var pageVm = SimpleIoc.Default.GetInstance(pageVmType);
                     if (pageVm is IParameterised)
                     {
                         ((IParameterised)pageVm).Initialise(parameter);

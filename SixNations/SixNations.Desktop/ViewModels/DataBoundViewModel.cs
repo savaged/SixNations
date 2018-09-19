@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
+using GalaSoft.MvvmLight.Ioc;
+using System;
 using log4net;
 using System.Linq;
 using System.Collections.Generic;
@@ -10,8 +12,8 @@ using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Models;
 using SixNations.Desktop.Messages;
 using System.Windows.Input;
-using CommonServiceLocator;
 using GalaSoft.MvvmLight.CommandWpf;
+using SixNations.Data.Models;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -127,7 +129,7 @@ namespace SixNations.Desktop.ViewModels
         public ICommand CancelCmd { get; }
 
         // TODO: Add permissions check on current user
-        public bool CanExecute => !ServiceLocator.Current.GetInstance<MainViewModel>().BusyStateManager.IsBusy;
+        public bool CanExecute => !SimpleIoc.Default.GetInstance<MainViewModel>().BusyStateManager.IsBusy;
 
         // TODO: Add permissions check on current user
         public bool CanExecuteNew => CanExecute && CanSelectItem;

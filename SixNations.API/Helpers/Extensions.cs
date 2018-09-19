@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace SixNations.Desktop.Helpers
+namespace SixNations.API.Helpers
 {
     public static class Extensions
     {

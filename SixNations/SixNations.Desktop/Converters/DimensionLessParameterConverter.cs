@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using SixNations.Desktop.Helpers;
+using SixNations.API.Helpers;
 
 namespace SixNations.Desktop.Converters
 {

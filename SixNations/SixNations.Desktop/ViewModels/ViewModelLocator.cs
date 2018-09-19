@@ -1,4 +1,4 @@
-using CommonServiceLocator;
+// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using SixNations.API.Constants;
 using SixNations.Desktop.Facade;
@@ -20,7 +20,7 @@ namespace SixNations.Desktop.ViewModels
         /// </summary>
         public ViewModelLocator()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            // Pre Standard .Net (see http://www.mvvmlight.net/std10) ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             SimpleIoc.Default.Register<IDataService<Lookup>, LookupDataService>();
             SimpleIoc.Default.Register<IDataService<Requirement>, RequirementDataService>();
@@ -84,22 +84,22 @@ namespace SixNations.Desktop.ViewModels
             SimpleIoc.Default.Register<FindStoryDialogViewModel>();
         }
 
-        public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
+        public MainViewModel Main => SimpleIoc.Default.GetInstance<MainViewModel>();
 
-        public LoginViewModel Login => ServiceLocator.Current.GetInstance<LoginViewModel>();
+        public LoginViewModel Login => SimpleIoc.Default.GetInstance<LoginViewModel>();
 
-        public RequirementViewModel Requirement => ServiceLocator.Current.GetInstance<RequirementViewModel>();
+        public RequirementViewModel Requirement => SimpleIoc.Default.GetInstance<RequirementViewModel>();
 
-        public WallViewModel Wall => ServiceLocator.Current.GetInstance<WallViewModel>();
+        public WallViewModel Wall => SimpleIoc.Default.GetInstance<WallViewModel>();
 
-        public WallDialogViewModel WallDialog => ServiceLocator.Current.GetInstance<WallDialogViewModel>();
+        public WallDialogViewModel WallDialog => SimpleIoc.Default.GetInstance<WallDialogViewModel>();
 
-        public AboutViewModel About => ServiceLocator.Current.GetInstance<AboutViewModel>();
+        public AboutViewModel About => SimpleIoc.Default.GetInstance<AboutViewModel>();
 
-        public SettingsViewModel Settings => ServiceLocator.Current.GetInstance<SettingsViewModel>();
+        public SettingsViewModel Settings => SimpleIoc.Default.GetInstance<SettingsViewModel>();
 
         public FindStoryDialogViewModel FindStoryDialog => 
-            ServiceLocator.Current.GetInstance<FindStoryDialogViewModel>();
+            SimpleIoc.Default.GetInstance<FindStoryDialogViewModel>();
 
         public static void Cleanup()
         {

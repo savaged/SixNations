@@ -1,9 +1,9 @@
-﻿using System;
+﻿// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows.Input;
 using SixNations.Desktop.Models;
-using CommonServiceLocator;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Constants;
 using SixNations.Desktop.Messages;
@@ -22,7 +22,7 @@ namespace SixNations.Desktop.ViewModels
 
         private void OnNavigateTo()
         {
-            var nav = ServiceLocator.Current.GetInstance<INavigationService>();
+            var nav = SimpleIoc.Default.GetInstance<INavigationService>();
             nav.NavigateTo(HamburgerNavItemsIndex.Requirement.ToString(), Requirement);
             MessengerInstance.Send(new CloseDialogRequestMessage(this, true));
         }
