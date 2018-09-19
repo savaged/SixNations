@@ -23,7 +23,7 @@ namespace SixNations.Desktop.Controls
 
         private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
         {
-            var i = e.Item as Models.Requirement;
+            var i = e.Item as Data.Models.Requirement;
             if (i != null)
             {
                 if (string.IsNullOrEmpty(StoryFilter.Text))

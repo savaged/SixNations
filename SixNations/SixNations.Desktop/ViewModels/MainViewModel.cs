@@ -7,7 +7,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Constants;
-using SixNations.Desktop.Models;
+using SixNations.Data.Models;
 using SixNations.Desktop.Helpers;
 using System.Reflection;
 using SixNations.Data.Models;

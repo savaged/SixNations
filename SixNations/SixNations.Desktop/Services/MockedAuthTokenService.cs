@@ -1,6 +1,6 @@
 ﻿using log4net;
 using System.Threading.Tasks;
-using SixNations.Desktop.Interfaces;
+using SixNations.API.Interfaces;
 
 namespace SixNations.Desktop.Services
 {

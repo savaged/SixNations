@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System.Windows.Input;
-using SixNations.Desktop.Models;
+using SixNations.Data.Models;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Constants;
 using SixNations.Desktop.Messages;

@@ -160,8 +160,6 @@
     <Compile Include="Helpers\LogFileLocator.cs" />
     <Compile Include="Messages\CloseDialogRequestMessage.cs" />
     <Compile Include="Messages\ReloadRequestMessage.cs" />
-    <Compile Include="Interfaces\IDataTransferObject.cs" />
-    <Compile Include="Interfaces\IResponseRootObject.cs" />
     <Compile Include="ViewModels\DataBoundViewModel.cs" />
     <Compile Include="Interfaces\ISwimlaneDropTarget.cs" />
     <Compile Include="ViewModels\PostItViewModel.cs" />
@@ -228,23 +226,14 @@
     <Compile Include="Facades\MockedHttpDataServiceFacade.cs" />
     <Compile Include="Helpers\ActionConfirmation.cs" />
     <Compile Include="Helpers\BusyStateManager.cs" />
-    <Compile Include="Interfaces\IHttpDataServiceFacade.cs" />
     <Compile Include="Helpers\FeedbackActions.cs" />
     <Compile Include="Interfaces\IAsyncViewModel.cs" />
-    <Compile Include="Interfaces\IHttpDataService.cs" />
-    <Compile Include="Interfaces\IDataServiceModel.cs" />
-    <Compile Include="Interfaces\IHttpDataServiceModel.cs" />
     <Compile Include="Interfaces\IParameterised.cs" />
-    <Compile Include="Interfaces\IDataService.cs" />
     <Compile Include="Interfaces\ISelectedIndexManager.cs" />
     <Compile Include="Interfaces\IShellViewModel.cs" />
     <Compile Include="Messages\StoryFilterMessage.cs" />
     <Compile Include="Messages\BusyMessage.cs" />
     <Compile Include="Messages\AuthenticatedMessage.cs" />
-    <Compile Include="Models\HttpDataServiceModelBase.cs" />
-    <Compile Include="Models\Lookup.cs" />
-    <Compile Include="Models\Requirement.cs" />
-    <Compile Include="Models\ResponseRootObject.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -255,7 +244,6 @@
     <Compile Include="Services\AuthTokenService.cs" />
     <Compile Include="Services\AuthTokenService.partial.cs" />
     <Compile Include="Facades\HttpDataServiceFacade.cs" />
-    <Compile Include="Interfaces\IAuthTokenService.cs" />
     <Compile Include="Services\LookupDataService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\RequirementDataService.cs" />

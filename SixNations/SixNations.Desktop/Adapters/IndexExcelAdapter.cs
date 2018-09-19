@@ -2,13 +2,14 @@
 using log4net;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
-using Microsoft.Office.Interop.Excel;
-using SixNations.Desktop.Interfaces;
-using System.Runtime.InteropServices;
-using Newtonsoft.Json;
-using SixNations.Desktop.Models;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Microsoft.Office.Interop.Excel;
+using Newtonsoft.Json;
+using SixNations.Data.Models;
+using SixNations.Desktop.Interfaces;
+using SixNations.API.Interfaces;
 
 namespace SixNations.Desktop.Adapters
 {

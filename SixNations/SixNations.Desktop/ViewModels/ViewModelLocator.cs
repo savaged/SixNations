@@ -4,7 +4,8 @@ using SixNations.API.Constants;
 using SixNations.Desktop.Facade;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
-using SixNations.Desktop.Models;
+using SixNations.API.Interfaces;
+using SixNations.Data.Models;
 using SixNations.Desktop.Services;
 
 namespace SixNations.Desktop.ViewModels

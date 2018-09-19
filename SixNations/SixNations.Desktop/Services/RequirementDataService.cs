@@ -6,10 +6,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using SixNations.Desktop.Constants;
 using SixNations.Desktop.Helpers;
-using SixNations.Desktop.Interfaces;
-using SixNations.Desktop.Models;
-using SixNations.API.Helpers;
+using SixNations.API.Interfaces;
 using SixNations.Data.Models;
+using SixNations.API.Helpers;
 
 namespace SixNations.Desktop.Services
 {

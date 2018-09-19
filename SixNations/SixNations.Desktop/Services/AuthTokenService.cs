@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using SixNations.Desktop.Exceptions;
-using SixNations.Desktop.Models;
+using SixNations.Data.Models;
 using SixNations.Desktop.Facade;
-using SixNations.Desktop.Interfaces;
+using SixNations.API.Interfaces;
 
 namespace SixNations.Desktop.Services
 {

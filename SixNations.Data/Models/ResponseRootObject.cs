@@ -1,14 +1,14 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Converters;
-using SixNations.Desktop.Interfaces;
-using log4net;
+using SixNations.API.Interfaces;
 
-namespace SixNations.Desktop.Models
+namespace SixNations.Data.Models
 {
     public class ResponseRootObject : IResponseRootObject
     {

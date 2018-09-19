@@ -3,12 +3,12 @@ using GalaSoft.MvvmLight.Ioc;
 using System;
 using GalaSoft.MvvmLight;
 using System.Windows.Input;
+using System.Windows.Controls;
 using GalaSoft.MvvmLight.Command;
 using SixNations.Desktop.Messages;
-using System.Windows.Controls;
 using SixNations.Desktop.Exceptions;
 using SixNations.Desktop.Helpers;
-using SixNations.Desktop.Interfaces;
+using SixNations.API.Interfaces;
 
 namespace SixNations.Desktop.ViewModels
 {

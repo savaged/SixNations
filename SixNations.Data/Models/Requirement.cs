@@ -1,8 +1,7 @@
 ﻿using System;
 using SixNations.API.Attributes;
-using SixNations.Desktop.Interfaces;
 
-namespace SixNations.Desktop.Models
+namespace SixNations.Data.Models
 {
     public class Requirement : HttpDataServiceModelBase
     {

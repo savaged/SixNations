@@ -6,8 +6,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using SixNations.Desktop.Interfaces;
-using SixNations.Desktop.Models;
+using SixNations.API.Interfaces;
+using SixNations.Data.Models;
 using SixNations.Desktop.Exceptions;
 
 namespace SixNations.Desktop.Facade

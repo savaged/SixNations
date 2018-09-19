@@ -6,9 +6,9 @@ using GalaSoft.MvvmLight;
 using Newtonsoft.Json;
 using SixNations.API.Attributes;
 using SixNations.API.Helpers;
-using SixNations.Desktop.Interfaces;
+using SixNations.API.Interfaces;
 
-namespace SixNations.Desktop.Models
+namespace SixNations.Data.Models
 {
     public abstract class HttpDataServiceModelBase 
         : ObservableObject, IHttpDataServiceModel

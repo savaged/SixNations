@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using SixNations.Desktop.Interfaces;
+using SixNations.API.Interfaces;
 
-namespace SixNations.Desktop.Models
+namespace SixNations.Data.Models
 {
     public class Lookup : Dictionary<int, string>, IHttpDataServiceModel
     {

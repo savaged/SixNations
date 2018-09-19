@@ -2,9 +2,8 @@
 using GalaSoft.MvvmLight.Ioc;
 using System;
 using System.Collections.Generic;
-using SixNations.Desktop.Interfaces;
+using SixNations.API.Interfaces;
 using System.Threading.Tasks;
-using SixNations.Desktop.Models;
 using SixNations.Data.Models;
 
 namespace SixNations.Desktop.Services

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using SixNations.Desktop.Interfaces;
-using SixNations.Desktop.Models;
+using SixNations.API.Interfaces;
+using SixNations.Data.Models;
 using SixNations.Desktop.Constants;
 using SixNations.Desktop.Messages;
 

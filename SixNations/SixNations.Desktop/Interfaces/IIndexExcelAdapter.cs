@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SixNations.API.Interfaces;
 
 namespace SixNations.Desktop.Interfaces
 {

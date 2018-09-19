@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
-using SixNations.Desktop.Models;
+using SixNations.Data.Models;
 using SixNations.Desktop.Messages;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
-using SixNations.Data.Models;
+using SixNations.API.Interfaces;
 
 namespace SixNations.Desktop.ViewModels
 {

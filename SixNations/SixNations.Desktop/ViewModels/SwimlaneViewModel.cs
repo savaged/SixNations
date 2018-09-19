@@ -4,12 +4,9 @@ using SixNations.Desktop.Constants;
 using System.Collections.ObjectModel;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
-using SixNations.Desktop.Models;
-using SixNations.Desktop.Helpers;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.CommandWpf;
-using System;
 using SixNations.Data.Models;
+using SixNations.Desktop.Helpers;
+using SixNations.API.Interfaces;
 
 namespace SixNations.Desktop.ViewModels
 {
