@@ -1,11 +1,12 @@
 // Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using SixNations.API.Constants;
-using SixNations.Desktop.Facade;
+using SixNations.Data.Facade;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.API.Interfaces;
 using SixNations.Data.Models;
+using SixNations.Data.Services;
 using SixNations.Desktop.Services;
 
 namespace SixNations.Desktop.ViewModels

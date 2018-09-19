@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using SixNations.API.Interfaces;
 using SixNations.Data.Models;
-using SixNations.Desktop.Constants;
+using SixNations.API.Constants;
 using SixNations.Desktop.Messages;
 
 namespace SixNations.Desktop.ViewModels

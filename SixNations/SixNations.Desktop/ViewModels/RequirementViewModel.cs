@@ -15,7 +15,7 @@ using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Data.Models;
-using SixNations.Desktop.Constants;
+using SixNations.API.Constants;
 using SixNations.API.Interfaces;
 
 namespace SixNations.Desktop.ViewModels

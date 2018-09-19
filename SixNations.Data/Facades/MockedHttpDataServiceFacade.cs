@@ -1,20 +1,20 @@
 ﻿using log4net;
 using System;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using SixNations.API.Interfaces;
 using SixNations.Data.Models;
-using Newtonsoft.Json;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Reflection;
 
-namespace SixNations.Desktop.Facade
+namespace SixNations.Data.Facade
 {
     public class MockedHttpDataServiceFacade : IHttpDataServiceFacade
     {
         private static readonly ILog Log = LogManager.GetLogger(
-            System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            MethodBase.GetCurrentMethod().DeclaringType);
 
         private IList<Requirement> MockRequirementDb { get; }
         private IDictionary<string, string> MockLookupDb { get; }

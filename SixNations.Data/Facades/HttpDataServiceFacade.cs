@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using SixNations.API.Interfaces;
+using SixNations.API.Exceptions;
 using SixNations.Data.Models;
-using SixNations.Desktop.Exceptions;
 
-namespace SixNations.Desktop.Facade
+namespace SixNations.Data.Facade
 {
     public class HttpDataServiceFacade : IHttpDataServiceFacade
     {
@@ -287,7 +287,7 @@ namespace SixNations.Desktop.Facade
             return responseRootObject;
         }
 
-        internal static async Task<string> ReadResponseContentAsync(HttpResponseMessage rawResponse)
+        public static async Task<string> ReadResponseContentAsync(HttpResponseMessage rawResponse)
         {
             string rawResponseContent;
             try

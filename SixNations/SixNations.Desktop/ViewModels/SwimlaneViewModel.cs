@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using GalaSoft.MvvmLight;
-using SixNations.Desktop.Constants;
+using SixNations.API.Constants;
 using System.Collections.ObjectModel;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;

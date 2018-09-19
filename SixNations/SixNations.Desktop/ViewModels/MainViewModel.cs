@@ -1,15 +1,14 @@
 // Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
 using GalaSoft.MvvmLight.Ioc;
 using System;
+using System.Reflection;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Constants;
-using SixNations.Data.Models;
 using SixNations.Desktop.Helpers;
-using System.Reflection;
 using SixNations.Data.Models;
 
 namespace SixNations.Desktop.ViewModels

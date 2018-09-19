@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight.Command;
 using SixNations.Desktop.Messages;
-using SixNations.Desktop.Exceptions;
+using SixNations.API.Exceptions;
 using SixNations.Desktop.Helpers;
 using SixNations.API.Interfaces;
 

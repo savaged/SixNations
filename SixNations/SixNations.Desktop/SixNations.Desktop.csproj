@@ -221,9 +221,6 @@
     </Compile>
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
-    <Compile Include="Exceptions\HttpDataServiceException.cs" />
-    <Compile Include="Exceptions\AuthServiceException.cs" />
-    <Compile Include="Facades\MockedHttpDataServiceFacade.cs" />
     <Compile Include="Helpers\ActionConfirmation.cs" />
     <Compile Include="Helpers\BusyStateManager.cs" />
     <Compile Include="Helpers\FeedbackActions.cs" />
@@ -240,13 +237,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\INavigationService.cs" />
-    <Compile Include="Services\MockedAuthTokenService.cs" />
-    <Compile Include="Services\AuthTokenService.cs" />
-    <Compile Include="Services\AuthTokenService.partial.cs" />
-    <Compile Include="Facades\HttpDataServiceFacade.cs" />
-    <Compile Include="Services\LookupDataService.cs" />
     <Compile Include="Services\NavigationService.cs" />
-    <Compile Include="Services\RequirementDataService.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\FindStoryDialogViewModel.cs" />
     <Compile Include="Interfaces\IIsFullScreenChangedEventArgs.cs" />

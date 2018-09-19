@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SixNations.Desktop.Exceptions
+namespace SixNations.API.Exceptions
 {
     [Serializable]
     public class AuthServiceException : Exception

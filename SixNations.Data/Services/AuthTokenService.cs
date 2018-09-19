@@ -6,18 +6,18 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using SixNations.Desktop.Exceptions;
-using SixNations.Data.Models;
-using SixNations.Desktop.Facade;
 using SixNations.API.Interfaces;
+using SixNations.API.Exceptions;
+using SixNations.Data.Models;
+using SixNations.Data.Facade;
 
-namespace SixNations.Desktop.Services
+namespace SixNations.Data.Services
 {
     /// <summary>
     /// The ClientSecret property is added to a partial because this
     /// should not be included in the source control repository.
     /// </summary>
-    partial class AuthTokenService : IAuthTokenService
+    public partial class AuthTokenService : IAuthTokenService
     {
         private readonly string url;
 

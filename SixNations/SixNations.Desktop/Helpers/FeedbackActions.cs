@@ -4,7 +4,7 @@ using GalaSoft.MvvmLight.Threading;
 
 namespace SixNations.Desktop.Helpers
 {
-    static class FeedbackActions
+    public static class FeedbackActions
     {
         public static void ReactToException(Exception ex)
         {

@@ -6,7 +6,7 @@ using SixNations.API.Interfaces;
 using System.Threading.Tasks;
 using SixNations.Data.Models;
 
-namespace SixNations.Desktop.Services
+namespace SixNations.Data.Services
 {
     public class LookupDataService : IHttpDataService<Lookup>
     {

@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using SixNations.API.Interfaces;
 
-namespace SixNations.Desktop.Services
+namespace SixNations.Data.Services
 {
-    partial class MockedAuthTokenService : IAuthTokenService
+    public partial class MockedAuthTokenService : IAuthTokenService
     {
         private readonly string url;
 

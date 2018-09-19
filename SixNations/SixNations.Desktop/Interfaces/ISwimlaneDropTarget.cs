@@ -1,4 +1,4 @@
-﻿using SixNations.Desktop.Constants;
+﻿using SixNations.API.Constants;
 
 namespace SixNations.Desktop.Interfaces
 {

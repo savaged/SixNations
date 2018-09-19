@@ -1,9 +1,8 @@
-﻿using SixNations.Desktop.Constants;
-using SixNations.Desktop.Interfaces;
-using System;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
+using SixNations.Desktop.Interfaces;
+using SixNations.API.Constants;
 
 namespace SixNations.Desktop.Controls
 {

@@ -4,13 +4,12 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SixNations.Desktop.Constants;
-using SixNations.Desktop.Helpers;
+using SixNations.API.Constants;
 using SixNations.API.Interfaces;
 using SixNations.Data.Models;
 using SixNations.API.Helpers;
 
-namespace SixNations.Desktop.Services
+namespace SixNations.Data.Services
 {
     public class RequirementDataService : IHttpDataService<Requirement>
     {
@@ -67,7 +66,7 @@ namespace SixNations.Desktop.Services
                 response = new ResponseRootObject(ex.Message);
             }
             var index = new ResponseRootObjectToModelMapper<Requirement>(response).AllMapped();
-            index = await Decorate(index);
+            index = await Decorate(index, exceptionHandler);
             return index;
         }
 
@@ -122,21 +121,23 @@ namespace SixNations.Desktop.Services
             return response.Success;
         }
 
-        private async Task<IList<Requirement>> Decorate(IEnumerable<Requirement> index)
+        private async Task<IList<Requirement>> Decorate(
+            IEnumerable<Requirement> index, Action<Exception> exceptionHandler)
         {
             var decoratedIndex = new List<Requirement>();
             foreach (var requirement in index)
             {
-                var decoratedRequirement = await Decorate(requirement);
+                var decoratedRequirement = await Decorate(requirement, exceptionHandler);
                 decoratedIndex.Add(decoratedRequirement);
             }
             return decoratedIndex;
         }
 
-        private async Task<Requirement> Decorate(Requirement requirement)
+        private async Task<Requirement> Decorate(
+            Requirement requirement, Action<Exception> exceptionHandler)
         {
             var lookups = await _lookupDataService.GetModelDataAsync(
-                        User.Current.AuthToken, FeedbackActions.ReactToException);
+                        User.Current.AuthToken, exceptionHandler);
 
             var estimationLookup = lookups.First(l => l.Name == "RequirementEstimation");
             var priorityLookup = lookups.First(l => l.Name == "RequirementPriority");
