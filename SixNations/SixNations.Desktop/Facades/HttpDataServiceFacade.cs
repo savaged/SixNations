@@ -33,12 +33,12 @@ namespace SixNations.Desktop.Facade
         private const string DefaultRequestHeaderName2 = "Authorization";
         private const string DefaultRequestHeaderValue2 = "Bearer ";
 
-        public async Task<ResponseRootObject> HttpRequestAsync(string uri, string token)
+        public async Task<IResponseRootObject> HttpRequestAsync(string uri, string token)
         {
             return await HttpRequestAsync(uri, token, HttpMethods.Get, null);
         }
         
-        public async Task<ResponseRootObject> HttpRequestAsync(
+        public async Task<IResponseRootObject> HttpRequestAsync(
             string uri, string token, HttpMethods httpMethod, IDictionary<string, object> data)
         {
             var url = GetUrl(uri);

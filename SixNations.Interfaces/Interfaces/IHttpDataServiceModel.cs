@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SixNations.Desktop.Interfaces
+namespace SixNations.API.Interfaces
 {
     public interface IHttpDataServiceModel : IDataServiceModel
     {

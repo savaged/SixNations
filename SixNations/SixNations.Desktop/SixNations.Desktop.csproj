@@ -165,6 +165,8 @@
     <Compile Include="Helpers\LogFileLocator.cs" />
     <Compile Include="Messages\CloseDialogRequestMessage.cs" />
     <Compile Include="Messages\ReloadRequestMessage.cs" />
+    <Compile Include="Interfaces\IDataTransferObject.cs" />
+    <Compile Include="Interfaces\IResponseRootObject.cs" />
     <Compile Include="ViewModels\DataBoundViewModel.cs" />
     <Compile Include="Interfaces\ISwimlaneDropTarget.cs" />
     <Compile Include="ViewModels\PostItViewModel.cs" />
@@ -350,6 +352,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SixNations.Interfaces\SixNations.API.csproj">
+      <Project>{2ab96af5-6ade-4244-9e1d-74772b284097}</Project>
+      <Name>SixNations.API</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

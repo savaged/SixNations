@@ -10,9 +10,9 @@ using log4net;
 
 namespace SixNations.Desktop.Models
 {
-    public class ResponseRootObject
+    public class ResponseRootObject : IResponseRootObject
     {
-        private DataTransferObject[] _data;
+        private IDataTransferObject[] _data;
         private string _error;
 
         public ResponseRootObject(string error) : this()
@@ -23,7 +23,7 @@ namespace SixNations.Desktop.Models
         }
 
         [JsonConstructor]
-        public ResponseRootObject(DataTransferObject[] data) : this()
+        public ResponseRootObject(IDataTransferObject[] data) : this()
         {
             if (data != null && data.Length > 0)
             {
@@ -36,7 +36,7 @@ namespace SixNations.Desktop.Models
             _data = new DataTransferObject[] { new DataTransferObject() };
         }
 
-        public DataTransferObject[] Data
+        public IDataTransferObject[] Data
         {
             get => _data;
             set
@@ -92,7 +92,7 @@ namespace SixNations.Desktop.Models
     }
 
     [JsonObject]
-    public class DataTransferObject
+    public class DataTransferObject : IDataTransferObject
     {
         public DataTransferObject()
         {
@@ -225,9 +225,9 @@ namespace SixNations.Desktop.Models
         private static readonly ILog Log = LogManager.GetLogger(
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private bool _noData;
-        private ResponseRootObject _responseRootObject;
+        private IResponseRootObject _responseRootObject;
 
-        public ResponseRootObjectToModelMapper(ResponseRootObject responseRootObject)
+        public ResponseRootObjectToModelMapper(IResponseRootObject responseRootObject)
         {
             _responseRootObject = responseRootObject;
         }

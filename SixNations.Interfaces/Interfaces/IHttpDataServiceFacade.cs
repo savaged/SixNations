@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using SixNations.Desktop.Constants;
-using SixNations.Desktop.Models;
+using SixNations.API.Constants;
 
-namespace SixNations.Desktop.Interfaces
+namespace SixNations.API.Interfaces
 {
     public interface IHttpDataServiceFacade
     {

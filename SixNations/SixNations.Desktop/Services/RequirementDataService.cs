@@ -53,7 +53,7 @@ namespace SixNations.Desktop.Services
         {
             var uri = typeof(Requirement).NameToUriFormat();
 
-            ResponseRootObject response = null;
+            IResponseRootObject response = null;
             try
             {
                 response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()

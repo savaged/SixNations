@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SixNations.Desktop.Constants
+namespace SixNations.API.Constants
 {
     public enum HttpMethods
     {

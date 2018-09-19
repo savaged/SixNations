@@ -148,12 +148,12 @@ namespace SixNations.Desktop.Facade
             };
         }
 
-        public async Task<ResponseRootObject> HttpRequestAsync(string uri, string token)
+        public async Task<IResponseRootObject> HttpRequestAsync(string uri, string token)
         {
             return await HttpRequestAsync(uri, token, HttpMethods.Get, null);
         }
         
-        public async Task<ResponseRootObject> HttpRequestAsync(
+        public async Task<IResponseRootObject> HttpRequestAsync(
             string uri, string token, HttpMethods httpMethod, IDictionary<string, object> data)
         {
             Log.Info($"Request initiated from {httpMethod}: {uri}");
@@ -172,7 +172,7 @@ namespace SixNations.Desktop.Facade
             return responseRootObject;
         }
 
-        private ResponseRootObject GetResponse(
+        private IResponseRootObject GetResponse(
             HttpMethods httpMethod, string uri, IDictionary<string, object> data)
         {
             ResponseRootObject responseRootObject = null;
@@ -366,7 +366,7 @@ namespace SixNations.Desktop.Facade
             json += "]}";
             var responseRootObject = DeserializeResponseRootObject(
                 json, 200, uri);
-            var value = responseRootObject.Data.FirstOrDefault();
+            var value = (DataTransferObject)responseRootObject.Data.FirstOrDefault();
             return value;
         }
 
@@ -407,7 +407,7 @@ namespace SixNations.Desktop.Facade
         }
 
         private static void EmulateEditLocking(
-            string url, HttpMethods httpMethod, ref ResponseRootObject responseRootObject)
+            string url, HttpMethods httpMethod, ref IResponseRootObject responseRootObject)
         {
             if (responseRootObject == null)
             {

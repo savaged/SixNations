@@ -16,7 +16,7 @@ namespace SixNations.Desktop.Models
         private bool _isDirty;
         private bool _isInitialised;
         
-        public virtual void Initialise(DataTransferObject dto)
+        public virtual void Initialise(IDataTransferObject dto)
         {
             if (_isInitialised)
             {
@@ -46,7 +46,7 @@ namespace SixNations.Desktop.Models
             }
         }
 
-        private void SetProperty(DataTransferObject dto, PropertyInfo p)
+        private void SetProperty(IDataTransferObject dto, PropertyInfo p)
         {
             var key = p.Name;
             if (!dto.ContainsKey(key))

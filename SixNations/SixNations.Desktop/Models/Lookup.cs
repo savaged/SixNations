@@ -12,7 +12,7 @@ namespace SixNations.Desktop.Models
             Name = lookupName;
         }
 
-        public Lookup(string lookupName, DataTransferObject[] data) : this(lookupName)
+        public Lookup(string lookupName, IDataTransferObject[] data) : this(lookupName)
         {
             if (data == null)
             {
@@ -24,7 +24,7 @@ namespace SixNations.Desktop.Models
             }
         }
 
-        public Lookup(string lookupName, ResponseRootObject response) 
+        public Lookup(string lookupName, IResponseRootObject response) 
             : this(lookupName, response?.Data) { }
 
         public Lookup(string lookupName, IDictionary<int, string> dict) : this(lookupName)
@@ -48,7 +48,7 @@ namespace SixNations.Desktop.Models
             }
         }
 
-        public void Initialise(DataTransferObject dto)
+        public void Initialise(IDataTransferObject dto)
         {
             if (dto.ContainsKey($"{Name}ID") || dto.ContainsKey("ID"))
             {
