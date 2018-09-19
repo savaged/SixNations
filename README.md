@@ -14,7 +14,7 @@ Packages" and one must add a couple of files. The first in
 
 ```using System;
 
-namespace SixNations.Desktop.Services
+namespace SixNations.Data.Services
 {
     partial class AuthTokenService
     {
@@ -30,7 +30,7 @@ And the second partial in `Constants` named `Props.partial.cs`
 with the following contents:
 
 ```
-namespace SixNations.Desktop.Constants
+namespace SixNations.API.Constants
 {
     static partial class Props
     {
