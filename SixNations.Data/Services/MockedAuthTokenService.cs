@@ -1,6 +1,7 @@
 ﻿using log4net;
 using System.Threading.Tasks;
 using SixNations.API.Interfaces;
+using SixNations.API.Exceptions;
 
 namespace SixNations.Data.Services
 {
@@ -19,6 +20,13 @@ namespace SixNations.Data.Services
         public async Task<string> GetTokenAsync(string email, string password)
         {
             Log.Info($"Requesting access from {url}");
+            if (password.ToLower() == "fail" ||
+                password.ToLower() == "error" ||
+                password.ToLower() == "exception")
+            {
+                throw new AuthServiceException(
+                    $"Mock Exception because you used \"{password}\"");
+            }
             await Task.CompletedTask;
             Log.Info("Access token obtained");
             return "mockToken";

@@ -18,7 +18,7 @@ namespace SixNations.CLI.IO
             switch (format)
             {
                 case Formats.Success:
-                    Show(value, ConsoleColor.Yellow, ConsoleColor.Green);
+                    Show(value, ConsoleColor.Blue, ConsoleColor.Green);
                     break;
                 case Formats.Danger:
                     Show(value, ConsoleColor.Yellow, ConsoleColor.Red);

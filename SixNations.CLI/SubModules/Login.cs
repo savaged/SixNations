@@ -5,6 +5,7 @@ using SixNations.API.Exceptions;
 using SixNations.API.Interfaces;
 using SixNations.CLI.Interfaces;
 using SixNations.CLI.IO;
+using SixNations.Data.Models;
 
 namespace SixNations.CLI.Modules
 {
@@ -27,7 +28,11 @@ namespace SixNations.CLI.Modules
             }
             catch (AuthServiceException ex)
             {
-                // TODO feedback
+                Feedback.Show(ex, Formats.Danger);
+            }
+            if (!string.IsNullOrEmpty(token))
+            {
+                User.Current.Initialise(token);
             }
         }
     }

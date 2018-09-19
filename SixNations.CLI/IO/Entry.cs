@@ -28,6 +28,7 @@ namespace SixNations.CLI.IO
                 key = Console.ReadKey(true);
                 if (key.Key == ConsoleKey.Enter)
                 {
+                    Console.WriteLine();
                     break;
                 }
                 if (key.Key != ConsoleKey.Backspace)

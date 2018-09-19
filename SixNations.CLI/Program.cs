@@ -8,8 +8,10 @@ namespace SixNations.CLI
         static void Main(string[] args)
         {
             var app = new Kernel(args);
-            Task t = app.RunAsync();
-            t.GetAwaiter().GetResult();
+            app.RunAsync().GetAwaiter().GetResult();
+#if DEBUG
+            Console.ReadLine();
+#endif
         }
     }
 }
