@@ -14,7 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixNations.API", "SixNations.API\SixNations.API.csproj", "{FE2E7879-6BB0-45B6-98DE-373DEA65C1A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SixNations.Data", "SixNations.Data\SixNations.Data.csproj", "{CF3FD937-6CF7-46CE-93AA-F9669B660449}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixNations.Data", "SixNations.Data\SixNations.Data.csproj", "{CF3FD937-6CF7-46CE-93AA-F9669B660449}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SixNations.CLI", "SixNations.CLI\SixNations.CLI.csproj", "{BB957B77-C9F1-4415-A19E-C797696B186E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +36,10 @@ Global
 		{CF3FD937-6CF7-46CE-93AA-F9669B660449}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF3FD937-6CF7-46CE-93AA-F9669B660449}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF3FD937-6CF7-46CE-93AA-F9669B660449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB957B77-C9F1-4415-A19E-C797696B186E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB957B77-C9F1-4415-A19E-C797696B186E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB957B77-C9F1-4415-A19E-C797696B186E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB957B77-C9F1-4415-A19E-C797696B186E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
