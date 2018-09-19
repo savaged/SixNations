@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using SixNations.CLI.Interfaces;
+using SixNations.CLI.IO;
 
 namespace SixNations.CLI.Modules
 {
     public class Help : BaseModule, IModule
     {
-        public Task RunAsync()
+        public async Task RunAsync()
         {
-            throw new NotSupportedException();
+            Feedback.Show("You're on your own! TODO ;)");
+            await Task.CompletedTask;
         }
     }
 }
