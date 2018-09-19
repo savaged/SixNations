@@ -25,7 +25,7 @@ namespace SixNations.Desktop.Services
 
         public AuthTokenService()
         {
-            url = $"{Constants.Props.ApiBaseURL}api/login";
+            url = $"{API.Constants.Props.ApiBaseURL}api/login";
         }
 
         public async Task<string> GetTokenAsync(string email, string password)

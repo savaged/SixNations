@@ -212,7 +212,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Attributes\HiddenAttribute.cs" />
-    <Compile Include="Constants\Props.partial.cs" />
     <Compile Include="Controls\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -260,7 +259,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Constants\Props.cs" />
     <Compile Include="Interfaces\INavigationService.cs" />
     <Compile Include="Services\MockedAuthTokenService.cs" />
     <Compile Include="Services\AuthTokenService.cs" />

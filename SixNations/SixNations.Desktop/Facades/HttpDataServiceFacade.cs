@@ -184,7 +184,7 @@ namespace SixNations.Desktop.Facade
                     uri += part.Contains('=') ? "?" + part : part.ToLower();
                 }
             }
-            var url = $"{Constants.Props.ApiBaseURL}api/{uri}";
+            var url = $"{API.Constants.Props.ApiBaseURL}api/{uri}";
             return url;
         }
         private static string GetArgs(IDictionary<string, object> data)
