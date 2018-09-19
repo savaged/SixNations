@@ -1,6 +1,7 @@
-﻿using GalaSoft.MvvmLight.Ioc;
+﻿using System;
+using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Ioc;
 using SixNations.CLI.Interfaces;
-using SixNations.CLI.IO;
 
 namespace SixNations.CLI.Modules
 {
@@ -8,8 +9,13 @@ namespace SixNations.CLI.Modules
     {
         public void Run()
         {
-            var login = SimpleIoc.Default.GetInstance<Login>();
-            login.Run();
+            SimpleIoc.Default.GetInstance<Login>().Run();
+            // TODO more logic here ;)
+        }
+
+        public Task RunAsync()
+        {
+            throw new NotSupportedException();
         }
     }
 }

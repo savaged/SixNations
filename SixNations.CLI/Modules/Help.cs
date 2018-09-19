@@ -1,4 +1,6 @@
-﻿using SixNations.CLI.Interfaces;
+﻿using System;
+using System.Threading.Tasks;
+using SixNations.CLI.Interfaces;
 
 namespace SixNations.CLI.Modules
 {
@@ -7,6 +9,11 @@ namespace SixNations.CLI.Modules
         public void Run()
         {
             // TODO
+        }
+
+        public Task RunAsync()
+        {
+            throw new NotSupportedException();
         }
     }
 }
