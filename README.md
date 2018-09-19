@@ -16,7 +16,7 @@ Packages" and one must add a couple of files. The first in
 
 namespace SixNations.Data.Services
 {
-    partial class AuthTokenService
+    public partial class AuthTokenService
     {
         private const string ClientSecret = "your token here";
     }
@@ -32,7 +32,7 @@ with the following contents:
 ```
 namespace SixNations.API.Constants
 {
-    static partial class Props
+    public static partial class Props
     {
 #if DEBUG
         /// <summary>

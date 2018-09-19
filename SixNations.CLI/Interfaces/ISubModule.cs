@@ -2,10 +2,7 @@
 
 namespace SixNations.CLI.Interfaces
 {
-    public interface ISubModule
+    public interface ISubModule : IProcedure
     {
-        void Run();
-
-        Task RunAsync();
     }
 }
