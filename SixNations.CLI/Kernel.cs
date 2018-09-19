@@ -6,6 +6,7 @@ using SixNations.CLI.IO;
 using SixNations.CLI.Modules;
 using SixNations.Data.Services;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SixNations.CLI
 {
@@ -21,7 +22,7 @@ namespace SixNations.CLI
             _modules = Router.Route(args);
         }       
 
-        public async void Run()
+        public async Task RunAsync()
         {
             Feedback.Splash();
 

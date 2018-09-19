@@ -23,9 +23,13 @@ namespace SixNations.CLI.IO
         {
             ConsoleKeyInfo key;
             var value = string.Empty;
-            do
+            while (true)
             {
                 key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    break;
+                }
                 if (key.Key != ConsoleKey.Backspace)
                 {
                     value += key.KeyChar;
@@ -33,14 +37,13 @@ namespace SixNations.CLI.IO
                 }
                 else
                 {
-                    if (key.Key == ConsoleKey.Backspace && value.Length > 0)
+                    if (value.Length > 0 && key.Key == ConsoleKey.Backspace)
                     {
                         value = value.Substring(0, (value.Length - 1));
                         Console.Write("\b \b");
                     }
                 }
             }
-            while (key.Key != ConsoleKey.Enter);
             return value;
         }
     }

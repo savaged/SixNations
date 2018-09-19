@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace SixNations.CLI
 {
@@ -7,7 +8,8 @@ namespace SixNations.CLI
         static void Main(string[] args)
         {
             var app = new Kernel(args);
-            app.Run();
+            Task t = app.RunAsync();
+            t.GetAwaiter().GetResult();
         }
     }
 }

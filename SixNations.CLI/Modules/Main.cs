@@ -9,13 +9,13 @@ namespace SixNations.CLI.Modules
     {
         public void Run()
         {
-            SimpleIoc.Default.GetInstance<Login>().Run();
-            // TODO more logic here ;)
+            throw new NotSupportedException();
         }
 
-        public Task RunAsync()
+        public async Task RunAsync()
         {
-            throw new NotSupportedException();
+            await SimpleIoc.Default.GetInstance<Login>().RunAsync();
+            // TODO more logic here ;)
         }
     }
 }

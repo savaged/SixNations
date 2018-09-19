@@ -54,10 +54,10 @@
     <ApplicationIcon>Logo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>1A22478C5B08ADCC1C824465A08795E16994442D</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>195CB1F192B485911A4C64387996F73EC6B3A582</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>SixNations.Desktop_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>SixNations.Desktop_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -165,6 +165,8 @@
     <Compile Include="ViewModels\PostItViewModel.cs" />
     <Compile Include="ViewModels\SwimlaneViewModel.cs" />
     <Compile Include="ViewModels\WallDialogViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\WallDialog.xaml.cs">
       <DependentUpon>WallDialog.xaml</DependentUpon>
     </Compile>
@@ -269,7 +271,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="SixNations.Desktop_TemporaryKey.pfx" />
+    <None Include="SixNations.Desktop_1_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
