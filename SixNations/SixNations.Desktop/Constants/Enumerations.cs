@@ -2,15 +2,6 @@
 
 namespace SixNations.Desktop.Constants
 {
-    public enum HttpMethods
-    {
-        Post,
-        Get,
-        Put,
-        Delete,
-        Patch
-    }
-
     [Serializable]
     public enum ThemeOptions
     {

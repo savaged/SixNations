@@ -150,11 +150,11 @@ namespace SixNations.Desktop.Facade
 
         public async Task<IResponseRootObject> HttpRequestAsync(string uri, string token)
         {
-            return await HttpRequestAsync(uri, token, HttpMethods.Get, null);
+            return await HttpRequestAsync(uri, token, API.Constants.HttpMethods.Get, null);
         }
         
         public async Task<IResponseRootObject> HttpRequestAsync(
-            string uri, string token, HttpMethods httpMethod, IDictionary<string, object> data)
+            string uri, string token, API.Constants.HttpMethods httpMethod, IDictionary<string, object> data)
         {
             Log.Info($"Request initiated from {httpMethod}: {uri}");
             if (data?.Count > 0)
@@ -173,18 +173,18 @@ namespace SixNations.Desktop.Facade
         }
 
         private IResponseRootObject GetResponse(
-            HttpMethods httpMethod, string uri, IDictionary<string, object> data)
+            API.Constants.HttpMethods httpMethod, string uri, IDictionary<string, object> data)
         {
             ResponseRootObject responseRootObject = null;
             switch (httpMethod)
             {
-                case HttpMethods.Post:
+                case API.Constants.HttpMethods.Post:
                     responseRootObject = MockPost(uri, data);
                     break;
-                case HttpMethods.Put:
+                case API.Constants.HttpMethods.Put:
                     responseRootObject = MockPut(uri, data);
                     break;
-                case HttpMethods.Delete:
+                case API.Constants.HttpMethods.Delete:
                     responseRootObject = MockDelete(uri);
                     break;
                 default:
@@ -407,13 +407,14 @@ namespace SixNations.Desktop.Facade
         }
 
         private static void EmulateEditLocking(
-            string url, HttpMethods httpMethod, ref IResponseRootObject responseRootObject)
+            string url, API.Constants.HttpMethods httpMethod, ref IResponseRootObject responseRootObject)
         {
             if (responseRootObject == null)
             {
                 throw new ArgumentNullException(nameof(responseRootObject));
             }
-            if (httpMethod == HttpMethods.Get && (url.EndsWith("edit") || url.Contains("create")))
+            if (httpMethod == API.Constants.HttpMethods.Get &&
+                (url.EndsWith("edit") || url.Contains("create")))
             {
                 foreach (var dto in responseRootObject.Data)
                 {

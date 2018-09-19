@@ -43,7 +43,7 @@ namespace SixNations.Desktop.Services
             var uri = typeof(Requirement).NameToUriFormat();
             var data = model.GetData();
             var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
-                .HttpRequestAsync(uri, User.Current.AuthToken, HttpMethods.Post, data);
+                .HttpRequestAsync(uri, User.Current.AuthToken, API.Constants.HttpMethods.Post, data);
             model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
         }
@@ -101,7 +101,7 @@ namespace SixNations.Desktop.Services
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{model.Id}";
             var data = model.GetData();
             var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
-                .HttpRequestAsync(uri, User.Current.AuthToken, HttpMethods.Put, data);
+                .HttpRequestAsync(uri, User.Current.AuthToken, API.Constants.HttpMethods.Put, data);
             model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
         }
@@ -116,7 +116,7 @@ namespace SixNations.Desktop.Services
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{model.Id}";
             var data = model.GetData();
             var response = await ServiceLocator.Current.GetInstance<IHttpDataServiceFacade>()
-                .HttpRequestAsync(uri, User.Current.AuthToken, HttpMethods.Delete, null);
+                .HttpRequestAsync(uri, User.Current.AuthToken, API.Constants.HttpMethods.Delete, null);
             return response.Success;
         }
 

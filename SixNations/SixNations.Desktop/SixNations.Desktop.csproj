@@ -155,6 +155,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Constants\Enumerations.cs" />
     <Compile Include="Helpers\Tinker.cs" />
     <Compile Include="Interfaces\IIndexExcelAdapter.cs" />
     <Compile Include="Adapters\IndexExcelAdapter.cs" />
@@ -237,7 +238,6 @@
     <Compile Include="Interfaces\IHttpDataServiceFacade.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\FeedbackActions.cs" />
-    <Compile Include="Constants\Enumerations.cs" />
     <Compile Include="Interfaces\IAsyncViewModel.cs" />
     <Compile Include="Interfaces\IHttpDataService.cs" />
     <Compile Include="Interfaces\IDataServiceModel.cs" />

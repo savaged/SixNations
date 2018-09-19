@@ -35,11 +35,11 @@ namespace SixNations.Desktop.Facade
 
         public async Task<IResponseRootObject> HttpRequestAsync(string uri, string token)
         {
-            return await HttpRequestAsync(uri, token, HttpMethods.Get, null);
+            return await HttpRequestAsync(uri, token, API.Constants.HttpMethods.Get, null);
         }
         
         public async Task<IResponseRootObject> HttpRequestAsync(
-            string uri, string token, HttpMethods httpMethod, IDictionary<string, object> data)
+            string uri, string token, API.Constants.HttpMethods httpMethod, IDictionary<string, object> data)
         {
             var url = GetUrl(uri);
             Log.Info($"Request initiated from {httpMethod}: {url}");
@@ -108,7 +108,7 @@ namespace SixNations.Desktop.Facade
         }
 
         private static async Task<HttpResponseMessage> HttpRequestRawResponseAsync(
-            string uri, string token, HttpMethods httpMethod, IDictionary<string, object> data)
+            string uri, string token, API.Constants.HttpMethods httpMethod, IDictionary<string, object> data)
         {
             MultipartFormDataContent formData = null;
 
@@ -223,8 +223,8 @@ namespace SixNations.Desktop.Facade
         }
 
         private static async Task<HttpResponseMessage> GetRawResponseAsync(
-            HttpClient client, 
-            HttpMethods httpMethod, 
+            HttpClient client,
+            API.Constants.HttpMethods httpMethod, 
             string url, 
             StringContent httpContent = null, 
             MultipartFormDataContent formContent = null)
@@ -232,14 +232,14 @@ namespace SixNations.Desktop.Facade
             HttpResponseMessage rawResponse = null;
             switch (httpMethod)
             {
-                case HttpMethods.Post:
+                case API.Constants.HttpMethods.Post:
                     rawResponse = await client.PostAsync(url, (formContent != null) ?
                         (HttpContent)formContent : httpContent);
                     break;
-                case HttpMethods.Put:
+                case API.Constants.HttpMethods.Put:
                     rawResponse = await client.PutAsync(url, httpContent);
                     break;
-                case HttpMethods.Delete:
+                case API.Constants.HttpMethods.Delete:
                     rawResponse = await client.DeleteAsync(url);
                     break;
                 default:
@@ -327,13 +327,13 @@ namespace SixNations.Desktop.Facade
         /// <param name="responseRootObject"></param>
         /// <returns></returns>
         private static void EmulateEditLocking(
-            string url, HttpMethods httpMethod, ref ResponseRootObject responseRootObject)
+            string url, API.Constants.HttpMethods httpMethod, ref ResponseRootObject responseRootObject)
         {
             if (responseRootObject == null)
             {
                 throw new ArgumentNullException(nameof(responseRootObject));
             }
-            if (httpMethod == HttpMethods.Get && (url.EndsWith("edit") || url.Contains("create")))
+            if (httpMethod == API.Constants.HttpMethods.Get && (url.EndsWith("edit") || url.Contains("create")))
             {
                 responseRootObject.__SetIsLockedForEditing();
             }
