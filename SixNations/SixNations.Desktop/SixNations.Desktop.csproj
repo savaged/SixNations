@@ -321,12 +321,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SixNations.API\SixNations.API.csproj">
-      <Project>{fe2e7879-6bb0-45b6-98de-373dea65c1a4}</Project>
+    <ProjectReference Include="..\SixNations.API\SixNations.API.csproj">
+      <Project>{9c7df106-2cd2-4b87-9a39-6a388e5efe92}</Project>
       <Name>SixNations.API</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SixNations.Data\SixNations.Data.csproj">
-      <Project>{cf3fd937-6cf7-46ce-93aa-f9669b660449}</Project>
+    <ProjectReference Include="..\SixNations.Data\SixNations.Data.csproj">
+      <Project>{a1b660dc-b92f-4110-9828-7bfcef212d8c}</Project>
       <Name>SixNations.Data</Name>
     </ProjectReference>
   </ItemGroup>
