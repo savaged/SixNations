@@ -72,6 +72,10 @@ namespace SixNations.CLI.Modules
                     var result = await _dataService.DeleteModelAsync(
                         token, (ex) => Feedback.Show(ex), _selected);
                     Feedback.Show(result);
+                    if (result)
+                    {
+                        await LoadIndexAsync();
+                    }
                     break;
                 case "q":
                     _isQuitRequested = true;
@@ -83,6 +87,7 @@ namespace SixNations.CLI.Modules
         {
             var data = await _dataService.GetModelDataAsync(
                     User.Current.AuthToken, (ex) => Feedback.Show(ex, Formats.Danger));
+            _index.Clear();
             foreach (var item in data)
             {
                 _index.Add(item);
