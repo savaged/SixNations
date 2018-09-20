@@ -59,7 +59,8 @@ namespace SixNations.CLI.Modules
                     ShowSelected();
                     break;
                 case "s":
-                    // TODO search
+                    var searchArg = Entry.Read("Search (ID or Word[s] in Story)");
+                    SetSelectedToSearchArg(searchArg);
                     break;
                 case "n":
                     // TODO new
@@ -85,6 +86,29 @@ namespace SixNations.CLI.Modules
             foreach (var item in data)
             {
                 _index.Add(item);
+            }
+        }
+
+        private void SetSelectedToSearchArg(string searchArg)
+        {
+            var isId = int.TryParse(searchArg, out int id);
+            Requirement match = null;
+            if (isId)
+            {
+                match = _index.Where(r => r.Id == id).FirstOrDefault();
+            }
+            else
+            {
+                match = _index.Where(r => r.Story.Contains(searchArg)).FirstOrDefault();
+            }
+            if (match != null)
+            {
+                _selected = match;
+                Feedback.Show(_selected);
+            }
+            else
+            {
+                Feedback.Show("No match!", Formats.Warning);
             }
         }
 
