@@ -13,7 +13,7 @@ namespace SixNations.CLI
             var all = SimpleIoc.Default.GetAllInstances<IModule>();
             var selected = new List<IModule>
             {
-                all.Where(m => m.Name == nameof(Main)).First()
+                all.Where(m => m.Name == nameof(MainMod)).First()
             };
             foreach (var arg in args)
             {
@@ -30,14 +30,14 @@ namespace SixNations.CLI
                     case "-version":
                     case "--v":
                     case "-v":
-                        selected.Add(all.Where(m => m.Name == nameof(About)).First());
+                        selected.Add(all.Where(m => m.Name == nameof(AboutMod)).First());
                         break;
                     case "?":
                     case "-h":
                     case "--h":
                     case "--help":
                     case "-help":
-                        selected.Add(all.Where(m => m.Name == nameof(Help)).First());
+                        selected.Add(all.Where(m => m.Name == nameof(HelpMod)).First());
                         break;
                 }
             }

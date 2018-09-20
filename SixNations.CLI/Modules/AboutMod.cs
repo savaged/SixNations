@@ -5,11 +5,17 @@ using SixNations.CLI.IO;
 
 namespace SixNations.CLI.Modules
 {
-    public class Help : BaseModule, IModule
+    public class AboutMod : BaseModule, IModule
     {
+        private void Run()
+        {
+            var about = new Data.Models.About();
+            Feedback.Show(about);
+        }
+
         public async Task RunAsync()
         {
-            Feedback.Show("You're on your own! TODO ;)");
+            Run();
             await Task.CompletedTask;
         }
     }

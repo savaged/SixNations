@@ -164,8 +164,6 @@
     <Compile Include="ViewModels\PostItViewModel.cs" />
     <Compile Include="ViewModels\SwimlaneViewModel.cs" />
     <Compile Include="ViewModels\WallDialogViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\WallDialog.xaml.cs">
       <DependentUpon>WallDialog.xaml</DependentUpon>
     </Compile>
@@ -270,7 +268,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="SixNations.Desktop_1_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

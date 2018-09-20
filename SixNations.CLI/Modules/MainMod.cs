@@ -1,24 +1,34 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GalaSoft.MvvmLight.Ioc;
 using SixNations.CLI.Interfaces;
 using SixNations.CLI.IO;
 using SixNations.Data.Models;
 
 namespace SixNations.CLI.Modules
 {
-    public class Main : BaseModule, IModule
+    public class MainMod : BaseModule, IModule
     {
+        private LoginSubMod _loginSubMod;
+        private IndexSubMod _indexSubMod;
+
+        public MainMod(LoginSubMod loginSubMod, IndexSubMod indexSubMod)
+        {
+            _loginSubMod = loginSubMod;
+            _indexSubMod = indexSubMod;
+        }
+
         public async Task RunAsync()
         {
-            await SimpleIoc.Default.GetInstance<Login>().RunAsync();
+            
+            await _loginSubMod.RunAsync();
             if (!User.Current.IsLoggedIn)
             {
                 Feedback.Show("Login Failure!", Formats.Danger);
                 return;
             }
             Feedback.Show("Login Success!", Formats.Success);
-            // TODO load first requirement and feedback page fwd/back, search and CRUD
+
+            await _indexSubMod.RunAsync();
         }
     }
 }
