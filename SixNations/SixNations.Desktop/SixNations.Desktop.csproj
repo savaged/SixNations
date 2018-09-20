@@ -54,10 +54,10 @@
     <ApplicationIcon>Logo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>195CB1F192B485911A4C64387996F73EC6B3A582</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>49E7C7903E5E3EA8DF5AA912CD48005EC43D4A1E</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>SixNations.Desktop_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>SixNations.Desktop_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -268,6 +268,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="SixNations.Desktop_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

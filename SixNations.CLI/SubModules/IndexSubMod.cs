@@ -11,7 +11,9 @@ namespace SixNations.CLI.Modules
     public class IndexSubMod : BaseModule, ISubModule
     {
         private readonly IDataService<Requirement> _dataService;
-        private readonly IList<Requirement> _index;
+        private readonly List<Requirement> _index;
+        private Requirement _selected;
+        private bool _isQuitRequested;
 
         public IndexSubMod(IDataService<Requirement> dataService)
         {
@@ -29,9 +31,51 @@ namespace SixNations.CLI.Modules
             {
                 await LoadIndexAsync();
             }
-            var first = _index.FirstOrDefault();
-            Feedback.Show(first);
-            // TODO feedback page fwd/back, search and CRUD
+            _selected = _index.FirstOrDefault();
+            ShowSelected();
+
+            const string actions = 
+                "Action ('<' previous; '>' next; 's' search;" +
+                " 'n' new; 'e' edit; 'd' delete; 'q' quit)";
+
+            while (!_isQuitRequested)
+            {
+                var action = Entry.Read(actions);
+                await RunAsync(action);
+            }
+        }
+
+        private async Task RunAsync(string action)
+        {
+            var token = User.Current.AuthToken;
+            switch (action)
+            {
+                case ">":
+                    SetSelectedToNext();
+                    ShowSelected();
+                    break;
+                case "<":
+                    SetSelectedToPrevious();
+                    ShowSelected();
+                    break;
+                case "s":
+                    // TODO search
+                    break;
+                case "n":
+                    // TODO new
+                    break;
+                case "e":
+                    // TODO edit
+                    break;
+                case "d":
+                    var result = await _dataService.DeleteModelAsync(
+                        token, (ex) => Feedback.Show(ex), _selected);
+                    Feedback.Show(result);
+                    break;
+                case "q":
+                    _isQuitRequested = true;
+                    break;
+            }
         }
 
         private async Task LoadIndexAsync()
@@ -42,6 +86,33 @@ namespace SixNations.CLI.Modules
             {
                 _index.Add(item);
             }
+        }
+
+        private int SelectedPosition => _index.FindIndex(r => r == _selected);
+
+        private void SetSelectedToNext()
+        {
+            var pos = SelectedPosition + 1;
+            if (pos == _index.Count)
+            {
+                pos = 0;
+            }
+            _selected = _index[pos];
+        }
+
+        private void SetSelectedToPrevious()
+        {
+            var pos = SelectedPosition - 1;
+            if (pos < 0)
+            {
+                pos = _index.Count - 1;
+            }
+            _selected = _index[pos];
+        }
+
+        private void ShowSelected()
+        {
+            Feedback.Show(_selected);
         }
     }
 }

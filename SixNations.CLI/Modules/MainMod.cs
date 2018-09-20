@@ -19,7 +19,6 @@ namespace SixNations.CLI.Modules
 
         public async Task RunAsync()
         {
-            
             await _loginSubMod.RunAsync();
             if (!User.Current.IsLoggedIn)
             {

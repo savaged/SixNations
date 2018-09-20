@@ -22,7 +22,7 @@ namespace SixNations.CLI
             SetupSubModules();
             SetupModules();
             _modules = Router.Route(args);
-        }       
+        }
 
         public async Task RunAsync()
         {

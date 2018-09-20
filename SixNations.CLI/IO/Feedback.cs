@@ -1,5 +1,6 @@
-﻿using SixNations.API.Interfaces;
-using System;
+﻿using System;
+using System.Drawing;
+using SixNations.API.Interfaces;
 
 namespace SixNations.CLI.IO
 {
@@ -39,6 +40,20 @@ namespace SixNations.CLI.IO
         internal static void Show(IDataServiceModel model)
         {
             Console.WriteLine(model.ToJson());
+        }
+
+        internal static void Show(bool result)
+        {
+            Color foreground;
+            if (result)
+            {
+                foreground = Color.Green;
+            }
+            else
+            {
+                foreground = Color.Red;
+            }
+            Colorful.Console.WriteLine("Success!", foreground);
         }
 
         internal static void Splash()

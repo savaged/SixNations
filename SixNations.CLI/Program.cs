@@ -9,9 +9,6 @@ namespace SixNations.CLI
         {
             var app = new Kernel(args);
             app.RunAsync().GetAwaiter().GetResult();
-#if DEBUG
-            Console.ReadLine();
-#endif
         }
     }
 }
