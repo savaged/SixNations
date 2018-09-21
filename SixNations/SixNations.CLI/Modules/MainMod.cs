@@ -25,10 +25,10 @@ namespace SixNations.CLI.Modules
             await _loginSubMod.RunAsync();
             if (!User.Current.IsLoggedIn)
             {
-                Feedback.Show("Login Failure!", Formats.Danger);
+                Feedback.Show("Login Failure!", Formats.Danger, true);
                 return;
             }
-            Feedback.Show("Login Success!", Formats.Success);
+            Feedback.Show("Login Success!", Formats.Success, true);
 
             await _indexSubMod.RunAsync();
         }

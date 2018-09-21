@@ -48,6 +48,12 @@ namespace SixNations.CLI.IO
             return value;
         }
 
+        public string ReadMenu(string menu)
+        {
+            // TODO logic to write at the bottom of the window then clear after input
+            return Read(menu);
+        }
+
         private ConsoleKeyInfo ReadOrComplete(out bool isReadingCompleted)
         {
             isReadingCompleted = false;

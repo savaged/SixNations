@@ -15,7 +15,8 @@ namespace SixNations.CLI.IO
 
     static class Feedback
     {
-        internal static void Show(object value, Formats format = Formats.Default)
+        internal static void Show(
+            object value, Formats format = Formats.Default, bool lineBreakAfter = false)
         {
             switch (format)
             {
@@ -35,14 +36,22 @@ namespace SixNations.CLI.IO
                     Console.WriteLine(value);
                     break;
             }
+            if (lineBreakAfter)
+            {
+                Console.WriteLine();
+            }
         }
 
-        internal static void Show(IDataServiceModel model)
+        internal static void Show(IDataServiceModel model, bool lineBreakAfter = false)
         {
             Console.WriteLine(model.ToJson());
+            if (lineBreakAfter)
+            {
+                Console.WriteLine();
+            }
         }
 
-        internal static void Show(bool result)
+        internal static void Show(bool result, bool lineBreakAfter = false)
         {
             Color foreground;
             if (result)
@@ -54,11 +63,20 @@ namespace SixNations.CLI.IO
                 foreground = Color.Red;
             }
             Colorful.Console.WriteLine("Success!", foreground);
+            if (lineBreakAfter)
+            {
+                Console.WriteLine();
+            }
         }
 
         internal static void Splash()
         {
-            Colorful.Console.WriteAscii("SixNations", System.Drawing.Color.Cyan);
+            Colorful.Console.WriteAscii("SixNations", Color.Cyan);
+        }
+
+        internal static void ShowMenu()
+        {
+            
         }
 
         private static void Show(
@@ -68,6 +86,11 @@ namespace SixNations.CLI.IO
             Console.BackgroundColor = background;
             Console.WriteLine(value);
             Console.ResetColor();
+        }
+
+        private static void WriteLineAtBottom()
+        {
+
         }
     }
 }

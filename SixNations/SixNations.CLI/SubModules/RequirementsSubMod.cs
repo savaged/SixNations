@@ -47,7 +47,7 @@ namespace SixNations.CLI.SubModules
 
             while (!_isQuitRequested)
             {
-                var action = Entry.Read(actions);
+                var action = Entry.ReadMenu(actions);
                 await RunAsync(action);
             }
         }
