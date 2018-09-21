@@ -6,7 +6,7 @@ namespace SixNations.CLI.IO
     {
         private const string _prompt = ": ";
 
-        public event EventHandler<EventArgs> QuitRequested;
+        public event EventHandler<EventArgs> Escaped;
 
         public string Read(string label, bool masked = false)
         {
@@ -55,7 +55,7 @@ namespace SixNations.CLI.IO
             switch (key.Key)
             {
                 case ConsoleKey.Escape:
-                    RaiseQuitRequested();
+                    RaiseEscaped();
                     isReadingCompleted = true;
                     break;
                 case ConsoleKey.Enter:
@@ -72,9 +72,9 @@ namespace SixNations.CLI.IO
             return value;
         }
 
-        private void RaiseQuitRequested()
+        private void RaiseEscaped()
         {
-            var handler = QuitRequested;
+            var handler = Escaped;
             handler?.Invoke(this, new EventArgs());
         }
     }
