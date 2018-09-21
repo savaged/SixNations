@@ -5,17 +5,18 @@ using SixNations.API.Interfaces;
 using SixNations.CLI.Interfaces;
 using SixNations.CLI.IO;
 using SixNations.Data.Models;
+using SixNations.CLI.Modules;
 
-namespace SixNations.CLI.Modules
+namespace SixNations.CLI.SubModules
 {
-    public class IndexSubMod : BaseModule, ISubModule
+    public class RequirementsSubMod : BaseModule, ISubModule
     {
         private readonly IDataService<Requirement> _dataService;
         private readonly List<Requirement> _index;
         private Requirement _selected;
         private bool _isQuitRequested;
 
-        public IndexSubMod(IDataService<Requirement> dataService)
+        public RequirementsSubMod(IDataService<Requirement> dataService)
         {
             _dataService = dataService;
             _index = new List<Requirement>();
@@ -63,10 +64,18 @@ namespace SixNations.CLI.Modules
                     SetSelectedToSearchArg(searchArg);
                     break;
                 case "n":
-                    // TODO new
+                    var creator = new RequirementSubMod(_dataService);
+                    await creator.RunAsync();
+                    await LoadIndexAsync();
+                    _selected = creator.Selected;
+                    ShowSelected();
                     break;
                 case "e":
-                    // TODO edit
+                    var editor = new RequirementSubMod(_dataService, _selected);
+                    await editor.RunAsync();
+                    await LoadIndexAsync();
+                    _selected = editor.Selected;
+                    ShowSelected();
                     break;
                 case "d":
                     var result = await _dataService.DeleteModelAsync(

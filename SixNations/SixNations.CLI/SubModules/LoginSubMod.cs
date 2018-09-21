@@ -4,9 +4,10 @@ using SixNations.API.Exceptions;
 using SixNations.API.Interfaces;
 using SixNations.CLI.Interfaces;
 using SixNations.CLI.IO;
+using SixNations.CLI.Modules;
 using SixNations.Data.Models;
 
-namespace SixNations.CLI.Modules
+namespace SixNations.CLI.SubModules
 {
     public class LoginSubMod : BaseModule, ISubModule
     {

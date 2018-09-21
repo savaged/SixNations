@@ -4,6 +4,7 @@ using SixNations.API.Interfaces;
 using SixNations.CLI.Interfaces;
 using SixNations.CLI.IO;
 using SixNations.CLI.Modules;
+using SixNations.CLI.SubModules;
 using SixNations.Data.Facade;
 using SixNations.Data.Models;
 using SixNations.Data.Services;
@@ -55,9 +56,9 @@ namespace SixNations.CLI
             SimpleIoc.Default.Register<ISubModule>(
                 () => SimpleIoc.Default.GetInstance<LoginSubMod>(), nameof(LoginSubMod));
 
-            SimpleIoc.Default.Register<IndexSubMod>();
+            SimpleIoc.Default.Register<RequirementsSubMod>();
             SimpleIoc.Default.Register<ISubModule>(
-                () => SimpleIoc.Default.GetInstance<IndexSubMod>(), nameof(IndexSubMod));
+                () => SimpleIoc.Default.GetInstance<RequirementsSubMod>(), nameof(RequirementsSubMod));
         }
 
         private void SetupServices()
