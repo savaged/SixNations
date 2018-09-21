@@ -13,7 +13,10 @@ namespace SixNations.CLI.SubModules
     {
         private readonly IAuthTokenService _authTokenService;
 
-        public LoginSubMod(IAuthTokenService authTokenService)
+        public LoginSubMod(
+            IInputEntryService entryService,
+            IAuthTokenService authTokenService)
+            : base(entryService)
         {
             _authTokenService = authTokenService;
         }

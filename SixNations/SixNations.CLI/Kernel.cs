@@ -101,6 +101,11 @@ namespace SixNations.CLI
                     });
                 }
             }
+
+            SimpleIoc.Default.Register<IInputEntryService>(() =>
+            {
+                return new EntryService();
+            });
         }
     }
 }

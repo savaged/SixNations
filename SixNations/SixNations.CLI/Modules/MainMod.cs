@@ -12,7 +12,9 @@ namespace SixNations.CLI.Modules
         private LoginSubMod _loginSubMod;
         private RequirementsSubMod _indexSubMod;
 
-        public MainMod(LoginSubMod loginSubMod, RequirementsSubMod indexSubMod)
+        public MainMod(
+            LoginSubMod loginSubMod, 
+            RequirementsSubMod indexSubMod)
         {
             _loginSubMod = loginSubMod;
             _indexSubMod = indexSubMod;

@@ -11,14 +11,20 @@ namespace SixNations.CLI.SubModules
 {
     public class RequirementsSubMod : BaseModule, ISubModule
     {
-        private readonly IDataService<Requirement> _dataService;
+        private readonly IDataService<Requirement> _requirementsDataService;
+        private readonly IDataService<Lookup> _lookupsDataService;
         private readonly List<Requirement> _index;
         private Requirement _selected;
         private bool _isQuitRequested;
 
-        public RequirementsSubMod(IDataService<Requirement> dataService)
+        public RequirementsSubMod(
+            IInputEntryService entryService,
+            IDataService<Requirement> requirementsDataService,
+            IDataService<Lookup> lookupsDataService) 
+            : base(entryService)
         {
-            _dataService = dataService;
+            _requirementsDataService = requirementsDataService;
+            _lookupsDataService = lookupsDataService;
             _index = new List<Requirement>();
         }
 
@@ -64,21 +70,23 @@ namespace SixNations.CLI.SubModules
                     SetSelectedToSearchArg(searchArg);
                     break;
                 case "n":
-                    var creator = new RequirementSubMod(_dataService);
+                    var creator = new RequirementSubMod(
+                        Entry, _requirementsDataService, _lookupsDataService);
                     await creator.RunAsync();
                     await LoadIndexAsync();
                     _selected = creator.Selected;
                     ShowSelected();
                     break;
                 case "e":
-                    var editor = new RequirementSubMod(_dataService, _selected);
+                    var editor = new RequirementSubMod(
+                        Entry, _requirementsDataService, _lookupsDataService, _selected);
                     await editor.RunAsync();
                     await LoadIndexAsync();
                     _selected = editor.Selected;
                     ShowSelected();
                     break;
                 case "d":
-                    var result = await _dataService.DeleteModelAsync(
+                    var result = await _requirementsDataService.DeleteModelAsync(
                         token, (ex) => Feedback.Show(ex), _selected);
                     Feedback.Show(result);
                     if (result)
@@ -94,7 +102,7 @@ namespace SixNations.CLI.SubModules
 
         private async Task LoadIndexAsync()
         {
-            var data = await _dataService.GetModelDataAsync(
+            var data = await _requirementsDataService.GetModelDataAsync(
                     User.Current.AuthToken, (ex) => Feedback.Show(ex, Formats.Danger));
             _index.Clear();
             foreach (var item in data)
