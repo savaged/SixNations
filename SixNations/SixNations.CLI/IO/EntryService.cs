@@ -16,6 +16,15 @@ namespace SixNations.CLI.IO
             return RemoveLabel(label, value);
         }
 
+        public string ReadMenu(string menu)
+        {
+            Console.SetCursorPosition(0, Console.WindowHeight - 1);
+            var value = Read(menu);
+            Console.Clear();
+            Console.SetCursorPosition(0, 1);
+            return value;
+        }
+
         private string Read(bool masked = false)
         {
             ConsoleKeyInfo key;
@@ -46,12 +55,6 @@ namespace SixNations.CLI.IO
                 }
             }
             return value;
-        }
-
-        public string ReadMenu(string menu)
-        {
-            // TODO logic to write at the bottom of the window then clear after input
-            return Read(menu);
         }
 
         private ConsoleKeyInfo ReadOrComplete(out bool isReadingCompleted)

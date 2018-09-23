@@ -66,7 +66,7 @@ namespace SixNations.CLI.SubModules
                     ShowSelected();
                     break;
                 case "s":
-                    var searchArg = Entry.Read("Search (ID or Word[s] in Story)");
+                    var searchArg = Entry.ReadMenu("Search (ID or Word[s] in Story)");
                     SetSelectedToSearchArg(searchArg);
                     break;
                 case "n":
