@@ -129,7 +129,7 @@ namespace SixNations.Desktop.Adapters
             try
             {
                 wbs = _excel.Workbooks;
-                wb = wbs[1];
+                wb = wbs.Add(XlWBATemplate.xlWBATWorksheet);
                 sheets = wb.Worksheets;
                 ws = sheets[1];
 
