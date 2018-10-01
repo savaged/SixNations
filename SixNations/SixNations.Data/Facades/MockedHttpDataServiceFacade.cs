@@ -408,7 +408,7 @@ namespace SixNations.Data.Facade
         private static void EmulateEditLocking(
             string url, API.Constants.HttpMethods httpMethod, ref IResponseRootObject responseRootObject)
         {
-            if (responseRootObject == null)
+            if (responseRootObject is null)
             {
                 throw new ArgumentNullException(nameof(responseRootObject));
             }

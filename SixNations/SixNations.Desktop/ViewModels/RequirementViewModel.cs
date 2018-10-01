@@ -163,7 +163,7 @@ namespace SixNations.Desktop.ViewModels
 
         private async Task UpdateIndex(IList<Requirement> updated)
         {
-            if (updated == null || updated.Count == 0)
+            if (updated is null || updated.Count == 0)
             {
                 Log.Error("Nothing to import!");
                 return;

@@ -198,7 +198,7 @@ namespace SixNations.Data.Models
 
         public bool IsEmpty()
         {
-            return Fields == null || Fields.Count == 0;
+            return Fields is null || Fields.Count == 0;
         }
 
         public bool ContainsKey(string key)
@@ -246,7 +246,7 @@ namespace SixNations.Data.Models
 
         private void Validate()
         {
-            if (_responseRootObject == null)
+            if (_responseRootObject is null)
             {
                 throw new ArgumentNullException(
                     "No response root found. " +

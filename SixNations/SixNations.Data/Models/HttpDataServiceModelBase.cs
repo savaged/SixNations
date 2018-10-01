@@ -53,7 +53,7 @@ namespace SixNations.Data.Models
             {
                 return;
             }
-            if (dto[key] == null)
+            if (dto[key] is null)
             {
                 return;
             }

@@ -14,7 +14,7 @@ namespace SixNations.Data.Models
 
         public Lookup(string lookupName, IDataTransferObject[] data) : this(lookupName)
         {
-            if (data == null)
+            if (data is null)
             {
                 throw new ArgumentNullException("Expected to recieve initialised data.");
             }

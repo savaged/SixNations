@@ -156,7 +156,7 @@ namespace SixNations.Data.Facade
         {
             if (allowedStatusCodes.Contains(statusCode) && statusCode != 200)
             {
-                if (responseRootObject == null)
+                if (responseRootObject is null)
                 {
                     throw new HttpDataServiceException(
                         statusCode, "Unexpected result: API with an allowed status code returned null!");
@@ -188,7 +188,7 @@ namespace SixNations.Data.Facade
         }
         private static string GetArgs(IDictionary<string, object> data)
         {
-            if (data == null || data.Count == 0)
+            if (data is null || data.Count == 0)
             {
                 return string.Empty;
             }
@@ -198,7 +198,7 @@ namespace SixNations.Data.Facade
                 args.Append("\"");
                 args.Append(kvp.Key);
                 args.Append("\":");
-                if (kvp.Value == null)
+                if (kvp.Value is null)
                 {
                     args.Append("null");
                 }
@@ -278,7 +278,7 @@ namespace SixNations.Data.Facade
                 Log.Error(msg);
                 responseRootObject = new ResponseRootObject(msg);
             }
-            if (responseRootObject == null)
+            if (responseRootObject is null)
             {
                 throw new Exception(
                     $"Expected the {nameof(rawResponseContent)} to convert but it has returned null! " +
@@ -328,7 +328,7 @@ namespace SixNations.Data.Facade
         private static void EmulateEditLocking(
             string url, API.Constants.HttpMethods httpMethod, ref ResponseRootObject responseRootObject)
         {
-            if (responseRootObject == null)
+            if (responseRootObject is null)
             {
                 throw new ArgumentNullException(nameof(responseRootObject));
             }

@@ -17,11 +17,11 @@ namespace SixNations.Data.Models
         {
             get
             {
-                if (_instance == null)
+                if (_instance is null)
                 {
                     lock (ThreadSaftyLock)
                     {
-                        if (_instance == null)
+                        if (_instance is null)
                         {
                             _instance = new User();
                         }

@@ -45,7 +45,7 @@ namespace SixNations.CLI.SubModules
                 return;
             }
             await LoadLookupsAsync();
-            if (Selected == null)
+            if (Selected is null)
             {
                 Selected = await _requirementsDataService.CreateModelAsync(
                     User.Current.AuthToken, 

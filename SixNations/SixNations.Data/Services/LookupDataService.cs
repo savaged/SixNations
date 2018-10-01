@@ -22,7 +22,7 @@ namespace SixNations.Data.Services
         public async Task<IEnumerable<Lookup>> GetModelDataAsync(
             string authToken, Action<Exception> exceptionHandler)
         {
-            if (_lookup == null)
+            if (_lookup is null)
             {
                 _lookup = new List<Lookup>
                 {

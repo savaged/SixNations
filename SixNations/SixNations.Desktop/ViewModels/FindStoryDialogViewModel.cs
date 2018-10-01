@@ -21,7 +21,7 @@ namespace SixNations.Desktop.ViewModels
 
         private void OnSubmit(object filterBox)
         {
-            if (filterBox == null)
+            if (filterBox is null)
             {
                 throw new ArgumentNullException("Expected a TextBox!");
             }

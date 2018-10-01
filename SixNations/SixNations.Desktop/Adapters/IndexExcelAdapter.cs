@@ -162,7 +162,7 @@ namespace SixNations.Desktop.Adapters
 
         private void Prechecks(IList<T> index)
         {
-            if (index == null || index.FirstOrDefault() == null)
+            if (index is null || index.First() == null)
             {
                 throw new ArgumentNullException("Expected a valid Index!");
             }
