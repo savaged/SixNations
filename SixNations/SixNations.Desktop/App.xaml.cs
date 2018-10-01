@@ -10,6 +10,8 @@ using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro;
 using SixNations.Data.Helpers;
 
+// TODO [module:NonNullTypes]
+
 namespace SixNations.Desktop
 {
     public partial class App : Application
