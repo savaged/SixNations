@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WinAppDriverBase.cs" />
     <Compile Include="CalculatorTests.cs" />
     <Compile Include="HelloWorldTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
