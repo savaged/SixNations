@@ -1,5 +1,4 @@
 ﻿// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
-using GalaSoft.MvvmLight.Ioc;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -13,14 +12,18 @@ namespace SixNations.Data.Services
 {
     public class RequirementDataService : IHttpDataService<Requirement>
     {
+        private readonly IHttpDataServiceFacade _httpDataServiceFacade;
         private readonly IDataService<Lookup> _lookupDataService;
 
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="lookupDataService">Used if lookup names are required</param>
-        public RequirementDataService(IDataService<Lookup> lookupDataService)
+        public RequirementDataService(
+            IHttpDataServiceFacade httpDataServiceFacade,
+            IDataService<Lookup> lookupDataService)
         {
+            _httpDataServiceFacade = httpDataServiceFacade;
             _lookupDataService = lookupDataService;
         }
 
@@ -28,8 +31,8 @@ namespace SixNations.Data.Services
             string authToken, Action<Exception> exceptionHandler)
         {
             var uri = $"{typeof(Requirement).NameToUriFormat()}/create";
-            var response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
-                .HttpRequestAsync(uri, User.Current.AuthToken);
+            var response = await _httpDataServiceFacade.HttpRequestAsync(
+                uri, User.Current.AuthToken);
             var model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
         }
@@ -43,8 +46,8 @@ namespace SixNations.Data.Services
             }
             var uri = typeof(Requirement).NameToUriFormat();
             var data = model.GetData();
-            var response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
-                .HttpRequestAsync(uri, User.Current.AuthToken, API.Constants.HttpMethods.Post, data);
+            var response = await _httpDataServiceFacade.HttpRequestAsync(
+                uri, User.Current.AuthToken, HttpMethods.Post, data);
             model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
         }
@@ -57,7 +60,7 @@ namespace SixNations.Data.Services
             IResponseRootObject response = null;
             try
             {
-                response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
+                response = await _httpDataServiceFacade
                     .HttpRequestAsync(uri, authToken);
             }
             catch (Exception ex)
@@ -79,8 +82,7 @@ namespace SixNations.Data.Services
                 throw new NotSupportedException("Trying to edit a new model! Use the store method instead.");
             }
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{modelId}/edit";
-            var response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
-                    .HttpRequestAsync(uri, authToken);
+            var response = await _httpDataServiceFacade.HttpRequestAsync(uri, authToken);
             var model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
         }
@@ -101,8 +103,8 @@ namespace SixNations.Data.Services
             }
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{model.Id}";
             var data = model.GetData();
-            var response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
-                .HttpRequestAsync(uri, User.Current.AuthToken, API.Constants.HttpMethods.Put, data);
+            var response = await _httpDataServiceFacade.HttpRequestAsync(
+                uri, User.Current.AuthToken, HttpMethods.Put, data);
             model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
         }
@@ -116,8 +118,8 @@ namespace SixNations.Data.Services
             }
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{model.Id}";
             var data = model.GetData();
-            var response = await SimpleIoc.Default.GetInstance<IHttpDataServiceFacade>()
-                .HttpRequestAsync(uri, User.Current.AuthToken, API.Constants.HttpMethods.Delete, null);
+            var response = await _httpDataServiceFacade.HttpRequestAsync(
+                uri, User.Current.AuthToken, HttpMethods.Delete, null);
             return response.Success;
         }
 
