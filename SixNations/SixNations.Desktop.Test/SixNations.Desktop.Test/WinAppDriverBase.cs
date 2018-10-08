@@ -13,6 +13,7 @@ namespace SixNations.Desktop.Test
     public class WinAppDriverBase
     {
         private const string WindowsApplicationDriverUrl = "http://127.0.0.1:4723";
+        // Tried to get AUMID using this link but failed https://docs.microsoft.com/en-us/windows/configuration/find-the-application-user-model-id-of-an-installed-app
         private const string AutomationAppId = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
 
         protected static WindowsDriver<WindowsElement> session;
