@@ -4,13 +4,16 @@ using SixNations.API.Interfaces;
 using SixNations.Data.Models;
 using SixNations.API.Constants;
 using SixNations.Desktop.Messages;
+using SixNations.Desktop.Interfaces;
 
 namespace SixNations.Desktop.ViewModels
 {
     public class WallViewModel : DataBoundViewModel<Requirement>
     {
-        public WallViewModel(IDataService<Requirement> requirementDataService) 
-            : base(requirementDataService)
+        public WallViewModel(
+            IDataService<Requirement> requirementDataService,
+            IActionConfirmationService actionConfirmation) 
+            : base(requirementDataService, actionConfirmation)
         {
             Prioritised = new SwimlaneViewModel(requirementDataService, RequirementStatus.Prioritised);
             WIP = new SwimlaneViewModel(requirementDataService, RequirementStatus.WIP);

@@ -36,8 +36,9 @@ namespace SixNations.Desktop.ViewModels
 
         public RequirementViewModel(
             IDataService<Requirement> requirementDataService,
-            IDataService<Lookup> lookupService)
-            : base(requirementDataService)
+            IDataService<Lookup> lookupService,
+            IActionConfirmationService actionConfirmation)
+            : base(requirementDataService, actionConfirmation)
         {
             _storyFilter = string.Empty;
 

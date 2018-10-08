@@ -150,6 +150,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Constants\Enumerations.cs" />
+    <Compile Include="Interfaces\IActionConfirmationService.cs" />
     <Compile Include="Helpers\Tinker.cs" />
     <Compile Include="Interfaces\IIndexExcelAdapter.cs" />
     <Compile Include="Adapters\IndexExcelAdapter.cs" />
@@ -220,7 +221,7 @@
     </Compile>
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
-    <Compile Include="Helpers\ActionConfirmation.cs" />
+    <Compile Include="Services\ActionConfirmationService.cs" />
     <Compile Include="Helpers\BusyStateManager.cs" />
     <Compile Include="Helpers\FeedbackActions.cs" />
     <Compile Include="Interfaces\IAsyncViewModel.cs" />

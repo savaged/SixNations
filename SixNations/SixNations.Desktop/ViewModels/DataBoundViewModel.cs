@@ -24,12 +24,16 @@ namespace SixNations.Desktop.ViewModels
             System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         protected readonly IDataService<T> DataService;
+        protected readonly IActionConfirmationService ActionConfirmation;
         private T _selectedItem;
         private bool _canSelectItem;
 
-        public DataBoundViewModel(IDataService<T> dataService)
+        public DataBoundViewModel(
+            IDataService<T> dataService, IActionConfirmationService actionConfirmation)
         {
             DataService = dataService;
+            ActionConfirmation = actionConfirmation;
+
             Index = new ObservableCollection<T>();
 
             NewCmd = new RelayCommand(OnNew, () => CanExecuteNew);

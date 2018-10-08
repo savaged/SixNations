@@ -1,9 +1,10 @@
 // Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
-using GalaSoft.MvvmLight.Ioc;
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
@@ -23,7 +24,12 @@ namespace SixNations.Desktop.ViewModels
             INavigationService navigationService, 
             MvvmDialogs.IDialogService dialogService)
         {
-            Title = Assembly.GetEntryAssembly().GetName().Name;
+            // This long route to the assembly name is to ensure tests also work
+            Title = Assembly.GetExecutingAssembly().GetCustomAttributes(
+                typeof(AssemblyProductAttribute))
+                .OfType<AssemblyProductAttribute>()
+                .FirstOrDefault()
+                .Product;
 
             BusyStateManager = busyStateManager;
             _navigationService = navigationService;

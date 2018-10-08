@@ -75,8 +75,12 @@ namespace SixNations.Desktop.ViewModels
                     return new MvvmDialogs.DialogService();
                 });
             }
+            SimpleIoc.Default.Register<IActionConfirmationService, ActionConfirmationService>();
+
             SimpleIoc.Default.Register<BusyStateManager>();
+
             SimpleIoc.Default.Register<MainViewModel>();
+
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RequirementViewModel>();
             SimpleIoc.Default.Register<WallViewModel>();
