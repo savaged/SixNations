@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixNations.Data", "SixNatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixNations.CLI", "SixNations\SixNations.CLI\SixNations.CLI.csproj", "{106EC820-87BE-4019-B63D-65E19665BE48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SixNations.Desktop.Test", "SixNations\SixNations.Desktop.Test\SixNations.Desktop.Test\SixNations.Desktop.Test.csproj", "{0A516BD8-EB66-41F0-A875-26CAF731A3F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SixNations.Desktop.Test", "SixNations\SixNations.Desktop.Test\SixNations.Desktop.Test.csproj", "{0A516BD8-EB66-41F0-A875-26CAF731A3F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
