@@ -21,7 +21,7 @@ namespace SixNations.Desktop.ViewModels
         private bool _isFullScreen;
 
         public MainViewModel(
-            BusyStateRegistry busyStateManager,
+            IBusyStateRegistry busyStateManager,
             INavigationService navigationService, 
             MvvmDialogs.IDialogService dialogService)
         {
@@ -50,7 +50,7 @@ namespace SixNations.Desktop.ViewModels
 
         public event EventHandler<IIsFullScreenChangedEventArgs> IsFullScreenChanged;
 
-        public BusyStateRegistry BusyStateManager { get; }
+        public IBusyStateRegistry BusyStateManager { get; }
 
         public ISelectedIndexManager SelectedIndexManager { get; }
 

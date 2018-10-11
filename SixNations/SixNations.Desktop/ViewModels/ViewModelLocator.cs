@@ -77,7 +77,10 @@ namespace SixNations.Desktop.ViewModels
             }
             SimpleIoc.Default.Register<IActionConfirmationService, ActionConfirmationService>();
 
-            SimpleIoc.Default.Register<BusyStateRegistry>();
+            SimpleIoc.Default.Register<IBusyStateRegistry>(() =>
+            {
+                return new BusyStateRegistry();
+            });
 
             SimpleIoc.Default.Register<MainViewModel>();
 
