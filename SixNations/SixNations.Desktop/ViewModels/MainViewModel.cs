@@ -10,6 +10,7 @@ using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Constants;
 using SixNations.Desktop.Helpers;
+using Savaged.BusyStateManager;
 using SixNations.Data.Models;
 
 namespace SixNations.Desktop.ViewModels
@@ -20,7 +21,7 @@ namespace SixNations.Desktop.ViewModels
         private bool _isFullScreen;
 
         public MainViewModel(
-            BusyStateManager busyStateManager,
+            BusyStateRegistry busyStateManager,
             INavigationService navigationService, 
             MvvmDialogs.IDialogService dialogService)
         {
@@ -49,7 +50,7 @@ namespace SixNations.Desktop.ViewModels
 
         public event EventHandler<IIsFullScreenChangedEventArgs> IsFullScreenChanged;
 
-        public BusyStateManager BusyStateManager { get; }
+        public BusyStateRegistry BusyStateManager { get; }
 
         public ISelectedIndexManager SelectedIndexManager { get; }
 

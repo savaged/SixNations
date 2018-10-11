@@ -66,6 +66,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BusyStateManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\BusyStateManager.1.0.0\lib\netstandard2.0\BusyStateManager.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -222,14 +225,12 @@
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Services\ActionConfirmationService.cs" />
-    <Compile Include="Helpers\BusyStateManager.cs" />
     <Compile Include="Helpers\FeedbackActions.cs" />
     <Compile Include="Interfaces\IAsyncViewModel.cs" />
     <Compile Include="Interfaces\IParameterised.cs" />
     <Compile Include="Interfaces\ISelectedIndexManager.cs" />
     <Compile Include="Interfaces\IShellViewModel.cs" />
     <Compile Include="Messages\StoryFilterMessage.cs" />
-    <Compile Include="Messages\BusyMessage.cs" />
     <Compile Include="Messages\AuthenticatedMessage.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

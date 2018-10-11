@@ -2,7 +2,7 @@
 using GalaSoft.MvvmLight.Ioc;
 using SixNations.API.Constants;
 using SixNations.Data.Facade;
-using SixNations.Desktop.Helpers;
+using Savaged.BusyStateManager;
 using SixNations.Desktop.Interfaces;
 using SixNations.API.Interfaces;
 using SixNations.Data.Models;
@@ -77,7 +77,7 @@ namespace SixNations.Desktop.ViewModels
             }
             SimpleIoc.Default.Register<IActionConfirmationService, ActionConfirmationService>();
 
-            SimpleIoc.Default.Register<BusyStateManager>();
+            SimpleIoc.Default.Register<BusyStateRegistry>();
 
             SimpleIoc.Default.Register<MainViewModel>();
 

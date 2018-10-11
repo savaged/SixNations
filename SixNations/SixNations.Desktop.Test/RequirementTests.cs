@@ -1,17 +1,16 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Ioc;
-using GalaSoft.MvvmLight.Messaging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SixNations.API.Interfaces;
 using SixNations.Data.Facade;
 using SixNations.Data.Models;
 using SixNations.Data.Services;
-using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.Desktop.Services;
 using SixNations.Desktop.ViewModels;
+using Savaged.BusyStateManager;
 
 namespace SixNations.Desktop.Test
 {
@@ -47,7 +46,7 @@ namespace SixNations.Desktop.Test
                 return mockConfirmation.Object;
             });
 
-            SimpleIoc.Default.Register<BusyStateManager>();
+            SimpleIoc.Default.Register<BusyStateRegistry>();
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<RequirementViewModel>();
 

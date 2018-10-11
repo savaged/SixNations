@@ -10,10 +10,10 @@ using GalaSoft.MvvmLight;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.Data.Models;
-using SixNations.Desktop.Messages;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.API.Interfaces;
+using Savaged.BusyStateManager;
 
 namespace SixNations.Desktop.ViewModels
 {
