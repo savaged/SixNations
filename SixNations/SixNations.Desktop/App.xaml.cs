@@ -30,7 +30,6 @@ namespace SixNations.Desktop
             DispatcherHelper.Initialize();
 
             app = new MainWindow();
-            var context = SimpleIoc.Default.GetInstance<MainViewModel>();
 
             var userTheme = Desktop.Properties.Settings.Default.ThemeOption;
             var appStyle = ThemeManager.DetectAppStyle(App.Current);
