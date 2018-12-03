@@ -99,7 +99,16 @@ namespace SixNations.Data.Services
                     "Trying to edit a new model! Use the store method instead.");
             }
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{modelId}/edit";
-            var response = await _httpDataServiceFacade.HttpRequestAsync(uri, authToken);
+            IResponseRootObject response = null;
+            try
+            {
+                response = await _httpDataServiceFacade.HttpRequestAsync(uri, authToken);
+            }
+            catch (Exception ex)
+            {
+                exceptionHandler(ex);
+                response = new ResponseRootObject(ex.Message);
+            }
             var model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
         }
