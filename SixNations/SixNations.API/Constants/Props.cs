@@ -3,16 +3,17 @@
 namespace SixNations.API.Constants
 {
     /// <summary>
-    /// The ApiBaseURL property is added to a partial that is
+    /// The ApiBaseURL property can be added to a partial that is
     /// not kept in source control so that the individual 
     /// developer setting does not have to change for all others.
     /// </summary>
-    public static partial class Props
+    public static class Props
     {
-        /// <summary>
-        /// This can be used against the ApiBaseURL property to 
-        /// switch to mocked data services.
-        /// </summary>
         public const string MOCKED = "Mocked/";
+#if DEBUG
+        public static readonly string ApiBaseURL = MOCKED;// "http://homestead.test/";//
+#else
+        public static readonly string ApiBaseURL = "https://verivi.co.uk/";
+#endif
     }
 }
