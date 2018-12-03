@@ -46,13 +46,23 @@ namespace SixNations.Desktop.Test
                 return mockConfirmation.Object;
             });
 
-            SimpleIoc.Default.Register<BusyStateRegistry>();
+            SimpleIoc.Default.Register<IBusyStateRegistry>(() =>
+            {
+                return new BusyStateRegistry();
+            });
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<RequirementViewModel>();
 
             User.Current.Initialise("mockToken");
 
-            _vm = SimpleIoc.Default.GetInstance<RequirementViewModel>();
+            var serviceLocator = SimpleIoc.Default;
+            var mainVM = serviceLocator.GetInstance<MainViewModel>();
+            Assert.IsNotNull(mainVM);
+            var busyMngr = mainVM.BusyStateManager;
+            Assert.IsNotNull(busyMngr);
+
+            _vm = serviceLocator.GetInstance<RequirementViewModel>();
+            Assert.IsNotNull(_vm);            
         }
 
         [TestInitialize]

@@ -133,7 +133,18 @@ namespace SixNations.Desktop.ViewModels
         public ICommand CancelCmd { get; }
 
         // TODO: Add permissions check on current user
-        public bool CanExecute => !SimpleIoc.Default.GetInstance<MainViewModel>().BusyStateManager.IsBusy;
+        public bool CanExecute
+        {
+            get
+            {
+                var value = false;
+                var serviceLocator = SimpleIoc.Default;
+                var mainVM = serviceLocator.GetInstance<MainViewModel>();
+                var busyMngr = mainVM.BusyStateManager;
+                value = !busyMngr.IsBusy;
+                return value;
+            }
+        }
 
         // TODO: Add permissions check on current user
         public bool CanExecuteNew => CanExecute && CanSelectItem;
