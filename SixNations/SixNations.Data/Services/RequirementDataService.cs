@@ -31,8 +31,16 @@ namespace SixNations.Data.Services
             string authToken, Action<Exception> exceptionHandler)
         {
             var uri = $"{typeof(Requirement).NameToUriFormat()}/create";
-            var response = await _httpDataServiceFacade.HttpRequestAsync(
+            IResponseRootObject response = null;
+            try
+            {
+                response = await _httpDataServiceFacade.HttpRequestAsync(
                 uri, User.Current.AuthToken);
+            }
+            catch (Exception ex)
+            {
+                exceptionHandler(ex);
+            }
             var model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
         }
@@ -46,8 +54,16 @@ namespace SixNations.Data.Services
             }
             var uri = typeof(Requirement).NameToUriFormat();
             var data = model.GetData();
-            var response = await _httpDataServiceFacade.HttpRequestAsync(
-                uri, User.Current.AuthToken, HttpMethods.Post, data);
+            IResponseRootObject response = null;
+            try
+            {
+                response = await _httpDataServiceFacade.HttpRequestAsync(
+                    uri, User.Current.AuthToken, HttpMethods.Post, data);
+            }
+            catch (Exception ex)
+            {
+                exceptionHandler(ex);
+            }
             model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
         }
@@ -79,7 +95,8 @@ namespace SixNations.Data.Services
             var isNew = modelId < 1;
             if (isNew)
             {
-                throw new NotSupportedException("Trying to edit a new model! Use the store method instead.");
+                throw new NotSupportedException(
+                    "Trying to edit a new model! Use the store method instead.");
             }
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{modelId}/edit";
             var response = await _httpDataServiceFacade.HttpRequestAsync(uri, authToken);
@@ -103,8 +120,17 @@ namespace SixNations.Data.Services
             }
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{model.Id}";
             var data = model.GetData();
-            var response = await _httpDataServiceFacade.HttpRequestAsync(
-                uri, User.Current.AuthToken, HttpMethods.Put, data);
+            IResponseRootObject response = null;
+            try
+            {
+                response = await _httpDataServiceFacade.HttpRequestAsync(
+                    uri, User.Current.AuthToken, HttpMethods.Put, data);
+            }
+            catch (Exception ex)
+            {
+                exceptionHandler(ex);
+                response = new ResponseRootObject(ex.Message);
+            }
             model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
         }
@@ -118,8 +144,17 @@ namespace SixNations.Data.Services
             }
             var uri = $"{typeof(Requirement).NameToUriFormat()}/{model.Id}";
             var data = model.GetData();
-            var response = await _httpDataServiceFacade.HttpRequestAsync(
-                uri, User.Current.AuthToken, HttpMethods.Delete, null);
+            IResponseRootObject response = null;
+            try
+            {
+                response = await _httpDataServiceFacade.HttpRequestAsync(
+                    uri, User.Current.AuthToken, HttpMethods.Delete, null);
+            }
+            catch (Exception ex)
+            {
+                exceptionHandler(ex);
+                response = new ResponseRootObject(ex.Message);
+            }
             return response.Success;
         }
 
