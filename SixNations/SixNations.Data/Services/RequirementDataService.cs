@@ -24,7 +24,7 @@ namespace SixNations.Data.Services
             IDataService<Lookup> lookupDataService)
         {
             _httpDataServiceFacade = httpDataServiceFacade;
-            _lookupDataService = lookupDataService;
+            _lookupDataService = lookupDataService;            
         }
 
         public async Task<Requirement> CreateModelAsync(
@@ -35,7 +35,7 @@ namespace SixNations.Data.Services
             try
             {
                 response = await _httpDataServiceFacade.HttpRequestAsync(
-                uri, User.Current.AuthToken);
+                    uri, User.Current.AuthToken);
             }
             catch (Exception ex)
             {

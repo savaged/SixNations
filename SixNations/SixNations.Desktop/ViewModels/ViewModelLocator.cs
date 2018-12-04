@@ -25,7 +25,9 @@ namespace SixNations.Desktop.ViewModels
             // Pre Standard .Net (see http://www.mvvmlight.net/std10) ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             SimpleIoc.Default.Register<IDataService<Lookup>, LookupDataService>();
-            SimpleIoc.Default.Register<IDataService<Requirement>, RequirementDataService>();
+
+            SimpleIoc.Default
+                .Register<IDataService<Requirement>, RequirementDataService>();
             
             if (!SimpleIoc.Default.IsRegistered<IHttpDataServiceFacade>())
             {
@@ -75,12 +77,15 @@ namespace SixNations.Desktop.ViewModels
                     return new MvvmDialogs.DialogService();
                 });
             }
-            SimpleIoc.Default.Register<IActionConfirmationService, ActionConfirmationService>();
+            SimpleIoc.Default
+                .Register<IActionConfirmationService, ActionConfirmationService>();
 
             SimpleIoc.Default.Register<IBusyStateRegistry>(() =>
             {
                 return new BusyStateRegistry();
             });
+
+            SimpleIoc.Default.Register<IKeepAuthAliveService, KeepAuthAliveService>();
 
             SimpleIoc.Default.Register<MainViewModel>();
 
@@ -97,15 +102,18 @@ namespace SixNations.Desktop.ViewModels
 
         public LoginViewModel Login => SimpleIoc.Default.GetInstance<LoginViewModel>();
 
-        public RequirementViewModel Requirement => SimpleIoc.Default.GetInstance<RequirementViewModel>();
+        public RequirementViewModel Requirement => 
+            SimpleIoc.Default.GetInstance<RequirementViewModel>();
 
         public WallViewModel Wall => SimpleIoc.Default.GetInstance<WallViewModel>();
 
-        public WallDialogViewModel WallDialog => SimpleIoc.Default.GetInstance<WallDialogViewModel>();
+        public WallDialogViewModel WallDialog => 
+            SimpleIoc.Default.GetInstance<WallDialogViewModel>();
 
         public AboutViewModel About => SimpleIoc.Default.GetInstance<AboutViewModel>();
 
-        public SettingsViewModel Settings => SimpleIoc.Default.GetInstance<SettingsViewModel>();
+        public SettingsViewModel Settings => 
+            SimpleIoc.Default.GetInstance<SettingsViewModel>();
 
         public FindStoryDialogViewModel FindStoryDialog => 
             SimpleIoc.Default.GetInstance<FindStoryDialogViewModel>();

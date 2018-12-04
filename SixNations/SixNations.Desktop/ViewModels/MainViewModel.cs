@@ -115,6 +115,7 @@ namespace SixNations.Desktop.ViewModels
         {
             IsFullScreen = true;
             var vm = SimpleIoc.Default.GetInstance<WallDialogViewModel>();
+            vm.Initialise();
             var result = DialogService.ShowDialog(this, vm);
             IsFullScreen = false;
         }

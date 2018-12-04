@@ -15,5 +15,6 @@ namespace SixNations.API.Constants
 #else
         public static readonly string ApiBaseURL = "https://verivi.co.uk/";
 #endif
+        public const int POLLING_DELAY = 120000;
     }
 }
