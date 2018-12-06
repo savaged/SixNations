@@ -49,6 +49,9 @@ namespace SixNations.Desktop.ViewModels
             IndexToExcelCmd = new RelayCommand(OnIndexToExcel, () => _excelAdapter.CanExecute);
             ExcelToIndexCmd = new RelayCommand(OnExcelToIndex, () => _excelAdapter.CanExecute);
 
+            ClearRequirementStatusCmd = new RelayCommand(
+                OnClearRequirementStatus, () => CanExecute);
+
             MessengerInstance.Register<StoryFilterMessage>(this, OnFindStory);
         }
 
@@ -67,6 +70,8 @@ namespace SixNations.Desktop.ViewModels
         public ICommand IndexToExcelCmd { get; }
 
         public ICommand ExcelToIndexCmd { get; }
+
+        public RelayCommand ClearRequirementStatusCmd { get; }
 
         public override async Task LoadAsync()
         {
@@ -199,6 +204,11 @@ namespace SixNations.Desktop.ViewModels
             }
             Log.Info("Import completed.");
             await LoadIndexAsync();
+        }
+
+        private void OnClearRequirementStatus()
+        {
+            SelectedItem.Status = (int)RequirementStatus._;
         }
     }
 }
