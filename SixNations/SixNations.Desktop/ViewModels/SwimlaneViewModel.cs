@@ -42,12 +42,20 @@ namespace SixNations.Desktop.ViewModels
                     authToken, FeedbackActions.ReactToException, droppedRequirementId);
 
                 dropped.Status = (int)target;
-
-                var updated = await _requirementDataService.UpdateModelAsync(
-                    authToken, FeedbackActions.ReactToException, dropped as Requirement);
-                MessengerInstance.Send(new BusyMessage(false, this));
-
-                MessengerInstance.Send(new ReloadRequestMessage(this));
+                Requirement updated = null;
+                try
+                {
+                    updated = await _requirementDataService.UpdateModelAsync(
+                        authToken, FeedbackActions.ReactToException, dropped as Requirement);
+                }
+                finally
+                {
+                    MessengerInstance.Send(new BusyMessage(false, this));
+                }
+                if (updated != null)
+                {
+                    MessengerInstance.Send(new ReloadRequestMessage(this));
+                }
             }
         }
     }
