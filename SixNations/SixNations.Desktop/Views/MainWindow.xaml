@@ -18,7 +18,6 @@
                  WindowStartupLocation="CenterScreen"
                  WindowState="Normal"
                  WindowStyle="SingleBorderWindow"
-                 ResizeMode="CanMinimize"
                  SourceInitialized="OnSourceInitialized"
                  Closing="OnClosing"
                  DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
