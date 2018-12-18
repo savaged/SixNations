@@ -54,19 +54,44 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="6*" Header="ID" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Width="5*" Header="ID" Binding="{Binding Id}"/>
                     <DataGridTextColumn Width="38*" Header="Story" Binding="{Binding Story}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="TextWrapping" Value="Wrap" />
                                 <Setter Property="Padding" Value="5" />
+                                <Setter Property="FontSize" Value="18"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Width="14*" Header="Status" Binding="{Binding StatusName}"/>
-                    <DataGridTextColumn Width="14*" Header="Priority" Binding="{Binding PriorityName}"/>
-                    <DataGridTextColumn Width="14*" Header="Estimation" Binding="{Binding EstimationName}"/>
-                    <DataGridTextColumn Width="14*" Header="Release" Binding="{Binding Release}"/>
+                    <DataGridTextColumn Width="9*" Header="Status" Binding="{Binding StatusName}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontSize" Value="16"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Width="10*" Header="Priority" Binding="{Binding PriorityName}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontSize" Value="16"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Width="12*" Header="Estimation" Binding="{Binding EstimationName}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontSize" Value="16"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Width="11*" Header="Release" Binding="{Binding Release}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="FontSize" Value="14"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Margin="10,0,0,0" 
@@ -98,23 +123,28 @@
                     <Label Grid.Column="0" Grid.Row="0">Story</Label>
                     <TextBox Grid.Column="1" Grid.Row="0" 
                              mah:TextBoxHelper.Watermark="As a {user role}, I want to {the thing that is needed}, so that {the business value that allows prioritisation}."
-                             TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                             Text="{Binding SelectedItem.Story, UpdateSourceTrigger=PropertyChanged}"
-                             AcceptsReturn="True"/>
+                             TextWrapping="Wrap" 
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             AcceptsReturn="True"
+                             FontSize="18"
+                             Text="{Binding SelectedItem.Story, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Grid.Column="0" Grid.Row="1">Estimation</Label>
                     <ComboBox Grid.Column="1" Grid.Row="1" MaxHeight="30" 
                               ItemsSource="{Binding EstimationLookup}"
                               SelectedValuePath="Key" DisplayMemberPath="Value"
+                              FontSize="18"
                               SelectedValue="{Binding SelectedItem.Estimation}"/>
                     <Label Grid.Column="0" Grid.Row="2">Priority</Label>
                     <ComboBox Grid.Column="1" Grid.Row="2" MaxHeight="30" 
                               ItemsSource="{Binding PriorityLookup}"
                               SelectedValuePath="Key" DisplayMemberPath="Value"
+                              FontSize="18"
                               SelectedValue="{Binding SelectedItem.Priority}"/>
                     <Label Grid.Column="0" Grid.Row="3">Status</Label>
                     <ComboBox Grid.Column="1" Grid.Row="3" MaxHeight="30" 
                               ItemsSource="{Binding StatusLookup}"
                               SelectedValuePath="Key" DisplayMemberPath="Value"
+                              FontSize="18"
                               SelectedValue="{Binding SelectedItem.Status}">
                         <ComboBox.ContextMenu>
                             <ContextMenu>
@@ -123,7 +153,9 @@
                         </ComboBox.ContextMenu>
                     </ComboBox>
                     <Label Grid.Column="0" Grid.Row="4">Release</Label>
-                    <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding SelectedItem.Release}"/>
+                    <TextBox Grid.Column="1" Grid.Row="4" 
+                             FontSize="18"
+                             Text="{Binding SelectedItem.Release, UpdateSourceTrigger=PropertyChanged}"/>
                     <Button Grid.Column="1" Grid.Row="5" 
                             Width="30" Margin="5,5,0,0"
                             HorizontalAlignment="Right"
