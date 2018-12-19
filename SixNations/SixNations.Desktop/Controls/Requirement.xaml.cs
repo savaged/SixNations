@@ -23,14 +23,13 @@ namespace SixNations.Desktop.Controls
 
         private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
         {
-            var i = e.Item as Data.Models.Requirement;
-            if (i != null)
+            if (e.Item is Data.Models.Requirement requirement)
             {
                 if (string.IsNullOrEmpty(StoryFilter.Text))
                 {
                     e.Accepted = true;
                 }
-                else if (i.Story.Contains(StoryFilter.Text))
+                else if (requirement.Story.Contains(StoryFilter.Text))
                 {
                     e.Accepted = true;
                 }
