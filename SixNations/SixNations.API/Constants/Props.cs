@@ -11,7 +11,7 @@ namespace SixNations.API.Constants
     {
         public const string MOCKED = "Mocked/";
 #if DEBUG
-        public static readonly string ApiBaseURL = "http://homestead.test/";//MOCKED;// 
+        public static readonly string ApiBaseURL = MOCKED;//"http://homestead.test/";//
 #else
         public static readonly string ApiBaseURL = "https://verivi.co.uk/";
 #endif
