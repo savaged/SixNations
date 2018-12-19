@@ -1,7 +1,5 @@
-﻿using System;
+﻿using System.Deployment.Application;
 using GalaSoft.MvvmLight;
-using System.Reflection;
-using SixNations.Desktop.Helpers;
 using SixNations.Data.Models;
 
 namespace SixNations.Desktop.ViewModels
@@ -10,7 +8,15 @@ namespace SixNations.Desktop.ViewModels
     {
         public AboutViewModel()
         {
-            SelectedItem = new About();
+            string ver = null;
+            try
+            {
+                ver = ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+            }
+            finally
+            {
+                SelectedItem = new About(ver);
+            }
         }
 
         public About SelectedItem { get; }

@@ -8,7 +8,7 @@ namespace SixNations.Data.Models
 {
     public class About : IDataServiceModel
     {
-        public About()
+        public About(string deploymentVersion = null)
         {
             AppNameText = $"{Assembly.GetEntryAssembly().GetName().Name}";
             AppBlurbText = $"An open source WPF application, for requirements management, " +
@@ -28,7 +28,14 @@ namespace SixNations.Data.Models
             $"GNU General Public License for more details.{Environment.NewLine}{Environment.NewLine}" +
             $"You should have received a copy of the GNU General Public License{Environment.NewLine}" +
             $"along with SixNations.If not, see <http://www.gnu.org/licenses/>.";
-            AppVersionText = $"{AppNameText} v{Assembly.GetEntryAssembly().GetName().Version}";
+            if (deploymentVersion is null)
+            {
+                AppVersionText = $"{AppNameText} v{Assembly.GetEntryAssembly().GetName().Version}";
+            }
+            else
+            {
+                AppVersionText = $"{AppNameText} v{deploymentVersion}";
+            }
             OSVersionText = $"Operating System {Environment.OSVersion.VersionString}";
             DotNetVersionText = $".Net v{Environment.Version.ToString()}";
             LogFileLocationText = $"Log file is at {LogFileLocator.GetLogFileLocation()}";
