@@ -1,6 +1,6 @@
 ﻿namespace SixNations.API.Interfaces
 {
-    public interface IKeepAuthAliveService
+    public interface IPollingService
     {
         void Kill();
         void Start();

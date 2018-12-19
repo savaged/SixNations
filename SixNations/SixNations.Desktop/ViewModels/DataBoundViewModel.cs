@@ -14,6 +14,8 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.API.Interfaces;
 using Savaged.BusyStateManager;
+using System.Timers;
+using SixNations.API.Constants;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -25,14 +27,25 @@ namespace SixNations.Desktop.ViewModels
 
         protected readonly IDataService<T> DataService;
         protected readonly IActionConfirmationService ActionConfirmation;
+        private Timer _pollingTimer;
+        private bool _withRefreshPolling;
         private T _selectedItem;
         private bool _canSelectItem;
 
         public DataBoundViewModel(
-            IDataService<T> dataService, IActionConfirmationService actionConfirmation)
+            IDataService<T> dataService, 
+            IActionConfirmationService actionConfirmation,
+            bool withRefreshPolling = false)
         {
             DataService = dataService;
             ActionConfirmation = actionConfirmation;
+            _pollingTimer = new Timer(Props.POLLING_DELAY)
+            {
+                AutoReset = true,
+                Enabled = false
+            };
+            _pollingTimer.Elapsed += OnPollingTimerElapsed;
+            _withRefreshPolling = withRefreshPolling;
 
             Index = new ObservableCollection<T>();
 
@@ -43,10 +56,21 @@ namespace SixNations.Desktop.ViewModels
             CancelCmd = new RelayCommand(OnCancel, () => CanExecuteCancel);
         }
 
+        public override void Cleanup()
+        {
+            _pollingTimer.Stop();
+            _pollingTimer.Elapsed -= OnPollingTimerElapsed;
+            base.Cleanup();
+        }
+
         public async virtual Task LoadAsync()
         {
             MessengerInstance.Send(new BusyMessage(true, this));
 
+            if (_withRefreshPolling)
+            {
+                _pollingTimer.Start();
+            }
             try
             {
                 await LoadIndexAsync();
@@ -69,16 +93,7 @@ namespace SixNations.Desktop.ViewModels
             IEnumerable<T> data = null;
             if (User.Current.IsLoggedIn)
             {
-                try
-                {
-                    data = await DataService.GetModelDataAsync(
-                        User.Current.AuthToken, FeedbackActions.ReactToException);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex.Message);
-                    throw;
-                }
+                data = await GetIndexAsync();
             }
             if (data != null)
             {
@@ -92,6 +107,22 @@ namespace SixNations.Desktop.ViewModels
             {
                 Index.Clear();
             }
+        }
+
+        private async Task<IEnumerable<T>> GetIndexAsync()
+        {
+            IEnumerable<T> data = null;
+            try
+            {
+                data = await DataService.GetModelDataAsync(
+                    User.Current.AuthToken, FeedbackActions.ReactToException);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+                throw;
+            }
+            return data;
         }
 
         public ObservableCollection<T> Index { get; }
@@ -281,6 +312,11 @@ namespace SixNations.Desktop.ViewModels
                 SelectedItem = Index.FirstOrDefault();
                 MessengerInstance.Send(new BusyMessage(false, this));
             }
+        }
+
+        private async void OnPollingTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            await LoadIndexAsync();
         }
     }
 }

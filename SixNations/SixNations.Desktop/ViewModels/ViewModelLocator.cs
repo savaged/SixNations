@@ -85,8 +85,6 @@ namespace SixNations.Desktop.ViewModels
                 return new BusyStateRegistry();
             });
 
-            SimpleIoc.Default.Register<IKeepAuthAliveService, KeepAuthAliveService>();
-
             SimpleIoc.Default.Register<MainViewModel>();
 
             SimpleIoc.Default.Register<LoginViewModel>();

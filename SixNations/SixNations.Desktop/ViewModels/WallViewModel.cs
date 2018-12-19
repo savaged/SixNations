@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Savaged.BusyStateManager;
 using SixNations.API.Interfaces;
 using SixNations.Data.Models;
 using SixNations.API.Constants;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Interfaces;
-using Savaged.BusyStateManager;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -14,7 +14,7 @@ namespace SixNations.Desktop.ViewModels
         public WallViewModel(
             IDataService<Requirement> requirementDataService,
             IActionConfirmationService actionConfirmation) 
-            : base(requirementDataService, actionConfirmation)
+            : base(requirementDataService, actionConfirmation, true)
         {
             Prioritised = new SwimlaneViewModel(requirementDataService, RequirementStatus.Prioritised);
             WIP = new SwimlaneViewModel(requirementDataService, RequirementStatus.WIP);
@@ -26,7 +26,9 @@ namespace SixNations.Desktop.ViewModels
         public async override Task LoadAsync()
         {
             MessengerInstance.Send(new BusyMessage(true, this));
+
             await base.LoadAsync();
+
             const int wont = 4;
             var filtered = Index.Where(r => r.Priority != wont);
 
