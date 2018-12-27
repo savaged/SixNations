@@ -11,7 +11,11 @@ namespace SixNations.Desktop.ViewModels
             string ver = null;
             try
             {
+#if DEBUG
+                ver = "debugging";
+#else
                 ver = ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+#endif
             }
             finally
             {

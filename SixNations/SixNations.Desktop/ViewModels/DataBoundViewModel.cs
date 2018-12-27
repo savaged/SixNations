@@ -1,5 +1,4 @@
 ﻿// Pre Standard .Net (see http://www.mvvmlight.net/std10) using CommonServiceLocator;
-using GalaSoft.MvvmLight.Ioc;
 using System;
 using log4net;
 using System.Linq;
@@ -7,15 +6,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using System.Windows.Input;
+using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.CommandWpf;
+using GalaSoft.MvvmLight.Threading;
 using SixNations.Desktop.Helpers;
 using SixNations.Desktop.Interfaces;
 using SixNations.Data.Models;
-using System.Windows.Input;
-using GalaSoft.MvvmLight.CommandWpf;
 using SixNations.API.Interfaces;
 using Savaged.BusyStateManager;
-using System.Timers;
-using SixNations.API.Constants;
+using SixNations.Desktop.Services;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -27,8 +27,7 @@ namespace SixNations.Desktop.ViewModels
 
         protected readonly IDataService<T> DataService;
         protected readonly IActionConfirmationService ActionConfirmation;
-        private Timer _pollingTimer;
-        private bool _withRefreshPolling;
+        private readonly bool _withRefreshPolling;
         private T _selectedItem;
         private bool _canSelectItem;
 
@@ -39,13 +38,9 @@ namespace SixNations.Desktop.ViewModels
         {
             DataService = dataService;
             ActionConfirmation = actionConfirmation;
-            _pollingTimer = new Timer(Props.POLLING_DELAY)
-            {
-                AutoReset = true,
-                Enabled = false
-            };
-            _pollingTimer.Elapsed += OnPollingTimerElapsed;
+            
             _withRefreshPolling = withRefreshPolling;
+            PollingService.Instance.IntervalElapsed += OnPollingIntervalElapsed;
 
             Index = new ObservableCollection<T>();
 
@@ -58,8 +53,7 @@ namespace SixNations.Desktop.ViewModels
 
         public override void Cleanup()
         {
-            _pollingTimer.Stop();
-            _pollingTimer.Elapsed -= OnPollingTimerElapsed;
+            PollingService.Instance.IntervalElapsed -= OnPollingIntervalElapsed;
             base.Cleanup();
         }
 
@@ -69,7 +63,7 @@ namespace SixNations.Desktop.ViewModels
 
             if (_withRefreshPolling)
             {
-                _pollingTimer.Start();
+                PollingService.Instance.Start();
             }
             try
             {
@@ -314,9 +308,12 @@ namespace SixNations.Desktop.ViewModels
             }
         }
 
-        private async void OnPollingTimerElapsed(object sender, ElapsedEventArgs e)
+        private void OnPollingIntervalElapsed()
         {
-            await LoadIndexAsync();
+            DispatcherHelper.CheckBeginInvokeOnUI(async () =>
+            {
+                await LoadIndexAsync();
+            });
         }
     }
 }
