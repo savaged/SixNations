@@ -64,7 +64,10 @@ namespace SixNations.Desktop.Services
 
         public void Start()
         {
-            _pollingTimer.Start();
+            if (!_pollingTimer.Enabled)
+            {
+                _pollingTimer.Start();
+            }
         }
 
         public void Stop()

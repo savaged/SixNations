@@ -312,7 +312,7 @@ namespace SixNations.Desktop.ViewModels
         {
             DispatcherHelper.CheckBeginInvokeOnUI(async () =>
             {
-                await LoadIndexAsync();
+                await LoadAsync();
             });
         }
     }
