@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SixNations.Desktop", "SixNations\SixNations.Desktop\SixNations.Desktop.csproj", "{10A138CC-168E-4F20-8623-C2872E44D694}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SixNations.Desktop", "src\client\SixNations.Desktop\SixNations.Desktop.csproj", "{10A138CC-168E-4F20-8623-C2872E44D694}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{409E2933-2E67-4C76-8C93-7B4AD620FFF6}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,13 +12,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixNations.API", "SixNations\SixNations.API\SixNations.API.csproj", "{9C7DF106-2CD2-4B87-9A39-6A388E5EFE92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixNations.API", "src\client\SixNations.API\SixNations.API.csproj", "{9C7DF106-2CD2-4B87-9A39-6A388E5EFE92}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixNations.Data", "SixNations\SixNations.Data\SixNations.Data.csproj", "{A1B660DC-B92F-4110-9828-7BFCEF212D8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixNations.Data", "src\client\SixNations.Data\SixNations.Data.csproj", "{A1B660DC-B92F-4110-9828-7BFCEF212D8C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixNations.CLI", "SixNations\SixNations.CLI\SixNations.CLI.csproj", "{106EC820-87BE-4019-B63D-65E19665BE48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixNations.CLI", "src\client\SixNations.CLI\SixNations.CLI.csproj", "{106EC820-87BE-4019-B63D-65E19665BE48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SixNations.Desktop.Test", "SixNations\SixNations.Desktop.Test\SixNations.Desktop.Test.csproj", "{0A516BD8-EB66-41F0-A875-26CAF731A3F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SixNations.Desktop.Test", "src\client\SixNations.Desktop.Test\SixNations.Desktop.Test.csproj", "{0A516BD8-EB66-41F0-A875-26CAF731A3F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{58818126-16CA-4DDA-A17D-4D035598A4C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{71C3DB04-48C7-4D32-A906-EDA906CF08C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{10A138CC-168E-4F20-8623-C2872E44D694} = {58818126-16CA-4DDA-A17D-4D035598A4C6}
+		{9C7DF106-2CD2-4B87-9A39-6A388E5EFE92} = {58818126-16CA-4DDA-A17D-4D035598A4C6}
+		{A1B660DC-B92F-4110-9828-7BFCEF212D8C} = {58818126-16CA-4DDA-A17D-4D035598A4C6}
+		{106EC820-87BE-4019-B63D-65E19665BE48} = {58818126-16CA-4DDA-A17D-4D035598A4C6}
+		{0A516BD8-EB66-41F0-A875-26CAF731A3F8} = {58818126-16CA-4DDA-A17D-4D035598A4C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE90DC4C-8004-4023-AE4F-60C191B56E58}
