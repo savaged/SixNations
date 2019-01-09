@@ -6,11 +6,12 @@ SixNations, is designed as lean tooling for an Agile development
 team.
 
 It is designed to consume a RESTful data service but could be 
-adapted to use something like Entity Framework.
+adapted to use something like Entity Framework. The data service
+is not yet available, however when time permits it will follow.
 
-It is a work-in-progress but should compile after a "Restore NuGet
-Packages" and one must add a couple of files. The first in
-`Services` named `AuthTokenService.partial.cs` with the contents:
+This project should compile after a "Restore NuGet Packages" and 
+one must add a couple of files. The first in `Services` named 
+`AuthTokenService.partial.cs` with the contents:
 
 ```using System;
 
