@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SixNations.Server.Models;
 
 namespace SixNations.Server.Data
 {
@@ -12,5 +13,7 @@ namespace SixNations.Server.Data
             : base(options)
         {
         }
+
+        public DbSet<Requirement> Requirement { get; set; }
     }
 }

@@ -4,7 +4,6 @@ using log4net;
 using System;
 using System.Reflection;
 using System.Windows;
-using SixNations.Desktop.ViewModels;
 using SixNations.Desktop.Views;
 using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro;
