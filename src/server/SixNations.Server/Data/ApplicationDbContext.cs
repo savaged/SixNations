@@ -15,5 +15,7 @@ namespace SixNations.Server.Data
         }
 
         public DbSet<Requirement> Requirement { get; set; }
+
+        
     }
 }
