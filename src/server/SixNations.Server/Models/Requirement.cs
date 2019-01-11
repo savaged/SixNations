@@ -1,7 +1,7 @@
 ﻿
 namespace SixNations.Server.Models
 {
-    public class Requirement
+    public class Requirement : ModelBase
     {
         public int RequirementID { get; set; }
 

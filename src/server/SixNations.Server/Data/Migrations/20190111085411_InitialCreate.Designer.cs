@@ -10,7 +10,7 @@ using SixNations.Server.Data;
 namespace SixNations.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190110130323_InitialCreate")]
+    [Migration("20190111085411_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -205,6 +205,68 @@ namespace SixNations.Server.Data.Migrations
                     b.HasKey("RequirementID");
 
                     b.ToTable("Requirement");
+                });
+
+            modelBuilder.Entity("SixNations.Server.Models.RequirementEstimation", b =>
+                {
+                    b.Property<int>("RequirementEstimationID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RequirementEstimationName");
+
+                    b.HasKey("RequirementEstimationID");
+
+                    b.ToTable("RequirementEstimation");
+
+                    b.HasData(
+                        new { RequirementEstimationID = 1, RequirementEstimationName = "XS" },
+                        new { RequirementEstimationID = 2, RequirementEstimationName = "Small" },
+                        new { RequirementEstimationID = 3, RequirementEstimationName = "Medium" },
+                        new { RequirementEstimationID = 5, RequirementEstimationName = "Large" },
+                        new { RequirementEstimationID = 8, RequirementEstimationName = "XL" },
+                        new { RequirementEstimationID = 13, RequirementEstimationName = "XXL" }
+                    );
+                });
+
+            modelBuilder.Entity("SixNations.Server.Models.RequirementPriority", b =>
+                {
+                    b.Property<int>("RequirementPriorityID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RequirementPriorityName");
+
+                    b.HasKey("RequirementPriorityID");
+
+                    b.ToTable("RequirementPriority");
+
+                    b.HasData(
+                        new { RequirementPriorityID = 1, RequirementPriorityName = "Must" },
+                        new { RequirementPriorityID = 2, RequirementPriorityName = "Should" },
+                        new { RequirementPriorityID = 3, RequirementPriorityName = "Could" },
+                        new { RequirementPriorityID = 4, RequirementPriorityName = "Wont" }
+                    );
+                });
+
+            modelBuilder.Entity("SixNations.Server.Models.RequirementStatus", b =>
+                {
+                    b.Property<int>("RequirementStatusID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RequirementStatusName");
+
+                    b.HasKey("RequirementStatusID");
+
+                    b.ToTable("RequirementStatus");
+
+                    b.HasData(
+                        new { RequirementStatusID = 1, RequirementStatusName = "Prioritised" },
+                        new { RequirementStatusID = 2, RequirementStatusName = "WIP" },
+                        new { RequirementStatusID = 3, RequirementStatusName = "Test" },
+                        new { RequirementStatusID = 4, RequirementStatusName = "Done" }
+                    );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

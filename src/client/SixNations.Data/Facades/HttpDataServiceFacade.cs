@@ -274,7 +274,9 @@ namespace SixNations.Data.Facade
                     "this may simply be that no data was returned. This can " +
                     "happen with a call to an API Create method which has " +
                     "no templating. " +
-                    $"Here is the JsonSerializationException: {ex.Message}";
+                    $"Here is the JsonSerializationException: {ex.Message}" +
+                    $"{Environment.NewLine}And here is the raw response: " +
+                    $"{rawResponseContent}";
                 Log.Error(msg);
                 responseRootObject = new ResponseRootObject(msg);
             }

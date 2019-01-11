@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SixNations.Server.Data;
@@ -12,16 +11,16 @@ namespace SixNations.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequirementsController : ControllerBase
+    public class RequirementController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public RequirementsController(ApplicationDbContext context)
+        public RequirementController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Requirements/create
+        // GET: api/Requirement/create
         [HttpGet("Create")]
         public async Task<IActionResult> CreateRequirement()
         {
@@ -30,23 +29,30 @@ namespace SixNations.Server.Controllers
             return Ok(requirement);
         }
 
-        // GET: api/Requirements/5/edit
+        // GET: api/Requirement/5/edit
         [HttpGet("{id}/Edit")]
         public async Task<IActionResult> EditRequirement([FromRoute] int id)
         {
-            var requirement = await GetRequirement(id);
+            var requirement = await _context.Requirement.FindAsync(id);
+
+            if (requirement == null)
+            {
+                return NotFound();
+            }
+
             // TODO lock the record
+
             return Ok(requirement);
         }
 
-        // GET: api/Requirements
+        // GET: api/Requirement
         [HttpGet]
         public IEnumerable<Requirement> GetRequirement()
         {
-            return _context.Requirements;
+            return _context.Requirement;
         }
 
-        // GET: api/Requirements/5
+        // GET: api/Requirement/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRequirement([FromRoute] int id)
         {
@@ -55,7 +61,7 @@ namespace SixNations.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var requirement = await _context.Requirements.FindAsync(id);
+            var requirement = await _context.Requirement.FindAsync(id);
 
             if (requirement == null)
             {
@@ -65,7 +71,7 @@ namespace SixNations.Server.Controllers
             return Ok(requirement);
         }
 
-        // PUT: api/Requirements/5
+        // PUT: api/Requirement/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRequirement([FromRoute] int id, [FromBody] Requirement requirement)
         {
@@ -96,11 +102,10 @@ namespace SixNations.Server.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
-        // POST: api/Requirements
+        // POST: api/Requirement
         [HttpPost]
         public async Task<IActionResult> PostRequirement([FromBody] Requirement requirement)
         {
@@ -109,13 +114,13 @@ namespace SixNations.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Requirements.Add(requirement);
+            _context.Requirement.Add(requirement);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRequirement", new { id = requirement.RequirementID }, requirement);
         }
 
-        // DELETE: api/Requirements/5
+        // DELETE: api/Requirement/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRequirement([FromRoute] int id)
         {
@@ -124,13 +129,13 @@ namespace SixNations.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var requirement = await _context.Requirements.FindAsync(id);
+            var requirement = await _context.Requirement.FindAsync(id);
             if (requirement == null)
             {
                 return NotFound();
             }
 
-            _context.Requirements.Remove(requirement);
+            _context.Requirement.Remove(requirement);
             await _context.SaveChangesAsync();
 
             return Ok(requirement);
@@ -138,7 +143,7 @@ namespace SixNations.Server.Controllers
 
         private bool RequirementExists(int id)
         {
-            return _context.Requirements.Any(e => e.RequirementID == id);
+            return _context.Requirement.Any(e => e.RequirementID == id);
         }
     }
 }

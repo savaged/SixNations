@@ -45,7 +45,7 @@ namespace SixNations.Desktop.ViewModels
             Index = new ObservableCollection<T>();
 
             NewCmd = new RelayCommand(OnNew, () => CanExecuteNew);
-            EditCmd = new RelayCommand(OnEdit, () => CanExecuteSelectedItemChange);
+            EditCmd = new RelayCommand(OnEdit, () => CanExecuteEdit);
             DeleteCmd = new RelayCommand(OnDelete, () => CanExecuteSelectedItemChange);
             SaveCmd = new RelayCommand(OnSave, () => CanExecuteSave);
             CancelCmd = new RelayCommand(OnCancel, () => CanExecuteCancel);
@@ -173,6 +173,9 @@ namespace SixNations.Desktop.ViewModels
 
         // TODO: Add permissions check on current user
         public bool CanExecuteNew => CanExecute && CanSelectItem;
+
+        // TODO: Add permissions check on current user
+        public bool CanExecuteEdit => CanExecute && IsSelectedItemEditable;
 
         // TODO: Add permissions check on current user
         public bool CanExecuteSelectedItemChange => CanExecute &&

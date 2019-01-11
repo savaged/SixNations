@@ -116,6 +116,11 @@ namespace SixNations.Data.Services
         public async Task<Requirement> EditModelAsync(
             string authToken, Action<Exception> exceptionHandler, Requirement model)
         {
+            if (model is null)
+            {
+                throw new ArgumentNullException(
+                    "Really need a model if you want to edit one!", nameof(model));
+            }
             model = await EditModelAsync(authToken, exceptionHandler, model.Id);
             return model;
         }
