@@ -85,10 +85,7 @@ namespace SixNations.Desktop.ViewModels
         protected virtual async Task LoadIndexAsync()
         {
             IEnumerable<T> data = null;
-            if (User.Current.IsLoggedIn)
-            {
-                data = await GetIndexAsync();
-            }
+            data = await GetIndexAsync();
             if (data != null)
             {
                 Index.Clear();
@@ -175,7 +172,7 @@ namespace SixNations.Desktop.ViewModels
         public bool CanExecuteNew => CanExecute && CanSelectItem;
 
         // TODO: Add permissions check on current user
-        public bool CanExecuteEdit => CanExecute && IsSelectedItemEditable;
+        public bool CanExecuteEdit => CanExecute && SelectedItem != null;
 
         // TODO: Add permissions check on current user
         public bool CanExecuteSelectedItemChange => CanExecute &&
@@ -243,8 +240,10 @@ namespace SixNations.Desktop.ViewModels
                     if (result)
                     {
                         await LoadIndexAsync();
-
-                        SelectedItem = Index.First();
+                        if (Index.Count > 0)
+                        {
+                            SelectedItem = Index.First();
+                        }
                     }
                 }
                 catch (Exception ex)

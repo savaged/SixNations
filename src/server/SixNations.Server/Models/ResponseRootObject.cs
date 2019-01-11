@@ -1,26 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SixNations.Server.Models
 {
     public class ResponseRootObject
     {
-        public ResponseRootObject()
+        private static int[] _successCodes =
         {
+            200,
+            201,
+            202
+        };
+
+        public ResponseRootObject(int statusCode)
+        {
+            Success = _successCodes.Contains(statusCode);
             Data = new ArrayList();
         }
 
-        public ResponseRootObject(ModelBase model)
-            : this()
+        public ResponseRootObject(int statusCode, ModelBase model)
+            : this(statusCode)
         {
             SetData(model);
         }
 
-        public ResponseRootObject(IEnumerable<ModelBase> models)
-            : this()
+        public ResponseRootObject(int statusCode, IEnumerable<ModelBase> models)
+            : this(statusCode)
         {
             SetData(models);
         }
+
+        public bool Success { get; set; }
 
         public string Error { get; set; }
 

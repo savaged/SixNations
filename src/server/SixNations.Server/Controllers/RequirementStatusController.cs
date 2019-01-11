@@ -21,7 +21,7 @@ namespace SixNations.Server.Controllers
         public ResponseRootObject GetRequirementStatus()
         {
             var index = _context.RequirementStatus;
-            var root = new ResponseRootObject(index);
+            var root = new ResponseRootObject(200, index);
             return root;
         }
     }

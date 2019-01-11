@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SixNations.Server.Data;
 using SixNations.Server.Models;
-using System.Collections.Generic;
 
 namespace SixNations.Server.Controllers
 {
@@ -21,7 +20,7 @@ namespace SixNations.Server.Controllers
         public ResponseRootObject GetRequirementEstimation()
         {
             var index = _context.RequirementEstimation;
-            var root = new ResponseRootObject(index);
+            var root = new ResponseRootObject(200, index);
             return root;
         }
     }

@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SixNations.Server.Data;
 
-namespace SixNations.Server.Data.Migrations
+namespace SixNations.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190111085411_InitialCreate")]
-    partial class InitialCreate
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,7 +198,8 @@ namespace SixNations.Server.Data.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<string>("Story");
+                    b.Property<string>("Story")
+                        .IsRequired();
 
                     b.HasKey("RequirementID");
 

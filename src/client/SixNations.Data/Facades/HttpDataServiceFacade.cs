@@ -20,12 +20,19 @@ namespace SixNations.Data.Facade
         private static int[] allowedStatusCodes = {
             200,
             201,
+            202,
             503,
             401,
             410,
             412,
             422,
             423
+        };
+        private static int[] successCodes =
+        {
+            200,
+            201,
+            202
         };
 
         private const string DefaultRequestHeaderName1 = "Accept";
@@ -150,21 +157,29 @@ namespace SixNations.Data.Facade
         private static void AnticipatedStatusCodeErrorCheck(
             int statusCode, ResponseRootObject responseRootObject)
         {
-            if (allowedStatusCodes.Contains(statusCode) && statusCode != 200)
+            if (allowedStatusCodes.Contains(statusCode))
             {
-                if (responseRootObject is null)
+                if (!successCodes.Contains(statusCode))
                 {
-                    throw new HttpDataServiceException(
-                        statusCode, "Unexpected result: API with an allowed status code returned null!");
+                    if (responseRootObject is null)
+                    {
+                        throw new HttpDataServiceException(
+                            statusCode, "Unexpected result: API with an allowed status code returned null!");
+                    }
+                    if (string.IsNullOrEmpty(responseRootObject.Error))
+                    {
+                        throw new HttpDataServiceException(
+                            statusCode,
+                            "Unexpected result: API with an allowed status code returned" +
+                            " response root object with null or empty Error property!");
+                    }
+                    throw new HttpDataServiceException(statusCode, responseRootObject.Error);
                 }
-                if (string.IsNullOrEmpty(responseRootObject.Error))
+                else if (!responseRootObject.Success)
                 {
-                    throw new HttpDataServiceException(
-                        statusCode,
-                        "Unexpected result: API with an allowed status code returned" +
-                        " response root object with null or empty Error property!");
+                    // Unexpected state from API that can be resolved locally
+                    responseRootObject.Success = true;
                 }
-                throw new HttpDataServiceException(statusCode, responseRootObject.Error);
             }
         }
 

@@ -37,6 +37,8 @@ namespace SixNations.Server.Data
                 new { RequirementStatusID = 2, RequirementStatusName = "WIP" },
                 new { RequirementStatusID = 3, RequirementStatusName = "Test" },
                 new { RequirementStatusID = 4, RequirementStatusName = "Done" });
+
+            builder.Entity<Requirement>().Property(r => r.Story).IsRequired();
         }
 
         public DbSet<Requirement> Requirement { get; set; }

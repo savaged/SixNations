@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SixNations.Server.Data;
 using SixNations.Server.Models;
 
@@ -14,9 +15,13 @@ namespace SixNations.Server.Controllers
     public class RequirementController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger _logger;
 
-        public RequirementController(ApplicationDbContext context)
+        public RequirementController(
+            ApplicationDbContext context,
+            ILogger<RequirementController> logger)
         {
+            _logger = logger;
             _context = context;
         }
 
@@ -24,7 +29,7 @@ namespace SixNations.Server.Controllers
         [HttpGet("Create")]
         public async Task<IActionResult> CreateRequirement()
         {
-            var root = new ResponseRootObject(new Requirement());
+            var root = new ResponseRootObject(200, new Requirement());
             await Task.CompletedTask;
             return Ok(root);
         }
@@ -39,10 +44,9 @@ namespace SixNations.Server.Controllers
             {
                 return NotFound();
             }
+            // Could lock the record here but EF Core handles concurrency just fine.
 
-            // TODO lock the record
-
-            var root = new ResponseRootObject(requirement);
+            var root = new ResponseRootObject(200, requirement);
             return Ok(root);
         }
 
@@ -51,7 +55,7 @@ namespace SixNations.Server.Controllers
         public ResponseRootObject GetRequirement()
         {
             var index = _context.Requirement;
-            var root = new ResponseRootObject(index);
+            var root = new ResponseRootObject(200, index);
             return root;
         }
 
@@ -69,7 +73,7 @@ namespace SixNations.Server.Controllers
             {
                 return NotFound();
             }
-            var root = new ResponseRootObject(requirement);
+            var root = new ResponseRootObject(200, requirement);
             return Ok(root);
         }
 
@@ -86,7 +90,6 @@ namespace SixNations.Server.Controllers
                 return BadRequest();
             }
             _context.Entry(requirement).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -102,7 +105,7 @@ namespace SixNations.Server.Controllers
                     throw;
                 }
             }
-            var root = new ResponseRootObject(requirement);
+            var root = new ResponseRootObject(200, requirement);
             return Ok(root);
         }
 
@@ -115,9 +118,16 @@ namespace SixNations.Server.Controllers
                 return BadRequest(ModelState);
             }
             _context.Requirement.Add(requirement);
-            await _context.SaveChangesAsync();
-
-            var root = new ResponseRootObject(requirement);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to store new model in db");
+                throw;
+            }
+            var root = new ResponseRootObject(201, requirement);
             return CreatedAtAction("GetRequirement", new { id = requirement.RequirementID }, root);
         }
 
@@ -139,7 +149,8 @@ namespace SixNations.Server.Controllers
             _context.Requirement.Remove(requirement);
             await _context.SaveChangesAsync();
 
-            return Ok(true);// TODO what to return ??
+            var root = new ResponseRootObject(202);
+            return AcceptedAtAction("GetRequirement", new { id = requirement.RequirementID }, root);
         }
 
         private bool RequirementExists(int id)
