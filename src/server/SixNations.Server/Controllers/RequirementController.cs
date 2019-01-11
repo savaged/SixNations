@@ -24,9 +24,9 @@ namespace SixNations.Server.Controllers
         [HttpGet("Create")]
         public async Task<IActionResult> CreateRequirement()
         {
-            var requirement = new Requirement();
+            var root = new ResponseRootObject(new Requirement());
             await Task.CompletedTask;
-            return Ok(requirement);
+            return Ok(root);
         }
 
         // GET: api/Requirement/5/edit
@@ -42,14 +42,17 @@ namespace SixNations.Server.Controllers
 
             // TODO lock the record
 
-            return Ok(requirement);
+            var root = new ResponseRootObject(requirement);
+            return Ok(root);
         }
 
         // GET: api/Requirement
         [HttpGet]
-        public IEnumerable<Requirement> GetRequirement()
+        public ResponseRootObject GetRequirement()
         {
-            return _context.Requirement;
+            var index = _context.Requirement;
+            var root = new ResponseRootObject(index);
+            return root;
         }
 
         // GET: api/Requirement/5
@@ -60,15 +63,14 @@ namespace SixNations.Server.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             var requirement = await _context.Requirement.FindAsync(id);
 
             if (requirement == null)
             {
                 return NotFound();
             }
-
-            return Ok(requirement);
+            var root = new ResponseRootObject(requirement);
+            return Ok(root);
         }
 
         // PUT: api/Requirement/5
@@ -79,12 +81,10 @@ namespace SixNations.Server.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             if (id != requirement.RequirementID)
             {
                 return BadRequest();
             }
-
             _context.Entry(requirement).State = EntityState.Modified;
 
             try
@@ -102,7 +102,8 @@ namespace SixNations.Server.Controllers
                     throw;
                 }
             }
-            return NoContent();
+            var root = new ResponseRootObject(requirement);
+            return Ok(root);
         }
 
         // POST: api/Requirement
@@ -113,11 +114,11 @@ namespace SixNations.Server.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             _context.Requirement.Add(requirement);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRequirement", new { id = requirement.RequirementID }, requirement);
+            var root = new ResponseRootObject(requirement);
+            return CreatedAtAction("GetRequirement", new { id = requirement.RequirementID }, root);
         }
 
         // DELETE: api/Requirement/5
@@ -138,7 +139,7 @@ namespace SixNations.Server.Controllers
             _context.Requirement.Remove(requirement);
             await _context.SaveChangesAsync();
 
-            return Ok(requirement);
+            return Ok(true);// TODO what to return ??
         }
 
         private bool RequirementExists(int id)

@@ -5,9 +5,20 @@ namespace SixNations.Server.Models
 {
     public class ResponseRootObject
     {
-        public ResponseRootObject(IEnumerable<ModelBase> models)
+        public ResponseRootObject()
         {
             Data = new ArrayList();
+        }
+
+        public ResponseRootObject(ModelBase model)
+            : this()
+        {
+            SetData(model);
+        }
+
+        public ResponseRootObject(IEnumerable<ModelBase> models)
+            : this()
+        {
             SetData(models);
         }
 
@@ -21,6 +32,11 @@ namespace SixNations.Server.Models
             {
                 Data.Add(model);
             }
+        }
+
+        private void SetData(ModelBase model)
+        {
+            Data.Add(model);
         }
     }
 }

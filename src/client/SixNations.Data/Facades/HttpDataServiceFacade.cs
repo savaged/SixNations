@@ -19,6 +19,7 @@ namespace SixNations.Data.Facade
 
         private static int[] allowedStatusCodes = {
             200,
+            201,
             503,
             401,
             410,
@@ -44,11 +45,21 @@ namespace SixNations.Data.Facade
             Log.Info($"Request initiated from {httpMethod}: {url}");
 
             var rawResponse = await HttpRequestRawResponseAsync(uri, token, httpMethod, data);
-            var rawResponseContent = await ReadResponseContentAsync(rawResponse);
-            var statusCode = (int)rawResponse.StatusCode;            
 
-            var responseRootObject = DeserializeResponseRootObject(rawResponseContent, statusCode, url);
-
+            ResponseRootObject responseRootObject;
+            var statusCode = (int)rawResponse.StatusCode;
+            if (statusCode == 500 || !allowedStatusCodes.Contains(statusCode))
+            {
+                // It's a 500 or a code we don't expect, we have no error to return, so throw a generic error.
+                var msg = string.Format(
+                    "Status Code: {0}, Error: {1}.", statusCode, rawResponse.ReasonPhrase);
+                throw new HttpDataServiceException(statusCode, msg);
+            }
+            else
+            {
+                var rawResponseContent = await ReadResponseContentAsync(rawResponse);
+                responseRootObject = DeserializeResponseRootObject(rawResponseContent, statusCode, url);
+            }
             // TODO on API change from using an Error property and put it in the response ReasonPhrase
             //      or the base class of all models
             //var statusCodeReason = rawResponse.ReasonPhrase;
@@ -133,24 +144,9 @@ namespace SixNations.Data.Facade
                 Log.Fatal($"Unexpected error accessing gateway. \n{ex.Message}");
                 throw;
             }
-
-            var statusCode = (int)rawResponse.StatusCode;
-
-            UnexpectedStatusCodeCheck(statusCode, rawResponse);
-
             return rawResponse;
         }
 
-        private static void UnexpectedStatusCodeCheck(int statusCode, HttpResponseMessage rawResponse)
-        {
-            if (statusCode == 500 || !allowedStatusCodes.Contains(statusCode))
-            {
-                // It's a 500 or a code we don't expect, we have no error to return, so throw a generic error.
-                var msg = string.Format(
-                    "Status Code: {0}, Error: {1}.", statusCode, rawResponse.ReasonPhrase);
-                throw new HttpDataServiceException(statusCode, msg);
-            }
-        }
         private static void AnticipatedStatusCodeErrorCheck(
             int statusCode, ResponseRootObject responseRootObject)
         {

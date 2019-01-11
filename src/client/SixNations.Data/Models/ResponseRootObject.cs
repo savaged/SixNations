@@ -251,7 +251,8 @@ namespace SixNations.Data.Models
             {
                 throw new ArgumentNullException(
                     "No response root found. " +
-                    "The service relied upon should always return a response root object.");
+                    "The service relied upon should always return a response root object. " +
+                    "Perhaps the server error handling needs adding.");
             }
             if (_responseRootObject.IsEmpty())
             {

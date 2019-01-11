@@ -40,6 +40,7 @@ namespace SixNations.Data.Services
             catch (Exception ex)
             {
                 exceptionHandler(ex);
+                response = new ResponseRootObject(ex.Message);
             }
             var model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
@@ -63,6 +64,7 @@ namespace SixNations.Data.Services
             catch (Exception ex)
             {
                 exceptionHandler(ex);
+                response = new ResponseRootObject(ex.Message);
             }
             model = new ResponseRootObjectToModelMapper<Requirement>(response).Mapped();
             return model;
