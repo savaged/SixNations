@@ -15,7 +15,10 @@ namespace SixNations.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> PostLogin()
         {
-            // TODO create token for use across the session
+            // TODO set-up and integrate a standard identity server like identityserver4 or
+            // something like the ASP.Net Core auth demo:
+            // https://github.com/aspnet/Docs/tree/master/aspnetcore/security/authentication/identity/sample/src/ASPNETCore-IdentityDemoComplete/IdentityDemo
+
             await Task.CompletedTask;
             return Ok("todo");
         }
