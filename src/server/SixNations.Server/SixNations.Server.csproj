@@ -2,20 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>aspnet-SixNations.Server-D4B87DBA-5DCA-4F27-8CE0-E6ADF5758116</UserSecretsId>
-    <Copyright>Copyright ©  2019</Copyright>
-    <RepositoryUrl>https://github.com/savaged/SixNations</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/savaged/SixNations/blob/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>GitHub.com</RepositoryType>
-    <PackageTags>scum agile</PackageTags>
-    <Description>RESTful API server for a requirements management tool based on SCRUM. SixNations, is designed as lean tooling for an Agile development team.</Description>
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="2.3.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.7" PrivateAssets="All" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
   </ItemGroup>
 
 </Project>
