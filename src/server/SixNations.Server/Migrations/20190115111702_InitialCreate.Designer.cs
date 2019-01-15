@@ -9,7 +9,7 @@ using SixNations.Server.Data;
 namespace SixNations.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190115083610_InitialCreate")]
+    [Migration("20190115111702_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,17 +110,24 @@ namespace SixNations.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Firstname");
+                    b.Property<string>("Firstname")
+                        .IsRequired();
 
-                    b.Property<string>("Lastname");
+                    b.Property<string>("Lastname")
+                        .IsRequired();
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .IsRequired();
 
                     b.Property<string>("Username");
 
                     b.Property<string>("access_token");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("Username")
+                        .IsUnique()
+                        .HasFilter("[Username] IS NOT NULL");
 
                     b.ToTable("User");
                 });

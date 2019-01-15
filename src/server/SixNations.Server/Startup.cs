@@ -48,7 +48,12 @@ namespace SixNations.Server
                 };
             });
 
+            services.AddSingleton<IEncryptionService>(
+                _ => new EncryptionService(Props.ClientSecret));
+
             services.AddScoped<IAuthService, AuthService>();
+
+            // TODO configure logging output
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)

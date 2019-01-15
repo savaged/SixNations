@@ -17,6 +17,7 @@
     },
     "SixNations.Server": {
       "commandName": "Project",
+      "launchUrl": "User",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -35,6 +35,11 @@ namespace SixNations.Server.Data
                 new { RequirementStatusID = 4, RequirementStatusName = "Done" });
 
             builder.Entity<Requirement>().Property(r => r.Story).IsRequired();
+
+            builder.Entity<User>().Property(u => u.Firstname).IsRequired();
+            builder.Entity<User>().Property(u => u.Lastname).IsRequired();
+            builder.Entity<User>().Property(u => u.Password).IsRequired();
+            builder.Entity<User>().HasIndex(u => u.Username).IsUnique();
         }
 
         public DbSet<User> User { get; set; }

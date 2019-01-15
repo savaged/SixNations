@@ -69,10 +69,10 @@ namespace SixNations.Server.Migrations
                 {
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Firstname = table.Column<string>(nullable: true),
-                    Lastname = table.Column<string>(nullable: true),
                     Username = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
+                    Firstname = table.Column<string>(nullable: false),
+                    Lastname = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
                     access_token = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -114,6 +114,13 @@ namespace SixNations.Server.Migrations
                     { 3, "Test" },
                     { 4, "Done" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_Username",
+                table: "User",
+                column: "Username",
+                unique: true,
+                filter: "[Username] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

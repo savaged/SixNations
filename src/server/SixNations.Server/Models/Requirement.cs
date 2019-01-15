@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace SixNations.Server.Models
 {
     public class Requirement : ModelBase

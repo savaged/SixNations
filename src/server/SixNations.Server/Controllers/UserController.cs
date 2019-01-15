@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SixNations.Server.Data;
 using SixNations.Server.Models;
@@ -8,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace SixNations.Server.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
+    [Route("[controller]")]
+    public class UserController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger _logger;
@@ -26,32 +26,59 @@ namespace SixNations.Server.Controllers
             _crypto = crypto;
         }
 
-        // POST: api/User
+        // GET: User
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        // POST: User
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] User user)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Post([Bind("Firstname,Lastname,Password")] User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
+            }            
 
             user.Password = _crypto.Encrypt(user.Password);
+            user.Username = $"{user.Lastname}{user.Firstname}";
 
-            _context.User.Add(user);
+            try
+            {
+                _context.User.Add(user);
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError(ex, "Error adding model");
+                throw;
+            }
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                _logger.LogError(ex, "Failed to store new model in db");
-                throw;
+                if (ex.InnerException != null 
+                    && ex.InnerException.Message.Contains("IX_User_Username"))
+                {
+                    ModelState.AddModelError(
+                        "Username", "Correctly failed to add duplicate user - " +
+                        "if users have the same name add a number to the firstname");
+                    return BadRequest(ModelState);
+                }
+                else
+                {
+                    _logger.LogError(ex, "Failed to store new model in db");
+                    throw;
+                }
             }
 
             user.Password = null;
 
-            var root = new ResponseRootObject(201, user);
-            return CreatedAtAction("GetUser", new { id = user.UserId }, root);
+            return CreatedAtAction("Index", user);
         }
     }
 }
