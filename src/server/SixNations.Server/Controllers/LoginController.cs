@@ -27,11 +27,10 @@ namespace SixNations.Server.Controllers
 
         // POST: api/Login
         [HttpPost]
-        public async Task<IActionResult> PostLogin()
+        public async Task<IActionResult> PostLogin(
+            [FromForm] string username,
+            [FromForm] string password)
         {
-            var username = "todo";
-            var password = "todo";
-
             var authUser = await _auth.AuthenticateAsync(username, password);
             return Ok(authUser.access_token);
         }
