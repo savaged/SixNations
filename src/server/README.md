@@ -1,4 +1,4 @@
 # TODO #
-* Add all the controllers and models needed (i.e. lookups)
-* Add authentification, including Login 
+* Ensure Login functions
+* Ensure each Requirement action is authenticated
 * Make changes to allow deployment to Linux
