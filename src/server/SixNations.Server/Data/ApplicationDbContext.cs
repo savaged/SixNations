@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SixNations.Server.Models;
 
 namespace SixNations.Server.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -40,6 +36,8 @@ namespace SixNations.Server.Data
 
             builder.Entity<Requirement>().Property(r => r.Story).IsRequired();
         }
+
+        public DbSet<User> User { get; set; }
 
         public DbSet<Requirement> Requirement { get; set; }
 
