@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SixNations.Server.Data;
+using SixNations.Server.Models;
 using SixNations.Server.Services;
 
 namespace SixNations.Server.Controllers
@@ -32,7 +33,16 @@ namespace SixNations.Server.Controllers
             [FromForm] string password)
         {
             var authUser = await _auth.AuthenticateAsync(username, password);
-            return Ok(authUser.access_token);
+            var key = "access_token";
+            // TODO move this into the AuthService
+            var data = new Dictionary<string, object>
+            {
+                { "token_type", "Bearer" },
+                { "expires_in", 86394 },
+                { key, authUser.GetData()[key] }
+            };
+            var root = new ResponseRootObject(200, data);
+            return Ok(root);
         }
     }
 }
