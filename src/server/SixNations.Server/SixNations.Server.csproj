@@ -2,11 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Copyright>Copyright ©  2019</Copyright>
+    <PackageLicenseUrl>https://github.com/savaged/SixNations/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/savaged/SixNations</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/savaged/SixNations/blob/master/src/client/SixNations.Desktop/Logo.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/savaged/SixNations</RepositoryUrl>
+    <RepositoryType>GitHub.com</RepositoryType>
+    <PackageTags>SCRUM</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Models\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

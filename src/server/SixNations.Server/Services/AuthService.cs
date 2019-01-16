@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -27,8 +28,11 @@ namespace SixNations.Server.Services
             _crypto = crypto;
         }
 
-        public async Task<User> AuthenticateAsync(string username, string password)
+        public async Task<Token> AuthenticateAsync(
+            string username, string password)
         {
+            Token value = null;
+
             var index = await _context.User.ToListAsync();
 
             password = _crypto.Encrypt(password);
@@ -37,6 +41,7 @@ namespace SixNations.Server.Services
                 .Where(u => u.Username == username)
                 .Where(u => u.Password == password)
                 .FirstOrDefault();
+            
             if (user != null)
             {
                 //authentication successful so generate jwt token
@@ -48,17 +53,18 @@ namespace SixNations.Server.Services
                     {
                         new Claim(ClaimTypes.Name, user.UserId.ToString())
                     }),
-                    Expires = DateTime.UtcNow.AddDays(7),
+                    Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(
                         new SymmetricSecurityKey(key),
                         SecurityAlgorithms.HmacSha256Signature)
                 };
+
                 var token = tokenHandler.CreateToken(tokenDescriptor);
-                user.access_token = tokenHandler.WriteToken(token);
-                //remove password before returning
-                user.Password = null;
+                var access_token = tokenHandler.WriteToken(token);
+                var expires_in = (tokenDescriptor.Expires - DateTime.Now).Value.TotalSeconds;
+                value = new Token("Bearer", (int)expires_in, access_token);
             }
-            return user;
+            return value;
         }
     }
 }

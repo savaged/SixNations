@@ -32,16 +32,8 @@ namespace SixNations.Server.Controllers
             [FromForm] string username,
             [FromForm] string password)
         {
-            var authUser = await _auth.AuthenticateAsync(username, password);
-            var key = "access_token";
-            // TODO move this into the AuthService
-            var data = new Dictionary<string, object>
-            {
-                { "token_type", "Bearer" },
-                { "expires_in", 86394 },
-                { key, authUser.GetData()[key] }
-            };
-            var root = new ResponseRootObject(200, data);
+            var token = await _auth.AuthenticateAsync(username, password);            
+            var root = new ResponseRootObject(200, token);
             return Ok(root);
         }
     }

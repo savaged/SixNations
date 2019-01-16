@@ -31,12 +31,6 @@ namespace SixNations.Server.Models
             SetData(models);
         }
 
-        public ResponseRootObject(int statusCode, IDictionary<string, object> data)
-            : this(statusCode)
-        {
-            SetData(data);
-        }
-
         public bool Success { get; set; }
 
         public string Error { get; set; }
@@ -54,14 +48,6 @@ namespace SixNations.Server.Models
         private void SetData(ModelBase model)
         {
             Data.Add(model);
-        }
-
-        private void SetData(IDictionary<string, object> data)
-        {
-            foreach (var kvp in data)
-            {
-                Data.Add(new { kvp.Key, kvp.Value });
-            }
         }
     }
 }

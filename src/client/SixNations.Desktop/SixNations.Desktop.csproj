@@ -25,6 +25,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>true</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <SupportUrl>https://github.com/savaged/SixNations</SupportUrl>
+    <ProductName>SixNations.Desktop</ProductName>
+    <PublisherName>savaged</PublisherName>
+    <SuiteName>SixNations</SuiteName>
     <MinimumRequiredVersion>1.0.2.10</MinimumRequiredVersion>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>10</ApplicationRevision>
