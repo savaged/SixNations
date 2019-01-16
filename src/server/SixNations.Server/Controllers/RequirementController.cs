@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +29,11 @@ namespace SixNations.Server.Controllers
         [HttpGet("Create")]
         public async Task<IActionResult> CreateRequirement()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
+
             var root = new ResponseRootObject(200, new Requirement());
             await Task.CompletedTask;
             return Ok(root);
@@ -38,6 +43,11 @@ namespace SixNations.Server.Controllers
         [HttpGet("{id}/Edit")]
         public async Task<IActionResult> EditRequirement([FromRoute] int id)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
+
             var requirement = await _context.Requirement.FindAsync(id);
 
             if (requirement == null)
@@ -54,8 +64,14 @@ namespace SixNations.Server.Controllers
         [HttpGet]
         public ResponseRootObject GetRequirement()
         {
+            ResponseRootObject root;
+            if (!User.Identity.IsAuthenticated)
+            {
+                root = new ResponseRootObject(401);
+                return root;
+            }
             var index = _context.Requirement;
-            var root = new ResponseRootObject(200, index);
+            root = new ResponseRootObject(200, index);
             return root;
         }
 
@@ -63,6 +79,11 @@ namespace SixNations.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRequirement([FromRoute] int id)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -81,6 +102,11 @@ namespace SixNations.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRequirement([FromRoute] int id, [FromBody] Requirement requirement)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -113,6 +139,11 @@ namespace SixNations.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> PostRequirement([FromBody] Requirement requirement)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -135,6 +166,11 @@ namespace SixNations.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRequirement([FromRoute] int id)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

@@ -119,8 +119,6 @@ namespace SixNations.Server.Migrations
 
                     b.Property<string>("Username");
 
-                    b.Property<string>("access_token");
-
                     b.HasKey("UserId");
 
                     b.HasIndex("Username")

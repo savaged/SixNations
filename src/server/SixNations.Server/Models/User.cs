@@ -17,8 +17,5 @@ namespace SixNations.Server.Models
 
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        [HiddenInput(DisplayValue = false)]
-        public string access_token { get; set; }
     }
 }

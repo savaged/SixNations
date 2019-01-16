@@ -72,8 +72,7 @@ namespace SixNations.Server.Migrations
                     Username = table.Column<string>(nullable: true),
                     Firstname = table.Column<string>(nullable: false),
                     Lastname = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false),
-                    access_token = table.Column<string>(nullable: true)
+                    Password = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

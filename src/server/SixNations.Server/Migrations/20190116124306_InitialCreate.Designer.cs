@@ -9,7 +9,7 @@ using SixNations.Server.Data;
 namespace SixNations.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190115111702_InitialCreate")]
+    [Migration("20190116124306_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -120,8 +120,6 @@ namespace SixNations.Server.Migrations
                         .IsRequired();
 
                     b.Property<string>("Username");
-
-                    b.Property<string>("access_token");
 
                     b.HasKey("UserId");
 
