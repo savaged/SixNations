@@ -1,6 +1,6 @@
 # SixNations
 
-Requirements management loosely based on SCRUM.
+Free requirements management loosely based on SCRUM.
 
 SixNations, is designed as lean tooling for an Agile development 
 team.
