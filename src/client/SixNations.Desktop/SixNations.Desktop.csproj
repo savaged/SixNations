@@ -29,9 +29,9 @@
     <ProductName>SixNations.Desktop</ProductName>
     <PublisherName>savaged</PublisherName>
     <SuiteName>SixNations</SuiteName>
-    <MinimumRequiredVersion>1.0.3.1</MinimumRequiredVersion>
+    <MinimumRequiredVersion>1.0.3.2</MinimumRequiredVersion>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
