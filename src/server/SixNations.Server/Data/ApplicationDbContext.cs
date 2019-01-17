@@ -32,7 +32,8 @@ namespace SixNations.Server.Data
                 new { RequirementStatusID = 1, RequirementStatusName = "Prioritised" },
                 new { RequirementStatusID = 2, RequirementStatusName = "WIP" },
                 new { RequirementStatusID = 3, RequirementStatusName = "Test" },
-                new { RequirementStatusID = 4, RequirementStatusName = "Done" });
+                new { RequirementStatusID = 4, RequirementStatusName = "Done" },
+                new { RequirementStatusID = 5, RequirementStatusName = "Reviewed" });
 
             builder.Entity<Requirement>().Property(r => r.Story).IsRequired();
 

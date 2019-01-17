@@ -17,6 +17,7 @@ namespace SixNations.API.Constants
         Prioritised = 1,
         WIP = 2,
         Test = 3,
-        Done = 4
+        Done = 4,
+        Reviewed = 5
     }
 }

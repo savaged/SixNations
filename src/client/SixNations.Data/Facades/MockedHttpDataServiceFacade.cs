@@ -139,8 +139,12 @@ namespace SixNations.Data.Facade
                     "      \"RequirementStatusID\": 3," +
                     "      \"RequirementStatusName\": \"Test\"," +
                     "    },    {" +
+                    "    },    {" +
                     "      \"RequirementStatusID\": 4," +
                     "      \"RequirementStatusName\": \"Done\"," +
+                    "    },    {" +
+                    "      \"RequirementStatusID\": 5," +
+                    "      \"RequirementStatusName\": \"Reviewed\"," +
                     "    }]" +
                     "}"
                 }
