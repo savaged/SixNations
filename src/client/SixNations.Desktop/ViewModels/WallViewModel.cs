@@ -6,6 +6,8 @@ using SixNations.Data.Models;
 using SixNations.API.Constants;
 using SixNations.Desktop.Messages;
 using SixNations.Desktop.Interfaces;
+using SixNations.Desktop.Services;
+using GalaSoft.MvvmLight.Threading;
 
 namespace SixNations.Desktop.ViewModels
 {
@@ -14,13 +16,22 @@ namespace SixNations.Desktop.ViewModels
         public WallViewModel(
             IDataService<Requirement> requirementDataService,
             IActionConfirmationService actionConfirmation) 
-            : base(requirementDataService, actionConfirmation, true)
+            : base(requirementDataService, actionConfirmation)
         {
             Prioritised = new SwimlaneViewModel(requirementDataService, RequirementStatus.Prioritised);
             WIP = new SwimlaneViewModel(requirementDataService, RequirementStatus.WIP);
             Test = new SwimlaneViewModel(requirementDataService, RequirementStatus.Test);
             Done = new SwimlaneViewModel(requirementDataService, RequirementStatus.Done);
+
+            PollingService.Instance.IntervalElapsed += OnPollingIntervalElapsed;
             MessengerInstance.Register<ReloadRequestMessage>(this, OnReloadRequest);
+        }
+
+        public override void Cleanup()
+        {
+            PollingService.Instance.Stop();
+            PollingService.Instance.IntervalElapsed -= OnPollingIntervalElapsed;
+            base.Cleanup();
         }
 
         public async override Task LoadAsync()
@@ -62,6 +73,14 @@ namespace SixNations.Desktop.ViewModels
         private async void OnReloadRequest(ReloadRequestMessage m)
         {
             await LoadAsync();
+        }
+
+        private void OnPollingIntervalElapsed()
+        {
+            DispatcherHelper.CheckBeginInvokeOnUI(async () =>
+            {
+                await LoadAsync();
+            });
         }
     }
 }

@@ -27,20 +27,15 @@ namespace SixNations.Desktop.ViewModels
 
         protected readonly IDataService<T> DataService;
         protected readonly IActionConfirmationService ActionConfirmation;
-        private readonly bool _withRefreshPolling;
         private T _selectedItem;
         private bool _canSelectItem;
 
         public DataBoundViewModel(
             IDataService<T> dataService, 
-            IActionConfirmationService actionConfirmation,
-            bool withRefreshPolling = false)
+            IActionConfirmationService actionConfirmation)
         {
             DataService = dataService;
             ActionConfirmation = actionConfirmation;
-            
-            _withRefreshPolling = withRefreshPolling;
-            PollingService.Instance.IntervalElapsed += OnPollingIntervalElapsed;
 
             Index = new ObservableCollection<T>();
 
@@ -51,20 +46,9 @@ namespace SixNations.Desktop.ViewModels
             CancelCmd = new RelayCommand(OnCancel, () => CanExecuteCancel);
         }
 
-        public override void Cleanup()
-        {
-            PollingService.Instance.IntervalElapsed -= OnPollingIntervalElapsed;
-            base.Cleanup();
-        }
-
         public async virtual Task LoadAsync()
         {
-            MessengerInstance.Send(new BusyMessage(true, this));
-
-            if (_withRefreshPolling)
-            {
-                PollingService.Instance.Start();
-            }
+            MessengerInstance.Send(new BusyMessage(true, this));            
             try
             {
                 await LoadIndexAsync();
@@ -308,14 +292,6 @@ namespace SixNations.Desktop.ViewModels
                 SelectedItem = Index.FirstOrDefault();
                 MessengerInstance.Send(new BusyMessage(false, this));
             }
-        }
-
-        private void OnPollingIntervalElapsed()
-        {
-            DispatcherHelper.CheckBeginInvokeOnUI(async () =>
-            {
-                await LoadAsync();
-            });
         }
     }
 }
