@@ -29,13 +29,29 @@ namespace SixNations.Desktop.Controls
                 {
                     e.Accepted = true;
                 }
-                else if (requirement.Story.Contains(StoryFilter.Text))
-                {
-                    e.Accepted = true;
-                }
                 else
                 {
-                    e.Accepted = false;
+                    var filter = StoryFilter.Text;
+
+                    int.TryParse(filter, out int id);
+                    if (id > 0)
+                    {
+                        if (requirement.Id == id)
+                        {
+                            e.Accepted = true;
+                        }
+                        else
+                        {
+                            e.Accepted = false;
+                        }
+                    } else if (requirement.Story.Contains(filter))
+                    {
+                        e.Accepted = true;
+                    }
+                    else
+                    {
+                        e.Accepted = false;
+                    }
                 }
             }
         }
