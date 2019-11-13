@@ -6,20 +6,20 @@ namespace SixNations.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequirementEstimationController : ControllerBase
+    public class ResponseRootRequirementStatusController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public RequirementEstimationController(ApplicationDbContext context)
+        public ResponseRootRequirementStatusController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/RequirementEstimation
+        // GET: api/RequirementStatus
         [HttpGet]
-        public ResponseRootObject GetRequirementEstimation()
+        public ResponseRootObject GetRequirementStatus()
         {
-            var index = _context.RequirementEstimation;
+            var index = _context.RequirementStatus;
             var root = new ResponseRootObject(200, index);
             return root;
         }

@@ -6,11 +6,11 @@ namespace SixNations.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequirementPriorityController : ControllerBase
+    public class ResponseRootRequirementPriorityController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public RequirementPriorityController(ApplicationDbContext context)
+        public ResponseRootRequirementPriorityController(ApplicationDbContext context)
         {
             _context = context;
         }

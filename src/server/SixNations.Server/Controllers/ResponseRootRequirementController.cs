@@ -1,25 +1,24 @@
-﻿using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SixNations.Server.Data;
 using SixNations.Server.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SixNations.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequirementController : ControllerBase
+    public class ResponseRootRequirementController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger _logger;
 
-        public RequirementController(
+        public ResponseRootRequirementController(
             ApplicationDbContext context,
-            ILogger<RequirementController> logger)
+            ILogger<ResponseRootRequirementController> logger)
         {
             _logger = logger;
             _context = context;
