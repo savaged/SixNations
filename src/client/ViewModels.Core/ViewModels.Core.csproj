@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MvvmNavigation\MvvmNavigation.csproj" />
+    <ProjectReference Include="..\MvvmCore\MvvmCore.csproj" />
+    <ProjectReference Include="..\RESTfulClientData\RESTfulClientData.csproj" />
+    <ProjectReference Include="..\Win32DialogService\Win32DialogService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Castle.Core" Version="4.4.0" />
+    <PackageReference Include="CommonServiceLocator" Version="2.0.5" />
+    <PackageReference Include="CsvHelper" Version="12.2.1" />
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1000" />
+    <PackageReference Include="Microsoft.Office.Interop.Outlook" Version="15.0.4797.1003" />
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Ninject" Version="3.3.4" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+
+</Project>
